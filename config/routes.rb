@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
-  resources :translations, :except => [:new, :create, :destroy, :show], :controller => Interpret.controller do
-    collection do
-      get :fetch
-      post :upload
+  scope Interpret.scope do
+    #match "/", :to => "#{Interpret.controller}#index"
+
+    resources :translations, :except => [:new, :create, :destroy, :show], :controller => Interpret.controller, :as => Interpret.resource_name do
+      collection do
+        get :fetch
+        post :upload
+      end
     end
   end
 end

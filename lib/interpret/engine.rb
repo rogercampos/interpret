@@ -1,4 +1,5 @@
 require 'i18n/backend/active_record'
+require 'interpret/logger'
 
 module Interpret
   class Engine < Rails::Engine
@@ -8,6 +9,12 @@ module Interpret
 
       Interpret.backend = I18n::Backend::ActiveRecord.new
       app.config.i18n.backend = Interpret.backend
+    end
+
+    initializer "interpret.setup_translations_logger" do |app|
+      logfile = File.open("#{Rails.root}/log/interpret.log", 'a')
+      logfile.sync = true
+      Interpret.logger = InterpretLogger.new(logfile)
     end
   end
 end
