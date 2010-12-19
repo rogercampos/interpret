@@ -18,7 +18,7 @@ class Interpret::TranslationsController < ApplicationController
 
     respond_to do |format|
       if @translation.update_attributes(params[:interpret_translation])
-        Rails.application.config.i18n.backend.reload!
+        Interpret.backend.reload!
         # Hook here
         #TRANSLATION_LOGGER.info("by [#{current_user}]. Locale: [#{@translation.locale}], key: [#{@translation.key}]. The translation has been changed from [#{old_value}] to [#{@translation.value}]")
         format.html { redirect_to(interpret_root_url)}
@@ -69,7 +69,7 @@ class Interpret::TranslationsController < ApplicationController
       end
 
       changes = Interpret::Translation.update_from_hash(I18n.locale, hash.values[0])
-      Rails.application.config.i18n.backend.reload!
+      Interpret.backend.reload!
 
       flash[:notice] = "#{changes} Traduccions actualitzades correctament"
     rescue ArgumentError => e

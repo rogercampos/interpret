@@ -6,7 +6,8 @@ module Interpret
       I18n::Backend::ActiveRecord.send(:include, I18n::Backend::Memoize)
       I18n::Backend::ActiveRecord.send(:include, I18n::Backend::Flatten)
 
-      app.config.i18n.backend = I18n::Backend::ActiveRecord.new
+      Interpret.backend = I18n::Backend::ActiveRecord.new
+      app.config.i18n.backend = Interpret.backend
     end
   end
 end
