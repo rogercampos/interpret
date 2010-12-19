@@ -8,9 +8,9 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Roger Campos"]
   s.email       = ["roger@itnig.net"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage    = "https://github.com/rogercampos/interpret"
+  s.summary     = %q{Manage your app translations with an i18n active_record backend}
+  s.description = %q{Manage your app translations with an i18n active_record backend}
 
   s.rubyforge_project = "interpret"
 

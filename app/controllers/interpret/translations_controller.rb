@@ -18,7 +18,7 @@ class Interpret::TranslationsController < ApplicationController
 
     respond_to do |format|
       if @translation.update_attributes(params[:interpret_translation])
-        Interpret.backend.reload!
+        Interpret.backend.reload! if Interpret.backend
         # Hook here
         msg = defined?(:current_user) ? "By [#{current_user}]. " : ""
         msg << "Locale: [#{@translation.locale}], key: [#{@translation.key}]. The translation has been changed from [#{old_value}] to [#{@translation.value}]"
@@ -72,7 +72,7 @@ class Interpret::TranslationsController < ApplicationController
       end
 
       changes = Interpret::Translation.update_from_hash(I18n.locale, hash.values[0])
-      Interpret.backend.reload!
+      Interpret.backend.reload! if Interpret.backend
 
       flash[:notice] = "#{changes} Traduccions actualitzades correctament"
     rescue ArgumentError => e

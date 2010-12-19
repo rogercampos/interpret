@@ -46,7 +46,8 @@ end
 # Fem que les claus a bd pel locale donat corresponguin al hash original de contrast dict
 def put_in_sync_with_db(dict, locale, prefix = "", existing = nil)
   if existing.nil?
-    existing = Translation.hash_from_query(:locale => locale)
+    translations = Interpret::Translation.locale(locale).all
+    existing = Interpret::Translation.as_hash(translations)
     existing = existing.first[1] unless existing.empty?
   end
 
@@ -56,12 +57,12 @@ def put_in_sync_with_db(dict, locale, prefix = "", existing = nil)
     if dict[x].kind_of?(Hash)
       put_in_sync_with_db(dict[x], locale, "#{prefix}#{x}.", existing[x])
     else
-      old = Translation.where(:locale => locale, :key => "#{prefix}#{x}").first
+      old = Interpret::Translation.where(:locale => locale, :key => "#{prefix}#{x}").first
       if !old
-        Translation.create :locale => locale,
+        Interpret::Translation.create :locale => locale,
                            :key => "#{prefix}#{x}",
                            :value => get_value_from_yaml_by_ckey(locale, "#{prefix}#{x}")
-        TRANSLATION_LOGGER.info("[translations:update] Created new key for locale: [#{locale}], key: [#{prefix}#{x}]")
+        Interpret.logger.info("[translations:update] Created new key for locale: [#{locale}], key: [#{prefix}#{x}]")
       end
     end
   end
@@ -76,8 +77,8 @@ def remove_old_keys_in_db(dict, locale, prefix = "")
     if dict[x].kind_of?(Hash)
       remove_old_keys_in_db(dict[x], locale, "#{prefix}#{x}.")
     else
-      old = Translation.where(:locale => locale, :key => "#{prefix}#{x}").first
-      TRANSLATION_LOGGER.info("[translations:update] Removed unused key [#{prefix}#{x}] for locale [#{locale}]. The value was [#{old.value}]")
+      old = Interpret::Translation.where(:locale => locale, :key => "#{prefix}#{x}").first
+      Interpret.logger.info("[translations:update] Removed unused key [#{prefix}#{x}] for locale [#{locale}]. The value was [#{old.value}]")
       old.delete
     end
   end
