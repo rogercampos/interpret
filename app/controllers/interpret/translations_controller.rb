@@ -3,12 +3,28 @@ class Interpret::TranslationsController < ApplicationController
   before_filter :get_sidebar_tree
 
   def index
-    @originals = Interpret::Translation.locale(I18n.default_locale).where("key NOT LIKE '%.%'")
+    @originals = Interpret::Translation.locale(I18n.default_locale).where("key NOT LIKE '%.%'").paginate :page => params[:page]
     unless I18n.locale == I18n.default_locale
-      @translations = Interpret::Translation.locale(I18n.locale).where("key NOT LIKE '%.%'")
+      @translations = Interpret::Translation.locale(I18n.locale).where("key NOT LIKE '%.%'").paginate :page => params[:page]
     else
       @translations = nil
     end
+  end
+
+  def node
+    key = params[:key]
+    unless key
+      redirect_to translations_url
+      return
+    end
+
+    @originals = Interpret::Translation.locale(I18n.default_locale).where("key LIKE '#{key}.%'").paginate :page => params[:page]
+    unless I18n.locale == I18n.default_locale
+      @translations = Interpret::Translation.locale(I18n.locale).where("key LIKE '#{key}.%'").paginate :page => params[:page]
+    else
+      @translations = nil
+    end
+    render :action => :index
   end
 
   def edit
