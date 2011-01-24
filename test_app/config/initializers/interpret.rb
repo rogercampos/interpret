@@ -1,1 +1,1 @@
-Interpret.controller = 'admin/translations'
+Interpret.controller = 'translations'
