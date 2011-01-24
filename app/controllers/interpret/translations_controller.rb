@@ -1,12 +1,13 @@
 class Interpret::TranslationsController < ApplicationController
   layout 'interpret'
+  before_filter :get_sidebar_tree
 
   def index
-    @translations = Interpret::Translation.locale(I18n.locale).all
-
-    respond_to do |format|
-      format.html
-      format.xml  { render :xml => @translations }
+    @originals = Interpret::Translation.locale(I18n.default_locale).where("key NOT LIKE '%.%'")
+    unless I18n.locale == I18n.default_locale
+      @translations = Interpret::Translation.locale(I18n.locale).where("key NOT LIKE '%.%'")
+    else
+      @translations = nil
     end
   end
 
@@ -83,4 +84,17 @@ class Interpret::TranslationsController < ApplicationController
 
     redirect_to translations_url
   end
+
+
+private
+  def get_sidebar_tree
+    all_trans = Interpret::Translation.locale(I18n.locale).select(:key).where("key LIKE '%.%'").all
+
+    @tree = LazyHash.build_hash
+    all_trans = all_trans.map{|x| x.key.split(".")[0..-2].join(".")}
+    all_trans.each do |x|
+      LazyHash.lazy_add(@tree, x, {})
+    end
+  end
+
 end

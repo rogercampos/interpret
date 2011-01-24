@@ -1,12 +1,14 @@
 module ApplicationHelper
-  def section_link_to(name, options = {}, html_options = {})
-    html_options.merge!({ :class => 'current' }) if current_page?(options)
-    link_to name, options, html_options
-  end
-
-  def title(page_title)
-    content_for :title do
-      page_title
+  def show_tree(hash)
+    out = "<ul>"
+    hash.keys.each do |key|
+      out += "<li>#{key}"
+      if hash[key].present? && hash[key].is_a?(Hash)
+        out += show_tree(hash[key])
+      end
+      out += "</li>"
     end
+    out += "</ul>"
+    out.html_safe
   end
 end

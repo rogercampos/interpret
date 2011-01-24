@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       collection do
         get :fetch
         post :upload
+        get :node
       end
     end
   end
