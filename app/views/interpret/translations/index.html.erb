@@ -21,7 +21,7 @@
     <% @originals.each do |x| %>
       <tr>
         <td><%= x.key %></td>
-        <td><%= best_in_place x, :value, :textarea %></td>
+        <td><%= best_in_place x, :value, :textarea, [], translation_path(x) %></td>
       </tr>
     <% end %>
   </tbody>
