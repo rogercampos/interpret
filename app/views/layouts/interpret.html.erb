@@ -2,16 +2,19 @@
 <html>
 <head>
   <title>Cuca</title>
-  <%= stylesheet_link_tag :all %>
+  <%= stylesheet_link_tag "style" %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 </head>
 <body>
-This is the Gem layout
-<%= render 'interpret/translations/sidebar' %>
-<%= yield %>
-
+<div id="container">
+  <div class="grid_3">
+    <h2>Sidebar</h2>
+    <%= yield :sidebar %>
+  </div>
+  <div class="grid_13">
+    <%= yield %>
+  </div>
+</div>
 </body>
 </html>
-
-

@@ -24,4 +24,5 @@ Gem::Specification.new do |s|
   s.add_dependency "i18n-active_record"
   s.add_dependency "ya2yaml", ">= 0.30.0"
   s.add_dependency "will_paginate", ">= 3.0.pre2"
+  s.add_dependency "best_in_place"
 end

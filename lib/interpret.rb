@@ -1,4 +1,6 @@
 require 'interpret/engine' if defined? Rails
+require 'best_in_place'
+require 'will_paginate'
 
 module Interpret
   mattr_accessor :backend

@@ -1,33 +1,33 @@
-<h1>Translations for <%= I18n.locale %></h1>
-
-<p><%= link_to "Download", fetch_translations_path %> the current translations for '<%= I18n.locale %>' language as .yml file</p>
-<p>Upload your .yml file for '<%= I18n.locale %>' language</p>
-<p>
-<%= form_tag upload_translations_path, :multipart => true do %>
-  <%= label_tag "File:" %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Upload" %>
-<% end %>
-
-
-</p>
+<div id="header">
+  <h1>Translations for <%= I18n.locale %></h1>
+  <!-- <p><%= link_to "Download", fetch_translations_path %> the current translations for '<%= I18n.locale %>' language as .yml file</p> -->
+  <!-- <p>Upload your .yml file for '<%= I18n.locale %>' language</p>
+  <p>
+  <%= form_tag upload_translations_path, :multipart => true do %>
+    <%= label_tag "File:" %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Upload" %>
+  <% end %>
+  </p> -->
+</div>
 <table>
   <thead>
     <tr>
-      <th>Content</th>
       <th>Key</th>
-      <th></th>
+      <th>Content</th>
     </tr>
   </thead>
   <tbody>
     <% @originals.each do |x| %>
       <tr>
-        <td><%= x.value %></td>
         <td><%= x.key %></td>
-        <td><%= link_to "Edit", edit_translation_path(x) %></td>
+        <td><%= best_in_place x, :value, :textarea %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <%= will_paginate(@originals) %>
+<%= content_for :sidebar do %>
+  <%= render 'interpret/translations/sidebar' %>
+<% end %>
