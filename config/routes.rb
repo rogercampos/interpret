@@ -9,5 +9,8 @@ Rails.application.routes.draw do
         get :node
       end
     end
+
+    match "tools", :to => "interpret/tools#index", :as => "interpret_tools"
+    match "search", :to => "interpret/search#index", :as => "interpret_search"
   end
 end
