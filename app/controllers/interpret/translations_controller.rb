@@ -1,4 +1,6 @@
 class Interpret::TranslationsController < ApplicationController
+  layout 'interpret'
+
   def index
     @translations = Interpret::Translation.locale(I18n.locale).all
 
