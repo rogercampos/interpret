@@ -1,0 +1,1 @@
+Interpret.controller = 'admin/translations'

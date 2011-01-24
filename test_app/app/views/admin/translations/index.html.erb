@@ -1,0 +1,32 @@
+<h1>Translations for <%= I18n.locale %></h1>
+
+<p><%= link_to "Download", fetch_translations_path %> the current translations for '<%= I18n.locale %>' language as .yml file</p>
+<p>Upload your .yml file for '<%= I18n.locale %>' language</p>
+<p>
+  <%= form_tag upload_translations_path, :multipart => true do %>
+    <%= label_tag "File:" %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Upload" %>
+  <% end %>
+</p>
+
+<div id="info_box">
+  <table>
+    <thead>
+      <tr>
+        <th>Content</th>
+        <th>Key</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @translations.each do |x| %>
+        <tr>
+          <td><%= x.value %></td>
+          <td><%= x.key %></td>
+          <td><%= link_to "Edit", edit_translation_path(x) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

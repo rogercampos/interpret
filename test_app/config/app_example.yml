@@ -1,0 +1,36 @@
+defaults: &defaults
+  name: InterpretApp
+
+production:
+  <<: *defaults
+  exception_notification_sender: your_account@mail.com
+  exception_notification_recipients:
+    - who_will_be_notified@me.com
+  mail:
+    account:
+      user_name: some@address.com
+      password: password
+    smtp:
+      address: smtp.example.com
+      port: 555
+      domain: domain.com
+      authentication: plain
+      enable_starttls_auto: true
+
+  hostname: yourapp.com
+
+
+development:
+  <<: *defaults
+  mail:
+    account:
+      user_name: some@address.com
+      password: password
+    smtp:
+      address: smtp.example.com
+      port: 555
+      domain: domain.com
+      authentication: plain
+      enable_starttls_auto: true
+
+  hostname: localhost:3000

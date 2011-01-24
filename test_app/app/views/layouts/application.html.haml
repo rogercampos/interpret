@@ -1,0 +1,35 @@
+!!! 5
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", :lang => I18n.locale }
+  %head
+    %title= yield :title
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "content-type"}
+    %meta{:content => t('metakeywords'), :name => "keywords"}
+    %meta{:content => t('metadescription'), :name => "description"}
+    %meta{:content => "Itnig", :name => "author"}
+    %meta{:content => "Itnig", :name => "generator"}
+    %meta{:content => "Itnig", :name => "origen"}
+    %meta{:content => t(:locality), :name => "locality"}
+    %meta{:content => I18n.locale, :name => "language"}
+    %meta{:content => "index, follow", :name => "robots"}
+    %meta{:content => t(:geo_region), :name => "geo.region"}
+    %meta{:content => t(:geo_placename), :name => "geo.placename"}
+    %meta{:content => t(:geo_position), :name => "geo.position"}
+    %meta{:content => t(:icbm), :name => "ICBM"}
+    = csrf_meta_tag
+    = include_stylesheets :frontend_screen, :media => :screen
+    = include_stylesheets :frontend_print, :media => :print
+    /[if lt IE 8 ]
+      = stylesheet_link_tag 'ie8', :media => 'screen, projection'
+  %body
+    = render 'shared/header'
+    = render 'shared/menu'
+
+    .container
+      = yield
+
+    = render 'shared/footer'
+    %script{:type => "text/javascript", :src  => "http://www.google.com/jsapi?key=ABQIAAAALy3hj-F80ucolZq1sevJGxQy9TusGK6D_dw7xKWtcTJbKPyiEhQ2HXkEN9UJJowAVIun52JrUbnugQ"}
+    :javascript
+      google.load("jquery", "1.4.2")
+    = include_javascripts :frontend
+    = yield :custom_js

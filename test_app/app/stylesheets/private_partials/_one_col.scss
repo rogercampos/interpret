@@ -1,0 +1,21 @@
+body.one_col{
+  #container{
+    @include container;
+		#welcome{
+			@include span(12);
+		}
+		#login_box{
+			@include span(10);
+			@include prepend(1);
+			@include append(1);
+		}
+		#info_box{
+			@include span(21);
+			@include prepend(1);
+			@include append(1);
+		}
+		#itnig_link{
+			@include span(24);
+		}
+	}
+}

@@ -1,0 +1,14 @@
+// This import applies a global reset to any page that imports this stylesheet.
+@import "blueprint/reset";
+
+// Import all the default blueprint modules so that we can access their mixins.
+@import "blueprint";
+
+// Loading the layout structure
+@import "private_partials/one_col";
+
+// To configure blueprint, edit the partials/base.sass file.
+@import "private_partials/base";
+
+// Combine the partials into a single screen stylesheet.
+@import "private_partials/style";
