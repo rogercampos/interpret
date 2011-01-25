@@ -20,4 +20,14 @@ module ApplicationHelper
     out += "</ul>"
     out.html_safe
   end
+
+  def current_controller?(opts)
+    hash = Rails.application.routes.recognize_path(url_for(opts))
+    params[:controller] == hash[:controller]
+  end
+
+  def section_link_to(name, options = {}, html_options = {})
+    html_options.merge!({ :class => 'current' }) if current_controller?(options)
+    link_to name, options, html_options
+  end
 end

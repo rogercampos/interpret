@@ -398,3 +398,7 @@ tbody td a {
 .menu {
   margin-top: 10px;
 }
+
+.menu a.current {
+  font-weight: bold;
+}
