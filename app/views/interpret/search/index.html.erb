@@ -1,3 +1,25 @@
 <div id="header">
   <h1>Search translations</h1>
 </div>
+
+
+<p>Enter a search term for the key and/or the value of the translation</p>
+
+<%= form_tag interpret_search_for_path do %>
+  <%= label_tag "Clave?" %>
+  <%= text_field_tag "key" %>
+  <br />
+
+  <%= label_tag "Traduccion?" %>
+  <%= text_field_tag "value" %>
+  <br />
+
+  <%= submit_tag "Buscar" %>
+
+<% end %>
+
+<%= content_for :sidebar do %>
+  <p>
+You can use this search feature to look into all the translations. Can be filtered by language, key and phrase.
+  </p>
+<% end %>

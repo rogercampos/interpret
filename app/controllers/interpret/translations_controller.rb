@@ -4,11 +4,11 @@ class Interpret::TranslationsController < ApplicationController
 
   def index
     @originals = Interpret::Translation.locale(I18n.default_locale).where("key NOT LIKE '%.%'").paginate :page => params[:page]
-    unless I18n.locale == I18n.default_locale
+    #unless I18n.locale == I18n.default_locale
       @translations = Interpret::Translation.locale(I18n.locale).where("key NOT LIKE '%.%'").paginate :page => params[:page]
-    else
-      @translations = nil
-    end
+    #else
+      #@translations = nil
+    #end
   end
 
   def node
@@ -19,11 +19,11 @@ class Interpret::TranslationsController < ApplicationController
     end
 
     @originals = Interpret::Translation.locale(I18n.default_locale).where("key LIKE '#{@params_key}.%'").paginate :page => params[:page]
-    unless I18n.locale == I18n.default_locale
+    #unless I18n.locale == I18n.default_locale
       @translations = Interpret::Translation.locale(I18n.locale).where("key LIKE '#{@params_key}.%'").paginate :page => params[:page]
-    else
-      @translations = nil
-    end
+    #else
+      #@translations = nil
+    #end
     render :action => :index
   end
 

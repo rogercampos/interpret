@@ -12,5 +12,6 @@ Rails.application.routes.draw do
 
     match "tools", :to => "interpret/tools#index", :as => "interpret_tools"
     match "search", :to => "interpret/search#index", :as => "interpret_search"
+    match "search_for", :to => "interpret/search#perform", :as => "interpret_search_for"
   end
 end

@@ -8,24 +8,10 @@ which doesn't belong to any page or section in particulary. To dive into the
 rest of your app's contents, navigate using the tree in the left, that shows your
 locales structure.
 </p>
-<table>
-  <thead>
-    <tr>
-      <th>Key</th>
-      <th>Content</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @originals.each do |x| %>
-      <tr>
-        <td><%= x.key %></td>
-        <td><%= best_in_place x, :value, :textarea, [], translation_path(x) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
-<%= will_paginate(@originals) %>
+<%= render 'interpret/translations/listing' %>
+<%= will_paginate(@translations) %>
+
 <%= content_for :sidebar do %>
   <%= render 'interpret/translations/sidebar' %>
 <% end %>

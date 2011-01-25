@@ -1,0 +1,25 @@
+<div id="header">
+  <h1>Search translations</h1>
+</div>
+
+
+<%= render 'interpret/translations/listing' %>
+
+
+<%= content_for :sidebar do %>
+  <p>
+    <%= @translations.size %> results found.
+  </p>
+  <%= form_tag interpret_search_for_path do %>
+    <%= label_tag "Clave?" %>
+    <%= text_field_tag "key", params[:key] %>
+    <br />
+
+    <%= label_tag "Traduccion?" %>
+    <%= text_field_tag "value", params[:value] %>
+    <br />
+
+    <%= submit_tag "Buscar" %>
+
+  <% end %>
+<% end %>

@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Content</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @translations.each do |x| %>
+      <tr>
+        <td><%= x.key %></td>
+        <td><%= best_in_place x, :value, :textarea, [], translation_path(x) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
