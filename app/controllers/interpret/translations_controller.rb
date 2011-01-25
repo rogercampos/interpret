@@ -12,15 +12,15 @@ class Interpret::TranslationsController < ApplicationController
   end
 
   def node
-    @params_key = params[:key]
-    unless @params_key
+    key = params[:key]
+    unless key
       redirect_to translations_url
       return
     end
 
-    @originals = Interpret::Translation.locale(I18n.default_locale).where("key LIKE '#{@params_key}.%'").paginate :page => params[:page]
+    @originals = Interpret::Translation.locale(I18n.default_locale).where("key LIKE '#{key}.%'").paginate :page => params[:page]
     #unless I18n.locale == I18n.default_locale
-      @translations = Interpret::Translation.locale(I18n.locale).where("key LIKE '#{@params_key}.%'").paginate :page => params[:page]
+      @translations = Interpret::Translation.locale(I18n.locale).where("key LIKE '#{key}.%'").paginate :page => params[:page]
     #else
       #@translations = nil
     #end
