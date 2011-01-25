@@ -39,15 +39,17 @@ class Interpret::TranslationsController < ApplicationController
       if @translation.update_attributes(params[:interpret_translation])
         Interpret.backend.reload! if Interpret.backend
         # Hook here
-        msg = defined?(:current_user) ? "By [#{current_user}]. " : ""
+        msg = respond_to?(:current_user) ? "By [#{current_user}]. " : ""
         msg << "Locale: [#{@translation.locale}], key: [#{@translation.key}]. The translation has been changed from [#{old_value}] to [#{@translation.value}]"
         Interpret.logger.info msg
 
         format.html { redirect_to(translations_url)}
         format.xml  { head :ok }
+        format.text {head :ok}
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @translation.errors, :status => :unprocessable_entity }
+        format.text {render :status => :unprocessable_entity}
       end
     end
   end
