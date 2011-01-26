@@ -13,5 +13,13 @@ locales structure.
 <%= will_paginate(@translations) %>
 
 <%= content_for :sidebar do %>
-  <%= render 'interpret/translations/sidebar' %>
+  <div id="tree_sidebar">
+    <h3>Cargando...</h3>
+  </div>
+<% end %>
+
+<%= javascript_tag do %>
+  $(document).ready(function() {
+    $("#tree_sidebar").load("<%= tree_translations_path %>");
+  });
 <% end %>

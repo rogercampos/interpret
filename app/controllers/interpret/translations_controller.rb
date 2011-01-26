@@ -1,6 +1,5 @@
 class Interpret::TranslationsController < ApplicationController
   layout 'interpret'
-  before_filter :get_sidebar_tree
 
   def index
     @originals = Interpret::Translation.locale(I18n.default_locale).where("key NOT LIKE '%.%'").paginate :page => params[:page]
@@ -38,7 +37,6 @@ class Interpret::TranslationsController < ApplicationController
     respond_to do |format|
       if @translation.update_attributes(params[:interpret_translation])
         Interpret.backend.reload! if Interpret.backend
-        # Hook here
         msg = respond_to?(:current_user) ? "By [#{current_user}]. " : ""
         msg << "Locale: [#{@translation.locale}], key: [#{@translation.key}]. The translation has been changed from [#{old_value}] to [#{@translation.value}]"
         Interpret.logger.info msg
@@ -94,6 +92,7 @@ class Interpret::TranslationsController < ApplicationController
 
       changes = Interpret::Translation.update_from_hash(I18n.locale, hash.values[0])
       Interpret.backend.reload! if Interpret.backend
+      expire_action :action => :tree
 
       flash[:notice] = "#{changes} Traduccions actualitzades correctament"
     rescue ArgumentError => e
@@ -103,6 +102,11 @@ class Interpret::TranslationsController < ApplicationController
     redirect_to translations_url
   end
 
+  caches_action :tree
+  def tree
+    get_sidebar_tree
+    render :layout => false
+  end
 
 private
   def get_sidebar_tree
@@ -114,5 +118,4 @@ private
       LazyHash.lazy_add(@tree, x, {})
     end
   end
-
 end

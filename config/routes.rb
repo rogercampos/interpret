@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         get :fetch
         post :upload
         get :node
+        get :tree
       end
     end
 
