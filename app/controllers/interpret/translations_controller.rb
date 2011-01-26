@@ -102,13 +102,16 @@ class Interpret::TranslationsController < ApplicationController
   end
 
   caches_action :tree
+  cache_sweeper Interpret::TranslationSweeper
   def tree
     get_sidebar_tree
+    sleep(3)
     render :layout => false
   end
 
   def migrate
-    #::Rake::Task["interpret:migrate"].execute
+    Interpret::Translation.import
+
     redirect_to interpret_tools_url, :notice => "Migracio realitzada"
   end
 

@@ -1,17 +1,11 @@
 namespace :interpret do
-  desc 'Copy all the translations in files from config/locales/*.yml into DB backend'
-  task :migrate => :environment do
-    files = Dir[Rails.root.join("config", "locales", "*.yml").to_s]
-    files.each do |f|
-      ar = YAML.load_file f
-      locale = ar.keys.first
-      parse_hash(ar.first[1], locale)
-    end
-    expire_action :controller => "interpret/translations", :action => :tree
+  desc 'Copy all the translations from config/locales/*.yml into DB backend'
+  task :migrate => [:environment, "tmp:cache:clear"] do
+    Interpret::Translation.import
   end
 
   desc 'Synchronize the keys used in db backend with the ones on *.yml files'
-  task :update => :environment do
+  task :update => [:environment, "tmp:cache:clear"] do
     files = Dir[Rails.root.join("config", "locales", "*.yml").to_s]
 
     languages = []
@@ -86,23 +80,4 @@ def remove_old_keys_in_db(dict, locale, prefix = "")
 end
 
 
-def parse_hash(dict, locale, prefix = "")
-  dict.keys.each do |x|
-    if dict[x].kind_of?(Hash)
-      parse_hash(dict[x], locale, "#{prefix}#{x}.")
-    else
-      old = Interpret::Translation.where(:locale => locale, :key => "#{prefix}#{x}").first
-      if old
-        old.value = dict[x]
-        old.save!
-        puts "Updated value for: #{locale} -> #{prefix}#{x}"
-      else
-        Interpret::Translation.create :locale => locale,
-                           :key => "#{prefix}#{x}",
-                           :value => dict[x]
-        puts "New translation for: #{locale} -> #{prefix}#{x}"
-      end
-    end
-  end
-end
 
