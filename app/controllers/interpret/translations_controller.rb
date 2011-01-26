@@ -45,11 +45,11 @@ class Interpret::TranslationsController < ApplicationController
 
         format.html { redirect_to(translations_url)}
         format.xml  { head :ok }
-        format.text {head :ok}
+        format.json { head :ok }
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @translation.errors, :status => :unprocessable_entity }
-        format.text {render :status => :unprocessable_entity}
+        format.json { render :status => :unprocessable_entity }
       end
     end
   end

@@ -352,10 +352,12 @@ html body * dd.clear
   display: block;
 }
 
+body {
+  font-family: Helvetica;
+}
 
 #container {
   border: .3em solid #333;
-  font-family: Helvetica;
 }
 
 #header {
@@ -365,29 +367,56 @@ html body * dd.clear
   background-color: #666;
 }
 
-/*#header h1 {
-  color: #000;
-}*/
-
 table {
  border-collapse:collapse;
+ width: 100%;
+ border-right: 1px solid #444;
+ border-left: 1px solid #444;
 }
 
 td, th {
-  color:#363636;
-  padding:.4em;
+  color: #363636;
+  padding: .4em;
 }
 
-td:first-child {
+td:first-child, td:first-child {
   width: 50%;
 }
 
-td:last-child {
+td:last-child, td:last-child {
   width: 50%;
 }
 
 tr {
   border-bottom:1px solid gray;
+  cursor: hand;
+  cursor: pointer;
+}
+
+
+tr:hover {
+  background-color: #DDD;
+  height: 5em;
+  -moz-transition: background .4s linear;
+  -o-transition: background .4s linear;
+  -webkit-transition: background .4s linear;
+}
+
+tr.header {
+  background-color: #555;
+  color: white;
+  height: 2em;
+  cursor: default;
+}
+tr.header:hover {
+  background: #555;
+  -moz-transition: none;
+  -o-transition: none;
+  -webkit-transition: none;
+  height: 2em;
+}
+tr.header th {
+  color: #EEE;
 }
 
 tbody td a {
@@ -401,4 +430,82 @@ tbody td a {
 
 .menu a.current {
   font-weight: bold;
+}
+
+/* Search Page */
+
+#search {
+  border: 1px solid #CCC;
+  padding-left: 3em;
+}
+#search label {
+  font-size: 1.4em;
+}
+
+#search input {
+  width: 40%;
+  font-size: 1.2em;
+  height: 2em;
+  margin: 1em 0;
+  border: .2em solid #CCC;
+  padding-left: .4em;
+}
+
+#search input:focus {
+  border: .2em solid #555;
+}
+
+#search input[type="submit"] {
+  width: 15em;
+  margin-top: 2em;
+  margin-left: 4%;
+}
+
+#search input[type="submit"]:hover {
+  background-color: #444;
+  color: #FFF;
+  cursor: hand;
+  cursor: pointer;
+}
+
+/* Sidebar for Search page */
+
+#side_search {
+  border: 1px solid #CCC;
+  padding: .4em 0 .4em .8em;
+}
+#side_search label {
+  font-size: .8em;
+}
+
+#side_search input {
+  width: 90%;
+  font-size: .9em;
+  height: 1.5em;
+  margin: .5em 0;
+  border: .2em solid #CCC;
+  padding: .2em;
+}
+
+#side_search input:focus {
+  border: .2em solid #555;
+}
+
+#side_search input[type="submit"] {
+  width: 94%;
+  margin-top: 1.2em;
+  height: 2em;
+}
+
+#side_search input[type="submit"]:hover {
+  background-color: #444;
+  color: #FFF;
+  cursor: hand;
+  cursor: pointer;
+}
+
+.best_in_place textarea {
+  width: 100%;
+  height: 5em;
+  border: transparent;
 }

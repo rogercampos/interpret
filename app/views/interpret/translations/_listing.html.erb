@@ -1,15 +1,15 @@
 <table>
   <thead>
-    <tr>
+    <tr class="header">
       <th>Key</th>
       <th>Content</th>
     </tr>
   </thead>
   <tbody>
     <% @translations.each do |x| %>
-      <tr>
+      <tr id="translation_<%= x.id %>">
         <td><%= x.key %></td>
-        <td><%= best_in_place x, :value, :textarea, [], translation_path(x) %></td>
+        <td><%= best_in_place x, :value, :type => :textarea, :path => translation_path(x), :activator => "#translation_#{x.id}" %></td>
         <!-- <td><%= link_to "Edit", edit_translation_path(x) %> -->
       </tr>
     <% end %>

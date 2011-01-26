@@ -1,3 +1,11 @@
+<%= content_for :title do %>
+  Search translations
+  <%= "by " unless params[:key].blank? && params[:value].blank? %>
+  <%= params[:key] unless params[:key].blank? %>
+  <%= "and " unless params[:key].blank? || params[:value].blank? %>
+  <%= params[:value] unless params[:value].blank? %>
+<% end %>
+
 <div id="header">
   <h1>Search translations</h1>
 </div>
@@ -10,16 +18,20 @@
   <p>
     <%= @translations.size %> results found.
   </p>
-  <%= form_tag interpret_search_for_path do %>
-    <%= label_tag "Clave?" %>
-    <%= text_field_tag "key", params[:key] %>
-    <br />
+  <div id="side_search">
+    <%= form_tag interpret_search_for_path do %>
+      <%= label_tag "key", "Key value" %>
+      <br />
+      <%= text_field_tag "key", params[:key] %>
+      <br />
 
-    <%= label_tag "Traduccion?" %>
-    <%= text_field_tag "value", params[:value] %>
-    <br />
+      <%= label_tag "value", "Translation text" %>
+      <br />
+      <%= text_field_tag "value", params[:value] %>
+      <br />
 
-    <%= submit_tag "Buscar" %>
+      <%= submit_tag "SEARCH" %>
 
-  <% end %>
+    <% end %>
+  </div>
 <% end %>
