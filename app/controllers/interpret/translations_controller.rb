@@ -92,7 +92,6 @@ class Interpret::TranslationsController < ApplicationController
 
       changes = Interpret::Translation.update_from_hash(I18n.locale, hash.values[0])
       Interpret.backend.reload! if Interpret.backend
-      expire_action :action => :tree
 
       flash[:notice] = "#{changes} Traduccions actualitzades correctament"
     rescue ArgumentError => e
@@ -106,6 +105,11 @@ class Interpret::TranslationsController < ApplicationController
   def tree
     get_sidebar_tree
     render :layout => false
+  end
+
+  def migrate
+    #::Rake::Task["interpret:migrate"].execute
+    redirect_to interpret_tools_url, :notice => "Migracio realitzada"
   end
 
 private

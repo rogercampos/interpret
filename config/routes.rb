@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         post :upload
         get :node
         get :tree
+        post :migrate
       end
     end
 

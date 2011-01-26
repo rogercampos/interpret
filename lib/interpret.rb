@@ -22,6 +22,7 @@ module Interpret
   # - current_user method. If set, current_user will appear in logs, otherwise not.
 end
 
+# Gist from: https://gist.github.com/745617
 module LazyHash
   class << self
     def lazy_add(hash, key, value, pre = nil)

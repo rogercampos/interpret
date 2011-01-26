@@ -7,6 +7,7 @@ namespace :interpret do
       locale = ar.keys.first
       parse_hash(ar.first[1], locale)
     end
+    expire_action :controller => "interpret/translations", :action => :tree
   end
 
   desc 'Synchronize the keys used in db backend with the ones on *.yml files'

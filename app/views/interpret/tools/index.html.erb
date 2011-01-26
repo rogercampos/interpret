@@ -9,6 +9,23 @@ can change it below:
 <p><em>TODO</em></p>
 
 <div id="header">
+  <h1>Dump .yml contents into database</h1>
+</div>
+
+<p>With this option you can export all of your *.yml contents into the database backend<br/>
+<b>Be aware!!</b> All of your current database translations will be erased
+</p>
+
+<% if Rails.env == "production" %>
+  <p><b>MY GOD!!! You're in PRODUCTION!! You're sure you wanna do this??</b></p>
+<% end %>
+
+<p>
+Note: Not working yet... it's in progress
+<%= button_to "Run the migration", migrate_translations_path %>
+</p>
+
+<div id="header">
   <h1>Tools for import/export locale data</h1>
 </div>
 
