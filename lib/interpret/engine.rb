@@ -1,5 +1,6 @@
 require 'i18n/backend/active_record'
 require 'interpret/logger'
+require 'interpret/helpers'
 
 module Interpret
   class Engine < Rails::Engine

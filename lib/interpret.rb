@@ -7,7 +7,7 @@ module Interpret
   mattr_accessor :logger
 
   mattr_accessor :controller
-  @@controller = "interpret/translations"
+  @@controller = "application"
 
   mattr_accessor :scope
   @@scope = "interpret"
@@ -42,3 +42,6 @@ module LazyHash
     end
   end
 end
+
+
+ActionView::Base.send(:include, Interpret::InterpretHelpers)
