@@ -1,7 +1,7 @@
 module Interpret
   module InterpretHelpers
 
-    def show_interpret_tree(hash, params_key, prev_key = "")
+    def show_interpret_tree(hash, params_key, prev_key = "", matching_node = false)
       out = "<ul>"
       if params_key
         params_key = params_key.split(".")
@@ -10,14 +10,16 @@ module Interpret
       end
       hash.keys.each do |key|
         expandable = hash[key].present? && hash[key].is_a?(Hash)
+        matching = (params_key && key == first_key && (prev_key == "" ? true : matching_node))
+
         opts = []
-        opts << "current" if (params_key && key == first_key)
+        opts << "current" if matching
         opts << "expandable" if expandable
 
         out << "<li#{opts.any? ? " class='#{opts.join(" ")}'" : ""}>"
-        out << "#{link_to key, node_translations_path(:key => "#{prev_key}#{key}")}"
+        out << "#{link_to key, node_interpret_translations_path(:key => "#{prev_key}#{key}")}"
 
-        out << show_interpret_tree(hash[key], params_key, "#{prev_key}#{key}.") if expandable
+        out << show_interpret_tree(hash[key], params_key, "#{prev_key}#{key}.", matching) if expandable
         out << "</li>"
       end
       out << "</ul>"

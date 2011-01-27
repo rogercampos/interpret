@@ -10,12 +10,6 @@ module Interpret
   mattr_accessor :controller
   @@controller = "application"
 
-  mattr_accessor :scope
-  @@scope = "interpret"
-
-  mattr_accessor :resource_name
-  @@resource_name = "translations"  # default to :translations, be sure to provide a plural name
-
   # More options:
   # - memoize?
   # - flatten?

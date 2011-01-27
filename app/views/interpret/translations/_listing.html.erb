@@ -12,7 +12,7 @@
         <td>
           <%= best_in_place x, :value,
               :type => :textarea,
-              :path => translation_path(x),
+              :path => interpret_translation_path(x),
               :activator => "#translation_#{x.id}",
               :sanitize => false %>
         </td>
