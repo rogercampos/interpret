@@ -1,4 +1,4 @@
-class Interpret::TranslationsController < ApplicationController
+class Interpret::TranslationsController < eval("#{Interpret.controller.classify}Controller")
   layout 'interpret'
 
   def index
