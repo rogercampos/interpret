@@ -396,7 +396,7 @@ tr {
 
 tr:hover {
   background-color: #DDD;
-  height: 5em;
+  height: 6.5em;
   -moz-transition: background .4s linear;
   -o-transition: background .4s linear;
   -webkit-transition: background .4s linear;
@@ -506,6 +506,32 @@ tbody td a {
 
 .best_in_place textarea {
   width: 100%;
-  height: 5em;
+  height: 6em;
   border: transparent;
+  font-size: .9em;
+}
+
+#tree_sidebar ul{
+  margin: 0;
+  padding: .5em;
+}
+#tree_sidebar li {
+  list-style-image: url("/stylesheets/plus_icon.gif");
+}
+#tree_sidebar li.current{
+  list-style-image: url("/stylesheets/minus_icon.gif");
+}
+
+#tree_sidebar a {
+  text-decoration: none;
+  color: #222;
+}
+li.exapandable ul {
+  display: none;
+}
+li.exapandable .current ul  {
+  display: none;
+}
+#tree_sidebar a:hover {
+  text-decoration: underline;
 }

@@ -11,5 +11,11 @@ module Interpret
     def copy_js
       copy_file "javascripts/jquery.purr.js", "public/javascripts/jquery.purr.js"
     end
+
+    def copy_images
+      copy_file "stylesheets/plus_icon.gif", "public/stylesheets/plus_icon.gif"
+      copy_file "stylesheets/minus_icon.gif", "public/stylesheets/minus_icon.gif"
+
+    end
   end
 end

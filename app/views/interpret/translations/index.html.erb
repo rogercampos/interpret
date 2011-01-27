@@ -20,6 +20,6 @@ locales structure.
 
 <%= javascript_tag do %>
   $(document).ready(function() {
-    $("#tree_sidebar").load("<%= tree_translations_path %>").hide().fadeIn(1500);
+    $("#tree_sidebar").load("<%= tree_translations_path(:key => params[:key]) %>").hide().fadeIn(1500);
   });
 <% end %>
