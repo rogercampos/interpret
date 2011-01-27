@@ -42,3 +42,6 @@ module LazyHash
     end
   end
 end
+
+
+ActionView::Base.send(:include, Interpret::InterpretHelpers)
