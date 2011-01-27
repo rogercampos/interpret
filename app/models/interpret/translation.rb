@@ -51,32 +51,37 @@ module Interpret
       # Interpret.options[:no_backup] = true
       def import
         files = Dir[Rails.root.join("config", "locales", "*.yml").to_s]
+        delete_all
+
+        records = []
         files.each do |f|
           ar = YAML.load_file f
           locale = ar.keys.first
-          parse_hash(ar.first[1], locale)
+          records += parse_hash(ar.first[1], locale)
+        end
+
+        # TODO: Replace with activerecord-import bulk inserts
+        transaction do
+          reacords.each {|x| x.save!}
         end
       end
 
+    private
       def parse_hash(dict, locale, prefix = "")
+        res = []
         dict.keys.each do |x|
           if dict[x].kind_of?(Hash)
-            parse_hash(dict[x], locale, "#{prefix}#{x}.")
+            res += parse_hash(dict[x], locale, "#{prefix}#{x}.")
           else
-            old = where(:locale => locale, :key => "#{prefix}#{x}").first
-            if old
-              old.value = dict[x]
-              old.save!
-              puts "Updated value for: #{locale} -> #{prefix}#{x}"
-            else
-              create! :locale => locale,
-                      :key => "#{prefix}#{x}",
-                      :value => dict[x]
-              puts "New translation for: #{locale} -> #{prefix}#{x}"
-            end
+            res << new(:locale => locale,
+                       :key => "#{prefix}#{x}",
+                       :value => dict[x])
           end
         end
+        res
       end
+
+
     end
   end
 end

@@ -105,7 +105,6 @@ class Interpret::TranslationsController < ApplicationController
   cache_sweeper Interpret::TranslationSweeper
   def tree
     get_sidebar_tree
-    sleep(3)
     render :layout => false
   end
 
