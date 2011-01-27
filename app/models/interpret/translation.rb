@@ -62,7 +62,7 @@ module Interpret
 
         # TODO: Replace with activerecord-import bulk inserts
         transaction do
-          reacords.each {|x| x.save!}
+          records.each {|x| x.save!}
         end
       end
 
