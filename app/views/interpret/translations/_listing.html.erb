@@ -9,11 +9,14 @@
     <% @translations.each do |x| %>
       <tr id="translation_<%= x.id %>">
         <td><%= x.key %></td>
-        <td><%= best_in_place x, :value, :type => :textarea, :path => translation_path(x), :activator => "#translation_#{x.id}" %></td>
-        <!-- <td><%= link_to "Edit", edit_translation_path(x) %> -->
+        <td>
+          <%= best_in_place x, :value,
+              :type => :textarea,
+              :path => translation_path(x),
+              :activator => "#translation_#{x.id}",
+              :sanitize => false %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-

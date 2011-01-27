@@ -7,12 +7,15 @@ module ApplicationHelper
       params_key = params_key.join(".")
     end
     hash.keys.each do |key|
-      out += "<li>"
-      out += "<b>" if params_key && key == first_key
-      out += "#{link_to key, node_translations_path(:key => prev_key+key)}"
-      out += "</b>" if params_key && key == first_key
+      expandable = hash[key].present? && hash[key].is_a?(Hash)
+      opts = []
+      opts << "current" if (params_key && key == first_key)
+      opts << "expandable" if expandable
 
-      if hash[key].present? && hash[key].is_a?(Hash)
+      out += "<li#{opts.any? ? " class='#{opts.join(" ")}'" : ""}>"
+      out += "#{link_to key, node_translations_path(:key => prev_key+key)}"
+
+      if expandable
         out += show_tree(hash[key], params_key, "#{prev_key}#{key}.")
       end
       out += "</li>"
