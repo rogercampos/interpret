@@ -513,24 +513,25 @@ tbody td a {
 
 #tree_sidebar ul{
   margin: 0;
-  padding: .5em;
+  padding: .4em;
 }
 #tree_sidebar li {
   list-style-image: url("/stylesheets/plus_icon.gif");
+  font-weight: normal;
 }
-#tree_sidebar li.current{
+
+
+#tree_sidebar li.current {
   list-style-image: url("/stylesheets/minus_icon.gif");
+}
+
+#tree_sidebar li.current  {
+  font-weight: bold;
 }
 
 #tree_sidebar a {
   text-decoration: none;
   color: #222;
-}
-li.exapandable ul {
-  display: none;
-}
-li.exapandable .current ul  {
-  display: none;
 }
 #tree_sidebar a:hover {
   text-decoration: underline;

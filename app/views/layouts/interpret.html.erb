@@ -11,13 +11,12 @@
 <body>
 <div id="container">
   <div class="menu grid_16">
-    <%= interpret_section_link_to "Overview", interpret_translations_path %> |
+    <%= interpret_section_link_to "Overview", interpret_root_path %> |
     <%= interpret_section_link_to "Tools", interpret_tools_path %> |
     <%= interpret_section_link_to "Search", interpret_search_path %>
     <hr />
   </div>
   <div class="grid_3">
-    <h2>Sidebar</h2>
     <%= yield :sidebar %>
   </div>
   <div class="grid_13">
