@@ -1,3 +1,6 @@
+<%= content_for :title do %>
+  Translation list
+<% end %>
 <div id="header">
   <h1>Translations for <%= I18n.locale %></h1>
 </div>
@@ -13,6 +16,7 @@ locales structure.
 <%= will_paginate(@translations) %>
 
 <%= content_for :sidebar do %>
+  <h2>Section tree</h2>
   <div id="tree_sidebar">
     <h3>Cargando...</h3>
   </div>
@@ -20,6 +24,6 @@ locales structure.
 
 <%= javascript_tag do %>
   $(document).ready(function() {
-    $("#tree_sidebar").load("<%= tree_interpret_translations_path(:key => params[:key]) %>").hide().fadeIn(1500);
+    $("#tree_sidebar").load("<%= tree_interpret_translations_path(:key => params[:key]) %>").hide().fadeIn(1000);
   });
 <% end %>

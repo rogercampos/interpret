@@ -521,17 +521,17 @@ tbody td a {
 #tree_sidebar li.current{
   list-style-image: url("/stylesheets/minus_icon.gif");
 }
-
 #tree_sidebar a {
   text-decoration: none;
   color: #222;
 }
-li.exapandable ul {
-  display: none;
-}
-li.exapandable .current ul  {
-  display: none;
-}
 #tree_sidebar a:hover {
   text-decoration: underline;
+}
+#tree_sidebar ul li.expandable {
+   display: none;
+}
+#tree_sidebar ul li.current {
+  display: inline;
+  font-weight: bold;
 }
