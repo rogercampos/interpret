@@ -1,4 +1,4 @@
-class Interpret::SearchController < eval("#{Interpret.controller.classify}Controller")
+class Interpret::SearchController < eval(Interpret.controller.classify)
   layout 'interpret'
 
   def perform

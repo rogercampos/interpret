@@ -1,12 +1,8 @@
 class Interpret::TranslationSweeper < ActionController::Caching::Sweeper
   observe Interpret::Translation
 
-  def after_create(translation)
-    expire_cache
-  end
-
-  def after_destroy(translation)
-    expire_cache
+  def after_update(translation)
+    Interpret.backend.reload! if Interpret.backend
   end
 
 private

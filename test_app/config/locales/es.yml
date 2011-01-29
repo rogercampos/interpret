@@ -9,11 +9,11 @@ es:
   icbm: Algun numero icbm
 
 
-  static:
+  pages:
     index:
-      title: "Inicio -- Ejemplo Plan Interpret Test App"
+      title: "Interpret Test app -- Index"
       header1: "Procial Networks are the near future"
-      line1: "Esto es la pagina de inicio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac odio quis dui tincidunt facilisis vitae sit amet nulla. Fusce tincidunt tempor dolor a ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris placerat tincidunt tempus. Nullam at tortor sed magna aliquet pharetra. Curabitur lectus nulla, egestas in ultricies eu, euismod mollis quam."
+      line1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac odio quis dui tincidunt facilisis vitae sit amet nulla. Fusce tincidunt tempor dolor a ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris placerat tincidunt tempus. Nullam at tortor sed magna aliquet pharetra. Curabitur lectus nulla, egestas in ultricies eu, euismod mollis quam."
       header2: SEO experts will eventually decline
       line2: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac odio quis dui tincidunt facilisis vitae sit amet nulla. Fusce tincidunt tempor dolor a ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris placerat tincidunt tempus. Nullam at tortor sed magna aliquet pharetra. Curabitur lectus nulla, egestas in ultricies eu, euismod mollis quam."
       header3: "Designers will eventually master programming languages"
@@ -22,13 +22,13 @@ es:
 
       seccio1:
         paragraf1: "ola que tal"
-        parag2: "Unaltre!! jajaj"
+        parag2: "Second paragraph Lorem ipsum"
       seccio2:
         paragraf1: "ola que tal"
-        parag2: "Unaltre!! jajaj"
+        parag2: "Second paragraph Lorem ipsum"
 
     contact:
-      title: "Contacto -- Ejemplo Plan Basico"
+      title: "Interpret Test app -- Contact"
       header1: "Procial Networks are the near future"
       line1: "Y esto es la pagina de contacto. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac odio quis dui tincidunt facilisis vitae sit amet nulla. Fusce tincidunt tempor dolor a ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris placerat tincidunt tempus. Nullam at tortor sed magna aliquet pharetra. Curabitur lectus nulla, egestas in ultricies eu, euismod mollis quam."
       header2: SEO experts will eventually decline
@@ -39,4 +39,4 @@ es:
 
       seccio2:
         paragraf1: "ola que tal"
-        parag2: "Unaltre!! jajaj"
+        parag2: "Second paragraph Lorem ipsum"

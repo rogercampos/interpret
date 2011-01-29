@@ -1,5 +1,7 @@
-class Interpret::TranslationsController < eval("#{Interpret.controller.classify}Controller")
+class Interpret::TranslationsController < eval(Interpret.controller.classify)
   layout 'interpret'
+  cache_sweeper eval(Interpret.sweeper.to_s.classify) if Interpret.sweeper
+  cache_sweeper Interpret::TranslationSweeper
 
   def index
     @originals = Interpret::Translation.locale(I18n.default_locale).where("key NOT LIKE '%.%'").paginate :page => params[:page]
@@ -36,7 +38,6 @@ class Interpret::TranslationsController < eval("#{Interpret.controller.classify}
 
     respond_to do |format|
       if @translation.update_attributes(params[:interpret_translation])
-        Interpret.backend.reload! if Interpret.backend
         msg = respond_to?(:current_user) ? "By [#{current_user}]. " : ""
         msg << "Locale: [#{@translation.locale}], key: [#{@translation.key}]. The translation has been changed from [#{old_value}] to [#{@translation.value}]"
         Interpret.logger.info msg
@@ -54,7 +55,6 @@ class Interpret::TranslationsController < eval("#{Interpret.controller.classify}
 
 
   caches_action :tree
-  cache_sweeper Interpret::TranslationSweeper
   def tree
     get_sidebar_tree
     render :layout => false

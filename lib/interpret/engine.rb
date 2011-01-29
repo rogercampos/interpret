@@ -4,7 +4,7 @@ require 'interpret/helpers'
 
 module Interpret
   class Engine < Rails::Engine
-    if Rails.env == "production"
+    if Interpret.registered_envs.include?(Rails.env.to_sym)
       initializer "interpret.register_i18n_active_record_backend" do |app|
         I18n::Backend::ActiveRecord.send(:include, I18n::Backend::Memoize)
         I18n::Backend::ActiveRecord.send(:include, I18n::Backend::Flatten)

@@ -1,9 +1,11 @@
-class Interpret::ToolsController < eval("#{Interpret.controller.classify}Controller")
+class Interpret::ToolsController < eval(Interpret.controller.classify)
   layout 'interpret'
 
   def migrate
     Interpret::Translation.import
 
+    expire_action :controller => "interpret/translations", :action => :tree
+    Interpret.backend.reload! if Interpret.backend
     redirect_to interpret_tools_url, :notice => "Migracio realitzada"
   end
 
@@ -46,6 +48,8 @@ class Interpret::ToolsController < eval("#{Interpret.controller.classify}Control
       end
 
       changes = Interpret::Translation.update_from_hash(I18n.locale, hash.values[0])
+
+      expire_action :controller => "interpret/translations", :action => :tree
       Interpret.backend.reload! if Interpret.backend
 
       flash[:notice] = "#{changes} Traduccions actualitzades correctament"
