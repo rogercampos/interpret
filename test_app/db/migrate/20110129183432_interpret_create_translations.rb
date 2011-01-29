@@ -13,3 +13,4 @@ class CreateTranslationsTable < ActiveRecord::Migration
     drop_table :translations
   end
 end
+
