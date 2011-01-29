@@ -13,7 +13,7 @@ module Interpret
   @@sweeper = nil
 
   mattr_accessor :registered_envs
-  @@registered_envs = [:production]
+  @@registered_envs = [:production, :staging]
 
   # More options:
   # - memoize?
