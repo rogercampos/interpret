@@ -4,12 +4,8 @@ class Interpret::TranslationsController < eval(Interpret.controller.classify)
   cache_sweeper Interpret::TranslationSweeper
 
   def index
-    @originals = Interpret::Translation.locale(I18n.default_locale).where("key NOT LIKE '%.%'").paginate :page => params[:page]
-    #unless I18n.locale == I18n.default_locale
-      @translations = Interpret::Translation.locale(I18n.locale).where("key NOT LIKE '%.%'").paginate :page => params[:page]
-    #else
-      #@translations = nil
-    #end
+    t = Interpret::Translation.arel_table
+    @translations = Interpret::Translation.locale(I18n.default_locale).where(t[:key].does_not_match("%.%")).paginate :page => params[:page]
   end
 
   def node
@@ -19,12 +15,9 @@ class Interpret::TranslationsController < eval(Interpret.controller.classify)
       return
     end
 
-    @originals = Interpret::Translation.locale(I18n.default_locale).where("key LIKE '#{key}.%'").paginate :page => params[:page]
-    #unless I18n.locale == I18n.default_locale
-      @translations = Interpret::Translation.locale(I18n.locale).where("key LIKE '#{key}.%'").paginate :page => params[:page]
-    #else
-      #@translations = nil
-    #end
+    t = Interpret::Translation.arel_table
+    @originals = Interpret::Translation.locale(I18n.default_locale).where(t[:key].matches("#{key}.%")).paginate :page => params[:page]
+    @translations = Interpret::Translation.locale(I18n.locale).where(t[:key].matches("#{key}.%")).paginate :page => params[:page]
     render :action => :index
   end
 
@@ -63,7 +56,8 @@ class Interpret::TranslationsController < eval(Interpret.controller.classify)
 
 private
   def get_sidebar_tree
-    all_trans = Interpret::Translation.locale(I18n.locale).select(:key).where("key LIKE '%.%'").all
+    t = Interpret::Translation.arel_table
+    all_trans = Interpret::Translation.locale(I18n.locale).select(:key).where(t[:key].matches("%.%")).all
 
 
     @tree = LazyHash.build_hash
