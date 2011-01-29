@@ -57,7 +57,7 @@ class Interpret::TranslationsController < eval(Interpret.controller.classify)
 private
   def get_sidebar_tree
     t = Interpret::Translation.arel_table
-    all_trans = Interpret::Translation.locale(I18n.locale).select(:key).where(t[:key].matches("%.%")).all
+    all_trans = Interpret::Translation.locale(I18n.locale).select(t[:key]).where(t[:key].matches("%.%")).all
 
 
     @tree = LazyHash.build_hash
