@@ -536,3 +536,7 @@ tbody td a {
 #tree_sidebar a:hover {
   text-decoration: underline;
 }
+
+#loading_sidebar {
+  display: none;
+}

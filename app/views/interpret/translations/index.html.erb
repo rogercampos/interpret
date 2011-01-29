@@ -18,12 +18,15 @@ locales structure.
 <%= content_for :sidebar do %>
   <h2>Section tree</h2>
   <div id="tree_sidebar">
-    <h3>Cargando...</h3>
+    <div id="loading_sidebar">
+      <h3>Cargando...</h3>
+    </div>
   </div>
 <% end %>
 
 <%= javascript_tag do %>
   $(document).ready(function() {
-    $("#tree_sidebar").load("<%= tree_interpret_translations_path(:key => params[:key]) %>").hide().fadeIn(1000);
+    $("#loading_sidebar").fadeIn(1500);
+    $("#tree_sidebar").load("<%= tree_interpret_translations_path(:key => params[:key]) %>");
   });
 <% end %>
