@@ -15,6 +15,9 @@ module Interpret
   mattr_accessor :registered_envs
   @@registered_envs = [:production, :staging]
 
+  mattr_accessor :scope
+  @@scope = ""
+
   # More options:
   # - memoize?
   # - flatten?

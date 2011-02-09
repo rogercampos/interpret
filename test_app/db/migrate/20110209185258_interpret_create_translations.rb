@@ -1,4 +1,4 @@
-class CreateTranslationsTable < ActiveRecord::Migration
+class InterpretCreateTranslations < ActiveRecord::Migration
   def self.up
     create_table :translations do |t|
       t.string :locale
