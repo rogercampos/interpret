@@ -16,10 +16,10 @@
     <%= interpret_section_link_to "Search", interpret_search_path %>
     <hr />
   </div>
-  <div class="grid_3">
+  <div id="sidebar" class="grid_3">
     <%= yield :sidebar %>
   </div>
-  <div class="grid_13">
+  <div id="main" class="grid_13">
     <%= yield %>
   </div>
 </div>
