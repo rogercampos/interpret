@@ -13,7 +13,28 @@ module Interpret
     default_scope order('locale ASC')
 
     class << self
-      def as_hash(translations)
+      # Generates a hash representing the tree structure of the translations
+      # for the given locale. It includes only "folders" in the sense of
+      # locale keys that includes some real translations, or other keys.
+      def get_tree(lang = I18n.locale)
+        t = arel_table
+        all_trans = locale(lang).select(t[:key]).where(t[:key].matches("%.%")).all
+
+        tree = LazyHash.build_hash
+        all_trans = all_trans.map{|x| x.key.split(".")[0..-2].join(".")}.uniq
+        all_trans.each do |x|
+          LazyHash.lazy_add(tree, x, {})
+        end
+
+        # Generate a new clean hash without the proc's from LazyHash.
+        # Includes a root level for convenience, to be exactly like the
+        # structure of a .yml file which has the "en" root key for example.
+        {"index" => eval(tree.to_s)}
+      end
+
+      # Generate a hash from the given translations. That hash can be
+      # ya2yaml'ized to get a standard .yml locale file.
+      def export(translations)
         res = LazyHash.build_hash
 
         translations.each do |e|
@@ -22,25 +43,33 @@ module Interpret
         res
       end
 
-      def update_from_hash(locale, hash, prefix = "")
-        changes = 0
-        hash.keys.each do |x|
-          if hash[x].kind_of?(Hash)
-            changes = changes + update_from_hash(locale, hash[x], "#{prefix}#{x}.")
-          else
-            old = where(:locale => locale, :key => "#{prefix}#{x}").first
-            if old && old.value != hash[x]
-              aux = old.value
-              old.update_attribute :value, hash[x]
-              #TRANSLATION_LOGGER.info("[manual YAML file locale upload] Updated value for: #{locale}, #{prefix}#{x} from [#{aux}] to [#{hash[x]}]")
-              changes += 1
-            end
-          end
+      # Import the contents of the given .yml locale file into the database
+      # backend. All the existing translations for the given language will be
+      # erased, the backend will contain only the translations from the file
+      # (in that language).
+      #
+      # The language will be obtained from the first unique key of the yml
+      # file.
+      def import(file)
+        if file.content_type && file.content_type.match(/^text\/.*/).nil?
+          raise ArgumentError, "Invalid file content type"
         end
-        changes
+        hash = YAML.load file
+        raise ArgumentError, "the YAML file must contain an unique first key representing the locale" unless hash.keys.count == 1
+
+        lang = hash.keys.first
+        to_remove = locale(lang).all
+        to_remove.each do |x|
+          x.destroy
+        end
+        records = parse_hash(hash.first[1], lang)
+        # TODO: Replace with activerecord-import bulk inserts
+        transaction do
+          records.each {|x| x.save!}
+        end
       end
 
-      # Import all contents from *.yml locale files into the database.
+      # Dump all contents from *.yml locale files into the database.
       # CAUTION: All existing data will be erased!
       #
       # It will create a "#{locale}.yml.backup" file into config/locales
@@ -48,8 +77,8 @@ module Interpret
       # recover some of your just-erased translations.
       # If you don't want backups, set:
       #
-      # Interpret.options[:no_backup] = true
-      def import
+      # Interpret.options[:dump_without_backup] = true
+      def dump
         files = Dir[Rails.root.join("config", "locales", "*.yml").to_s]
         delete_all
 
@@ -64,19 +93,6 @@ module Interpret
         transaction do
           records.each {|x| x.save!}
         end
-      end
-
-      def get_tree
-        t = arel_table
-        all_trans = locale(I18n.locale).select(t[:key]).where(t[:key].matches("%.%")).all
-
-        tree = LazyHash.build_hash
-        all_trans = all_trans.map{|x| x.key.split(".")[0..-2].join(".")}.uniq
-        all_trans.each do |x|
-          LazyHash.lazy_add(tree, x, {})
-        end
-        # Generate a new clean hash without the proc's from LazyHash
-        {"index" => eval(tree.to_s)}
       end
 
     private

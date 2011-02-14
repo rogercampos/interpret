@@ -5,9 +5,9 @@ Rails.application.routes.draw do
 
       resources :tools, :only => :index do
         collection do
-          get :fetch
-          post :upload
-          post :migrate
+          get :export
+          post :import
+          post :dump
         end
       end
 
