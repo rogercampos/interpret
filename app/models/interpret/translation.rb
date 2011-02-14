@@ -206,7 +206,7 @@ module Interpret
             create! :locale => lang,
                     :key => key,
                     :value => ""
-            puts "Created inexistent key [#{key}] for lang [#{lang}]"
+            Interpret.logger.info "Created inexistent key [#{key}] for lang [#{lang}]"
           end
         end
       end
@@ -222,7 +222,7 @@ module Interpret
                   :key => key,
                   :value => value
         end
-        puts "New key created [#{key}] for languages #{@languages.keys.inspect}"
+        Interpret.logger.info "New key created [#{key}] for languages #{@languages.keys.inspect}"
       end
 
       def remove_unused_keys(hash, prefix = "")
@@ -231,7 +231,7 @@ module Interpret
             remove_unused_keys(hash[x], "#{prefix}#{x}.")
           else
             delete_all(:locale => @languages.keys, :key => "#{prefix}#{x}")
-            puts "Removing unused key #{prefix}#{x}"
+            Interpret.logger.info "Removing unused key #{prefix}#{x}"
           end
         end
       end
