@@ -13,9 +13,7 @@ module Interpret
     end
 
     def copy_images
-      copy_file "stylesheets/plus_icon.gif", "public/stylesheets/plus_icon.gif"
-      copy_file "stylesheets/minus_icon.gif", "public/stylesheets/minus_icon.gif"
-
+      copy_file "stylesheets/folder.png", "public/stylesheets/folder.png"
     end
   end
 end
