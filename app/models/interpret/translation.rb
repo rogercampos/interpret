@@ -230,11 +230,8 @@ module Interpret
           if hash[x].kind_of?(Hash)
             remove_unused_keys(hash[x], "#{prefix}#{x}.")
           else
-            #old = Interpret::Translation.where(:locale => locale, :key => "#{prefix}#{x}").first
-            #Interpret.logger.info("[translations:update] Removed unused key [#{prefix}#{x}] for locale [#{locale}]. The value was [#{old.value}]")
-            #old.delete
             delete_all(:locale => @languages.keys, :key => "#{prefix}#{x}")
-            puts "Eliminem la key #{prefix}#{x}"
+            puts "Removing unused key #{prefix}#{x}"
           end
         end
       end
