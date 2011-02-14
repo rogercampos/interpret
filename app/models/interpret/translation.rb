@@ -205,7 +205,7 @@ module Interpret
           if trans.nil?
             create! :locale => lang,
                     :key => key,
-                    :value => ""
+                    :value => "untranslated"
             Interpret.logger.info "Created inexistent key [#{key}] for lang [#{lang}]"
           end
         end
