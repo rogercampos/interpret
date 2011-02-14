@@ -16,7 +16,7 @@ module Interpret
       # Generates a hash representing the tree structure of the translations
       # for the given locale. It includes only "folders" in the sense of
       # locale keys that includes some real translations, or other keys.
-      def get_tree(lang = I18n.locale)
+      def get_tree(lang = I18n.default_locale)
         t = arel_table
         all_trans = locale(lang).select(t[:key]).where(t[:key].matches("%.%")).all
 
