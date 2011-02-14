@@ -95,6 +95,63 @@ module Interpret
         end
       end
 
+      # Run a smart update from the translations in .yml files into the
+      # databse backend. It issues a merging from both, comparing each key
+      # present in the db with the one from the yml file.
+      #
+      # The use case beyond this arquitecture presuposes some things:
+      #
+      # 1) You're working in development mode with the default I18n backend,
+      # that is with the translations in the config/locales/*.yml files.
+      #
+      # 2) Your application is deployed in production and running well. Also,
+      # it has support to modify it's contents (from this very gem of course)
+      # on live, so its possible that your customer has changed a sentence or
+      # a title of the site. And you want to preserve that.
+      #
+      # 3) In general, from the very moment you choose to give the users (or
+      # admins) of your site the ability to change the contents, that contents
+      # are no longer part of the "project" (are checked in in git, to be
+      # specific), they are now part of the dynamic contents of the site just
+      # as if they were models in your db.
+      #
+      # In development, you define a "content layout" in the sense of a
+      # specific locale keys hierarchy. How many paragraphs are in your views,
+      # how many titles, etc... But the real paragraphs are in the production
+      # database.
+      #
+      # So, with this "update" action, you are updating that "contents layout"
+      # with the new one you just designed in development.
+      #
+      # Also keep in mind that rails let you have a diferent locale key
+      # hierarchy for each language, and this behaviour is prohibited in
+      # interpret.
+      # Here, the I18n.default_locale configured in your app is considered the
+      # main one, that is, the only language that can be trusted to have all
+      # the required and correct locale keys.
+      # This will be used to check for inconsitent translations into other
+      # languages, knowing what you haven't translated yet.
+      #
+      # What does all that means?
+      #
+      # - First of all, get the locale keys for the main language from yml files.
+      # - For all of these locale keys, do:
+      #   - If a key is present in the db, but not in the new ones, remove
+      #   it. You have removed it from the new content layout, so it's no longer
+      #   needed.
+      #   - If the key is not present in the db, it's new. So, create a new
+      #   entry for that key in each language. Look if a translation for that
+      #   key exists in yml files for each language, if it exists, use it. If
+      #   not, left it empty.
+      #   - If the key already exists in the db, do nothing. Maybe somone has
+      #   changed that content in production, and you don't want to lose
+      #   that. Or maybe you do want to change that content, because you
+      #   just added the correct sentence in the yml files. It's up to you to
+      #   do the right thing.
+      def update
+
+      end
+
     private
       def parse_hash(dict, locale, prefix = "")
         res = []
