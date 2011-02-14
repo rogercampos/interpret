@@ -1,11 +1,7 @@
 Rails.application.routes.draw do
   scope Interpret.scope do
     namespace :interpret do
-      resources :translations, :except => [:index, :new, :create, :destroy, :show]  do
-        collection do
-          get :node
-        end
-      end
+      resources :translations, :only => [:edit, :update]
 
       resources :tools, :only => :index do
         collection do

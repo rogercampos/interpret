@@ -17,7 +17,7 @@ module Interpret
         opts << "expandable" if expandable
 
         out << "<li#{opts.any? ? " class='#{opts.join(" ")}'" : ""}>"
-        out << "#{link_to key, node_interpret_translations_path(:key => "#{prev_key}#{key}")}"
+        out << "#{link_to key, interpret_root_path(:key => "#{prev_key}#{key}")}"
 
         out << show_interpret_tree(hash[key], params_key, "#{prev_key}#{key}.", matching) if expandable
         out << "</li>"

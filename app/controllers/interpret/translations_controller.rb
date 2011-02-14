@@ -2,24 +2,16 @@ class Interpret::TranslationsController < eval(Interpret.controller.classify)
   layout 'interpret'
   cache_sweeper eval(Interpret.sweeper.to_s.classify) if Interpret.sweeper
   cache_sweeper Interpret::TranslationSweeper
-  before_filter :get_tree, :only => [:index, :node]
+  before_filter :get_tree, :only => :index
 
   def index
-    t = Interpret::Translation.arel_table
-    @translations = Interpret::Translation.locale(I18n.default_locale).where(t[:key].does_not_match("%.%")).paginate :page => params[:page]
-  end
-
-  def node
     key = params[:key]
-    unless key
-      redirect_to translations_url
-      return
-    end
-
     t = Interpret::Translation.arel_table
-    @originals = Interpret::Translation.locale(I18n.default_locale).where(t[:key].matches("#{key}.%")).paginate :page => params[:page]
-    @translations = Interpret::Translation.locale(I18n.locale).where(t[:key].matches("#{key}.%")).paginate :page => params[:page]
-    render :action => :index
+    if key
+      @translations = Interpret::Translation.locale(I18n.default_locale).where(t[:key].matches("#{key}.%")).paginate :page => params[:page]
+    else
+      @translations = Interpret::Translation.locale(I18n.default_locale).where(t[:key].does_not_match("%.%")).paginate :page => params[:page]
+    end
   end
 
   def edit
