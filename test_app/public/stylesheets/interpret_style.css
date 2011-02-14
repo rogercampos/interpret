@@ -510,26 +510,15 @@ tbody td a {
   font-size: .9em;
 }
 
-#tree_sidebar {
-  font-size: .8em;
-}
 #tree_sidebar ul{
   margin: 0;
   padding: .4em;
 }
 #tree_sidebar li {
-  list-style-image: url("/stylesheets/plus_icon.gif");
+  list-style-image: url("/stylesheets/folder.png");
   font-weight: normal;
   padding-bottom: 5px;
-}
-
-
-#tree_sidebar li.current {
-  list-style-image: url("/stylesheets/minus_icon.gif");
-}
-
-#tree_sidebar li.current  {
-  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 #tree_sidebar a {
@@ -538,8 +527,4 @@ tbody td a {
 }
 #tree_sidebar a:hover {
   text-decoration: underline;
-}
-
-#loading_sidebar {
-  display: none;
 }

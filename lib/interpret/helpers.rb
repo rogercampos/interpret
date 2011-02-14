@@ -13,7 +13,7 @@ module Interpret
     end
 
     def build_tree(hash, origin_keys = "", prev_key = "")
-      out = "<ul>"
+      out = "<ul id='navigation'>"
       if origin_keys.present? && prev_key.blank?
         parent_key = origin_keys.split(".")[0..-2].join(".")
         if parent_key.blank?
@@ -23,16 +23,8 @@ module Interpret
         end
       end
       hash.keys.each do |key|
-        expandable = hash[key].present? && hash[key].is_a?(Hash)
-
-        opts = []
-        opts << "expandable" if expandable
-
-        out << "<li#{opts.any? ? " class='#{opts.join(" ")}'" : ""}>"
-
+        out << "<li>"
         out << "#{link_to key, interpret_root_path(:key => "#{origin_keys.blank? ? "" : "#{origin_keys}."}#{prev_key}#{key}")}"
-
-        out << build_tree(hash[key], origin_keys, "#{prev_key}#{key}.") if expandable
         out << "</li>"
       end
       out << "</ul>"
