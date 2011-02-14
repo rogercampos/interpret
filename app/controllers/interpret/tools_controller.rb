@@ -4,7 +4,7 @@ class Interpret::ToolsController < eval(Interpret.controller.classify)
   def migrate
     Interpret::Translation.import
 
-    expire_action :controller => "interpret/translations", :action => :tree
+    session.delete(:tree)
     Interpret.backend.reload! if Interpret.backend
     redirect_to interpret_tools_url, :notice => "Migracio realitzada"
   end

@@ -76,7 +76,7 @@ module Interpret
           LazyHash.lazy_add(tree, x, {})
         end
         # Generate a new clean hash without the proc's from LazyHash
-        eval(tree.to_s)
+        {"index" => eval(tree.to_s)}
       end
 
     private

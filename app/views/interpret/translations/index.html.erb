@@ -13,11 +13,17 @@ locales structure.
 </p>
 
 <%= render 'interpret/translations/listing' %>
-<%= will_paginate(@translations) %>
 
 <%= content_for :sidebar do %>
   <h2>Section tree</h2>
   <div id="tree_sidebar">
+    <h3>
+      <% if params[:key] %>
+        /<%= params[:key].split(".").join("/") %>
+      <% else %>
+        /
+      <% end %>
+    </h3>
     <%= show_interpret_tree(@tree, params[:key]) %>
   </div>
 <% end %>

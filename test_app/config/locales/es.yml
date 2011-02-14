@@ -8,7 +8,6 @@ es:
   geo_position: Alguna posicion
   icbm: Algun numero icbm
 
-
   pages:
     index:
       title: "Interpret Test app -- Index"
@@ -40,3 +39,8 @@ es:
       seccio2:
         paragraf1: "ola que tal"
         parag2: "Second paragraph Lorem ipsum"
+
+  cucamonga:
+    seccio2:
+      paragraf1: "ola que tal"
+      parag2: "Second paragraph Lorem ipsum"
