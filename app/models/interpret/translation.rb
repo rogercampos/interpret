@@ -66,6 +66,19 @@ module Interpret
         end
       end
 
+      def get_tree
+        t = arel_table
+        all_trans = locale(I18n.locale).select(t[:key]).where(t[:key].matches("%.%")).all
+
+        tree = LazyHash.build_hash
+        all_trans = all_trans.map{|x| x.key.split(".")[0..-2].join(".")}.uniq
+        all_trans.each do |x|
+          LazyHash.lazy_add(tree, x, {})
+        end
+        # Generate a new clean hash without the proc's from LazyHash
+        eval(tree.to_s)
+      end
+
     private
       def parse_hash(dict, locale, prefix = "")
         res = []

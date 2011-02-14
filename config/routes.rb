@@ -4,7 +4,6 @@ Rails.application.routes.draw do
       resources :translations, :except => [:index, :new, :create, :destroy, :show]  do
         collection do
           get :node
-          get :tree
         end
       end
 

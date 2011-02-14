@@ -2,6 +2,7 @@ class Interpret::TranslationsController < eval(Interpret.controller.classify)
   layout 'interpret'
   cache_sweeper eval(Interpret.sweeper.to_s.classify) if Interpret.sweeper
   cache_sweeper Interpret::TranslationSweeper
+  before_filter :get_tree, :only => [:index, :node]
 
   def index
     t = Interpret::Translation.arel_table
@@ -46,24 +47,9 @@ class Interpret::TranslationsController < eval(Interpret.controller.classify)
     end
   end
 
-
-  caches_action :tree
-  def tree
-    get_sidebar_tree
-    render :layout => false
-  end
-
-
 private
-  def get_sidebar_tree
-    t = Interpret::Translation.arel_table
-    all_trans = Interpret::Translation.locale(I18n.locale).select(t[:key]).where(t[:key].matches("%.%")).all
-
-
-    @tree = LazyHash.build_hash
-    all_trans = all_trans.map{|x| x.key.split(".")[0..-2].join(".")}.uniq
-    all_trans.each do |x|
-      LazyHash.lazy_add(@tree, x, {})
-    end
+  def get_tree
+    @tree = session[:tree] ||= Interpret::Translation.get_tree
   end
+
 end

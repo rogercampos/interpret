@@ -7,7 +7,8 @@ class Interpret::TranslationSweeper < ActionController::Caching::Sweeper
 
 private
   def expire_cache
-    expire_action :controller => "interpret/translations", :action => :tree
+    #expire_action :controller => "interpret/translations", :action => :tree
+    session.delete(:tree)
     Interpret.backend.reload! if Interpret.backend
   end
 end
