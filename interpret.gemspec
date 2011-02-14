@@ -25,4 +25,6 @@ Gem::Specification.new do |s|
   s.add_dependency "ya2yaml", ">= 0.30.0"
   s.add_dependency "will_paginate", ">= 3.0.pre2"
   s.add_dependency "best_in_place", ">= 0.1.7"
+
+  s.add_development_dependency "rspec-rails", ">= 2.5"
 end

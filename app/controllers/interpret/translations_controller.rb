@@ -1,5 +1,4 @@
-class Interpret::TranslationsController < eval(Interpret.controller.classify)
-  layout 'interpret'
+class Interpret::TranslationsController < Interpret::BaseController
   cache_sweeper eval(Interpret.sweeper.to_s.classify) if Interpret.sweeper
   cache_sweeper Interpret::TranslationSweeper
   before_filter :get_tree, :only => :index
@@ -8,10 +7,10 @@ class Interpret::TranslationsController < eval(Interpret.controller.classify)
     key = params[:key]
     t = Interpret::Translation.arel_table
     if key
-      @translations = Interpret::Translation.locale(I18n.default_locale).where(t[:key].matches("#{key}.%"))
+      @translations = Interpret::Translation.locale(I18n.locale).where(t[:key].matches("#{key}.%"))
       @translations = @translations.select{|x| x.key =~ /#{key}\.\w+$/}
     else
-      @translations = Interpret::Translation.locale(I18n.default_locale).where(t[:key].does_not_match("%.%")).paginate :page => params[:page]
+      @translations = Interpret::Translation.locale(I18n.locale).where(t[:key].does_not_match("%.%")).paginate :page => params[:page]
     end
   end
 
@@ -42,7 +41,6 @@ class Interpret::TranslationsController < eval(Interpret.controller.classify)
 
 private
   def get_tree
-    session.delete(:tree)
     @tree = session[:tree] ||= Interpret::Translation.get_tree
   end
 

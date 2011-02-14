@@ -16,6 +16,13 @@
     <%= interpret_section_link_to "Search", interpret_search_path %>
     <hr />
   </div>
+  <div class="menu grid_16">
+    Languages:
+    <% I18n.available_locales.each do |locale| %>
+      <%= link_to locale, :locale => locale %>
+    <% end %>
+    <hr />
+  </div>
   <div id="sidebar" class="grid_3">
     <%= yield :sidebar %>
   </div>

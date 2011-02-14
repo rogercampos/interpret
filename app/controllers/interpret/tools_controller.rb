@@ -1,5 +1,4 @@
-class Interpret::ToolsController < eval(Interpret.controller.classify)
-  layout 'interpret'
+class Interpret::ToolsController < Interpret::BaseController
 
   def dump
     Interpret::Translation.dump

@@ -149,10 +149,96 @@ module Interpret
       #   just added the correct sentence in the yml files. It's up to you to
       #   do the right thing.
       def update
+        files = Dir[Rails.root.join("config", "locales", "*.yml").to_s]
 
+        @languages = {}
+        @main = {}
+        files.each do |f|
+          ar = YAML.load_file f
+          lang = ar.keys.first
+          @languages[lang.to_s] = ar.first[1]
+          if I18n.default_locale.to_s == lang.to_s
+            @main = ar.first[1]
+            @main_lang = lang
+          end
+        end
+
+        sync(@main)
       end
 
     private
+      def sync(hash, prefix = "", existing = nil)
+        if existing.nil?
+          translations = locale(@main_lang).all
+          existing = export(translations)
+          existing = existing.first[1] unless existing.empty?
+        end
+
+        hash.keys.each do |x|
+          existing.delete(x)
+
+          if hash[x].kind_of?(Hash)
+            sync(hash[x], "#{prefix}#{x}.", existing[x])
+          else
+            old = locale(@main_lang).find_by_key("#{prefix}#{x}")
+
+            unless old
+              # Creates the new entry
+              create_new_translation("#{prefix}#{x}")
+            else
+              # Check if the entry exists in the other languages
+              check_in_other_langs("#{prefix}#{x}")
+            end
+          end
+        end
+
+        if prefix.blank?
+          remove_unused_keys(existing)
+        end
+      end
+
+      # Check if the the given key exists in all languages except @main. If
+      # not, create an entry.
+      def check_in_other_langs(key)
+        (@languages.keys - [@main_lang]).each do |lang|
+          trans = locale(lang).find_by_key(key)
+          if trans.nil?
+            create! :locale => lang,
+                    :key => key,
+                    :value => ""
+            puts "Created inexistent key [#{key}] for lang [#{lang}]"
+          end
+        end
+      end
+
+      def create_new_translation(key)
+        @languages.keys.each do |lang|
+          origin_hash = @languages[lang].clone
+          key.split(".")[0..-2].each do |key|
+            origin_hash = origin_hash[key]
+          end
+          value = origin_hash[key.split(".").last]
+          create! :locale => lang,
+                  :key => key,
+                  :value => value
+        end
+        puts "New key created [#{key}] for languages #{@languages.keys.inspect}"
+      end
+
+      def remove_unused_keys(hash, prefix = "")
+        hash.keys.each do |x|
+          if hash[x].kind_of?(Hash)
+            remove_unused_keys(hash[x], "#{prefix}#{x}.")
+          else
+            #old = Interpret::Translation.where(:locale => locale, :key => "#{prefix}#{x}").first
+            #Interpret.logger.info("[translations:update] Removed unused key [#{prefix}#{x}] for locale [#{locale}]. The value was [#{old.value}]")
+            #old.delete
+            delete_all(:locale => @languages.keys, :key => "#{prefix}#{x}")
+            puts "Eliminem la key #{prefix}#{x}"
+          end
+        end
+      end
+
       def parse_hash(dict, locale, prefix = "")
         res = []
         dict.keys.each do |x|

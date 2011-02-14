@@ -6,23 +6,7 @@ namespace :interpret do
 
   desc 'Synchronize the keys used in db backend with the ones on *.yml files'
   task :update => [:environment, "tmp:cache:clear"] do
-    files = Dir[Rails.root.join("config", "locales", "*.yml").to_s]
-
-    languages = []
-    reference_hash = {}
-    files.each do |f|
-      ar = YAML.load_file f
-      locale = ar.keys.first
-      languages << locale
-
-      reference_hash = ar.first[1] if I18n.default_locale.to_sym == locale.to_sym
-    end
-
-    languages.each do |x|
-      put_in_sync_with_db(reference_hash, x)
-    end
-
-    puts "Updated Translations table."
+    Interpret::Translation.update
   end
 end
 
