@@ -9,7 +9,7 @@ class Interpret::TranslationsController < eval(Interpret.controller.classify)
     t = Interpret::Translation.arel_table
     if key
       @translations = Interpret::Translation.locale(I18n.default_locale).where(t[:key].matches("#{key}.%"))
-      @translations.select!{|x| x.key =~ /#{key}\.\w+$/}
+      @translations = @translations.select{|x| x.key =~ /#{key}\.\w+$/}
     else
       @translations = Interpret::Translation.locale(I18n.default_locale).where(t[:key].does_not_match("%.%")).paginate :page => params[:page]
     end
@@ -42,6 +42,7 @@ class Interpret::TranslationsController < eval(Interpret.controller.classify)
 
 private
   def get_tree
+    session.delete(:tree)
     @tree = session[:tree] ||= Interpret::Translation.get_tree
   end
 

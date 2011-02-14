@@ -29,7 +29,7 @@ module Interpret
         # Generate a new clean hash without the proc's from LazyHash.
         # Includes a root level for convenience, to be exactly like the
         # structure of a .yml file which has the "en" root key for example.
-        {"index" => eval(tree.to_s)}
+        {"index" => eval(tree.inspect)}
       end
 
       # Generate a hash from the given translations. That hash can be
