@@ -47,7 +47,11 @@ en:
   end
 
   describe ".export" do
-    pending
+    it "should return a hash representing the yml locale file for the given translations" do
+      file2db(en_yml)
+      translations = Interpret::Translation.all
+      Interpret::Translation.export(translations).should == YAML.load(en_yml)
+    end
   end
 
   describe ".import" do
