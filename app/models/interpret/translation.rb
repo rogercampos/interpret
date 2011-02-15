@@ -40,6 +40,9 @@ module Interpret
         translations.each do |e|
           LazyHash.lazy_add(res, "#{e.locale}.#{e.key}", e.value)
         end
+        if res.keys.size != 1
+          raise IndexError, "Generated hash must have only one root key. Your translation data in datrabase may be corrupted."
+        end
         res
       end
 
@@ -152,24 +155,24 @@ module Interpret
         files = Dir[Rails.root.join("config", "locales", "*.yml").to_s]
 
         @languages = {}
-        @main = {}
         files.each do |f|
           ar = YAML.load_file f
           lang = ar.keys.first
-          @languages[lang.to_s] = ar.first[1]
-          if I18n.default_locale.to_s == lang.to_s
-            @main = ar.first[1]
-            @main_lang = lang
+          if @languages.has_key?(lang.to_s)
+            @languages[lang.to_s] = @languages[lang.to_s].deep_merge(ar.first[1])
+          else
+            @languages[lang.to_s] = ar.first[1]
           end
         end
 
+        @main = @languages[I18n.default_locale.to_s].clone
         sync(@main)
       end
 
     private
       def sync(hash, prefix = "", existing = nil)
         if existing.nil?
-          translations = locale(@main_lang).all
+          translations = locale(I18n.default_locale).all
           existing = export(translations)
           existing = existing.first[1] unless existing.empty?
         end
@@ -180,7 +183,7 @@ module Interpret
           if hash[x].kind_of?(Hash)
             sync(hash[x], "#{prefix}#{x}.", existing[x])
           else
-            old = locale(@main_lang).find_by_key("#{prefix}#{x}")
+            old = locale(I18n.default_locale).find_by_key("#{prefix}#{x}")
 
             unless old
               # Creates the new entry
@@ -200,7 +203,7 @@ module Interpret
       # Check if the the given key exists in all languages except @main. If
       # not, create an entry.
       def check_in_other_langs(key)
-        (@languages.keys - [@main_lang]).each do |lang|
+        (@languages.keys - [I18n.default_locale]).each do |lang|
           trans = locale(lang).find_by_key(key)
           if trans.nil?
             create! :locale => lang,
@@ -211,18 +214,23 @@ module Interpret
         end
       end
 
-      def create_new_translation(key)
+      def create_new_translation(missing_key)
         @languages.keys.each do |lang|
           origin_hash = @languages[lang].clone
-          key.split(".")[0..-2].each do |key|
+          value = nil
+          missing_key.split(".")[0..-2].each do |key|
+            if origin_hash[key].nil?
+              value = "untranslated"
+              break
+            end
             origin_hash = origin_hash[key]
           end
-          value = origin_hash[key.split(".").last]
+          value ||= origin_hash[missing_key.split(".").last]
           create! :locale => lang,
-                  :key => key,
+                  :key => missing_key,
                   :value => value
         end
-        Interpret.logger.info "New key created [#{key}] for languages #{@languages.keys.inspect}"
+        Interpret.logger.info "New key created [#{missing_key}] for languages #{@languages.keys.inspect}"
       end
 
       def remove_unused_keys(hash, prefix = "")
