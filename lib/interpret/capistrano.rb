@@ -1,15 +1,18 @@
-namespace :interpret do
-  desc "Update translations keys in database"
-  task :update, :roles => :app, :except => { :no_release => true } do
-    commands = [
-      "RAILS_ENV=#{rails_env} rake interpret:update",
-    ]
+Capistrano::Configuration.instance(:must_exist).load do
+  namespace :interpret do
+    def rails_env
+      fetch(:rails_env, false) ? "RAILS_ENV=#{fetch(:rails_env)}" : ''
+    end
 
-    run <<-CMD
-      cd #{release_path} &&
-      #{commands.join(" && ")}
-    CMD
+    def roles
+      fetch(:delayed_job_server_role, :app)
+    end
+
+    desc "Update translations keys in database"
+    task :update, :roles => lambda {roles} do
+      run "cd #{current_path};#{rails_env} rake interpret:update"
+    end
   end
-end
 
-after "deploy:update_code", "interpret:update"
+  after "deploy:update_code", "interpret:update"
+end
