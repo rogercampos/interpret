@@ -20,6 +20,24 @@ en:
     """
   }
 
+  let(:es_yml) {"""
+es:
+  p1: Hola mundo!
+  folder1:
+    pr1: hola
+  folder2:
+    pr1: Algun otro texto aqui
+  folder3:
+    pr1: Mas frases aleatorias
+    sub:
+      name: Esta es una subcarpeta de segundo nivel
+      subsub:
+        name: Con otra carpeta anidada en su interior
+    other:
+      name: carpeta
+    """
+  }
+
   def file2db(string_file)
     hash = YAML.load string_file
 

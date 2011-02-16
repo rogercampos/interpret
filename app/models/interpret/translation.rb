@@ -139,18 +139,23 @@ module Interpret
       #
       # - First of all, get the locale keys for the main language from yml files.
       # - For all of these locale keys, do:
-      #   - If a key is present in the db, but not in the new ones, remove
-      #   it. You have removed it from the new content layout, so it's no longer
-      #   needed.
       #   - If the key is not present in the db, it's new. So, create a new
-      #   entry for that key in each language. Look if a translation for that
-      #   key exists in yml files for each language, if it exists, use it. If
-      #   not, left it empty.
+      #   entry for that key in the main language. If the key also exists in
+      #   some other languages in yml files, also create the entry for that
+      #   languages. But, do not create entries for the languages that does
+      #   not have this key. Later you will be notified about that missing
+      #   translations.
       #   - If the key already exists in the db, do nothing. Maybe somone has
       #   changed that content in production, and you don't want to lose
       #   that. Or maybe you do want to change that content, because you
       #   just added the correct sentence in the yml files. It's up to you to
       #   do the right thing.
+      #   Also, if the key is missing in other languages in database but
+      #   present in yml files, create the new entry for that language.
+      #   - If a key is present in the db, but not in the new ones, remove
+      #   it. You have removed it from the new content layout, so it's no longer
+      #   needed.
+      #
       def update
         files = Dir[Rails.root.join("config", "locales", "*.yml").to_s]
 
@@ -165,8 +170,7 @@ module Interpret
           end
         end
 
-        @main = @languages[I18n.default_locale.to_s].clone
-        sync(@main)
+        sync(@languages[I18n.default_locale.to_s])
       end
 
     private
@@ -187,7 +191,7 @@ module Interpret
 
             unless old
               # Creates the new entry
-              create_new_translation("#{prefix}#{x}")
+              create_new_translation("#{prefix}#{x}", hash[x])
             else
               # Check if the entry exists in the other languages
               check_in_other_langs("#{prefix}#{x}")
@@ -200,37 +204,33 @@ module Interpret
         end
       end
 
-      # Check if the the given key exists in all languages except @main. If
-      # not, create an entry.
+      # Check if the given key exists in @languages for locales other than
+      # I18n.default_locale. Create the existing ones.
       def check_in_other_langs(key)
         (@languages.keys - [I18n.default_locale]).each do |lang|
           trans = locale(lang).find_by_key(key)
           if trans.nil?
-            create! :locale => lang,
-                    :key => key,
-                    :value => "untranslated"
-            Interpret.logger.info "Created inexistent key [#{key}] for lang [#{lang}]"
+            if value = get_value_from_hash(@languages[lang], key)
+              create! :locale => lang, :key => key, :value => value
+              Interpret.logger.info "New key created [#{key}] for language [#{lang}]"
+            end
           end
         end
       end
 
-      def create_new_translation(missing_key)
-        @languages.keys.each do |lang|
-          origin_hash = @languages[lang].clone
-          value = nil
-          missing_key.split(".")[0..-2].each do |key|
-            if origin_hash[key].nil?
-              value = "untranslated"
-              break
-            end
-            origin_hash = origin_hash[key]
-          end
-          value ||= origin_hash[missing_key.split(".").last]
-          create! :locale => lang,
-                  :key => missing_key,
-                  :value => value
+      def get_value_from_hash(hash, key)
+        key.split(".")[0..-2].each do |k|
+          break if origin_hash.nil?
+          origin_hash = origin_hash[key]
         end
-        Interpret.logger.info "New key created [#{missing_key}] for languages #{@languages.keys.inspect}"
+        origin_hash.nil? ? nil : origin_hash[key.split(".").last]
+      end
+
+      def create_new_translation(missing_key, main_value)
+        create! :locale => I18n.default_locale, :key => missing_key, :value => main_value
+        Interpret.logger.info "New key created [#{missing_key}] for language [#{I18n.default_locale}]"
+
+        check_in_other_langs(missing_key)
       end
 
       def remove_unused_keys(hash, prefix = "")
