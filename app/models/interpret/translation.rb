@@ -61,26 +61,24 @@ module Interpret
         raise ArgumentError, "the YAML file must contain an unique first key representing the locale" unless hash.keys.count == 1
 
         lang = hash.keys.first
-        to_remove = locale(lang).all
-        to_remove.each do |x|
-          x.destroy
-        end
+        delete_all(:locale => lang)
+
         records = parse_hash(hash.first[1], lang)
         # TODO: Replace with activerecord-import bulk inserts
         transaction do
-          records.each {|x| x.save!}
+          records.each do |x|
+            a = create! :locale => x.locale, :key => x.key, :value => x.value
+            puts x.value
+            a.update_attribute :value, x.value.to_s
+            a.reload
+            puts a.inspect
+          end
         end
       end
 
       # Dump all contents from *.yml locale files into the database.
       # CAUTION: All existing data will be erased!
       #
-      # It will create a "#{locale}.yml.backup" file into config/locales
-      # for each language present in the database, in case you want to
-      # recover some of your just-erased translations.
-      # If you don't want backups, set:
-      #
-      # Interpret.options[:dump_without_backup] = true
       def dump
         files = Dir[Rails.root.join("config", "locales", "*.yml").to_s]
         delete_all

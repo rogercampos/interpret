@@ -38,6 +38,47 @@ es:
     """
   }
 
+  let(:new_en_yml) {"""
+en:
+  p1: Hello modified world! This new translation should not be copied into database
+  new_key: This new key should be created with this english text
+  new_key_in_en: This new key that only exists in english should be created only in english
+
+  folder1:
+    pr1: Hi
+  folder2:
+    pr1: Some other text here
+  folder3:
+    pr1: More phrases
+    sub:
+      name: This is a 2 level subfolder
+      subsub:
+        name: With another nested folder inside
+    other:
+      name: folder
+  """
+  }
+
+  let(:new_es_yml) {"""
+es:
+  p1: Hola mon! Esta nueva traduccion al español deberia copiarse en base de datos porque no existe previamente en :es, aunque si en :en
+  new_key: Esta nueva clave debe crearse con este texto en español
+
+  folder1:
+    pr1: Hi
+  folder2:
+    pr1: Some other text here
+  folder3:
+    pr1: More phrases
+    sub:
+      name: This is a 2 level subfolder
+      subsub:
+        name: With another nested folder inside
+    other:
+      name: folder
+  """
+  }
+
   # Convert a locale file into database translations
   def file2db(string_file)
     def parse_hash(dict, locale, prefix = "")
@@ -89,54 +130,8 @@ es:
     end
   end
 
-  describe ".import" do
-    pending
-  end
-
-  describe ".dump" do
-    pending
-  end
-
   describe ".update" do
     before(:all) do
-      @new_en_yml = """
-en:
-  p1: Hello modified world! This new translation should not copied into database
-  new_key: This new key should be created with this english text
-  new_key_in_en: This new key that only exists in english should be created only in english
-
-  folder1:
-    pr1: Hi
-  folder2:
-    pr1: Some other text here
-  folder3:
-    pr1: More phrases
-    sub:
-      name: This is a 2 level subfolder
-      subsub:
-        name: With another nested folder inside
-    other:
-      name: folder
-      """
-      @new_es_yml = """
-es:
-  p1: Hola mon! Esta nueva traduccion al español deberia copiarse en base de datos porque no existe previamente en :es, aunque si en :en
-  new_key: Esta nueva clave debe crearse con este texto en español
-
-  folder1:
-    pr1: Hi
-  folder2:
-    pr1: Some other text here
-  folder3:
-    pr1: More phrases
-    sub:
-      name: This is a 2 level subfolder
-      subsub:
-        name: With another nested folder inside
-    other:
-      name: folder
-      """
-
       # Supose the database has the default contents, look at the top of this
       # file for en_yml simulated locale file
       file2db(en_yml)
@@ -145,7 +140,7 @@ es:
 
     before do
       Dir.stub!(:"[]").and_return(['/path/to/en.yml', '/path/to/es.yml'])
-      YAML.should_receive(:load_file).twice.and_return(YAML.load(@new_en_yml), YAML.load(@new_es_yml))
+      YAML.should_receive(:load_file).twice.and_return(YAML.load(new_en_yml), YAML.load(new_es_yml))
     end
 
     context "when a key exists in database but not in yml files [for I18n.default_locale]" do
@@ -191,5 +186,45 @@ es:
         translation = Interpret::Translation.locale('es').find_by_key("p1").should_not be_nil
       end
     end
+  end
+
+  describe ".dump" do
+    it "should dump all contents from yml files into database" do
+      # Initial database state
+      file2db(en_yml)
+      file2db(es_yml)
+
+      Dir.stub!(:"[]").and_return(['/path/to/en.yml', '/path/to/es.yml'])
+      YAML.should_receive(:load_file).twice.and_return(YAML.load(new_en_yml), YAML.load(new_es_yml))
+      Interpret::Translation.dump
+
+      # We use export to check for the existing database contents, which is
+      # also tested in this spec file
+      en_trans = Interpret::Translation.locale('en').all
+      Interpret::Translation.export(en_trans).should == YAML.load(new_en_yml)
+
+      es_trans = Interpret::Translation.locale('es').all
+      Interpret::Translation.export(es_trans).should == YAML.load(new_es_yml)
+    end
+  end
+
+  describe ".import" do
+    before do
+      @file = mock("a file")
+      @file.stub!(:content_type).and_return("text/plain")
+    end
+
+    it "should dump the contents for the given file into database" do
+      #file2db(en_yml)
+
+      new_en_yml_hash = YAML.load(new_en_yml)
+      YAML.stub!(:load).and_return(new_en_yml_hash)
+      Interpret::Translation.import(@file)
+
+      en_trans = Interpret::Translation.locale('en').all
+      #Interpret::Translation.export(en_trans).should == new_en_yml_hash
+    end
+
+    it "should not modify the database contents for other languages"
   end
 end
