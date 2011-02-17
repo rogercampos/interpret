@@ -182,11 +182,10 @@ module Interpret
         end
 
         hash.keys.each do |x|
-          existing.delete(x)
-
           if hash[x].kind_of?(Hash)
             sync(hash[x], "#{prefix}#{x}.", existing[x])
           else
+            existing.delete(x)
             old = locale(I18n.default_locale).find_by_key("#{prefix}#{x}")
 
             unless old
@@ -220,10 +219,10 @@ module Interpret
 
       def get_value_from_hash(hash, key)
         key.split(".")[0..-2].each do |k|
-          break if origin_hash.nil?
-          origin_hash = origin_hash[key]
+          break if hash.nil?
+          hash = hash[k]
         end
-        origin_hash.nil? ? nil : origin_hash[key.split(".").last]
+        hash.nil? ? nil : hash[key.split(".").last]
       end
 
       def create_new_translation(missing_key, main_value)
