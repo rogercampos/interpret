@@ -24,7 +24,6 @@ en:
 
   let(:es_yml) {"""
 es:
-  p1: Hola mundo!
   folder2:
     pr1: Algun otro texto aqui
     content: Un largo parrafo con contenido
@@ -121,7 +120,7 @@ en:
       """
       @new_es_yml = """
 es:
-  p1: Hola mon! Esta nueva traduccion al español no deberia copiarse a base de datos
+  p1: Hola mon! Esta nueva traduccion al español deberia copiarse en base de datos porque no existe previamente en :es, aunque si en :en
   new_key: Esta nueva clave debe crearse con este texto en español
 
   folder1:
@@ -141,6 +140,7 @@ es:
       # Supose the database has the default contents, look at the top of this
       # file for en_yml simulated locale file
       file2db(en_yml)
+      file2db(es_yml)
     end
 
     before do
@@ -180,8 +180,16 @@ es:
     end
 
     context "when a key exists in both yml files and database [for I18n.default_locale]" do
-      it "should not override the contents of the existing database translations"
-      it "should check if there is a language for which the key exists in yml files but not in database, and create the new entry."
+      it "should not override the contents of the existing database translations" do
+        Interpret::Translation.update
+        translation = Interpret::Translation.locale('en').find_by_key("p1")
+        translation.value.should == "Hello world!"
+      end
+
+      it "should check if there is a language (other than I18n.default_locale) for which that key is new, and create the entry." do
+        Interpret::Translation.update
+        translation = Interpret::Translation.locale('es').find_by_key("p1").should_not be_nil
+      end
     end
   end
 end
