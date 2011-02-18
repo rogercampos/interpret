@@ -1,6 +1,6 @@
 require 'best_in_place'
 require 'will_paginate'
-require 'interpret/lazy_hash'
+require 'lazyhash'
 
 module Interpret
   mattr_accessor :backend

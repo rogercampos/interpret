@@ -23,7 +23,7 @@ module Interpret
         tree = LazyHash.build_hash
         all_trans = all_trans.map{|x| x.key.split(".")[0..-2].join(".")}.uniq
         all_trans.each do |x|
-          LazyHash.lazy_add(tree, x, {})
+          LazyHash.add(tree, x, {})
         end
 
         # Generate a new clean hash without the proc's from LazyHash.
@@ -38,7 +38,7 @@ module Interpret
         res = LazyHash.build_hash
 
         translations.each do |e|
-          LazyHash.lazy_add(res, "#{e.locale}.#{e.key}", e.value)
+          LazyHash.add(res, "#{e.locale}.#{e.key}", e.value)
         end
         if res.keys.size != 1
           raise IndexError, "Generated hash must have only one root key. Your translation data in datrabase may be corrupted."
