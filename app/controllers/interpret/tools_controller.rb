@@ -18,6 +18,12 @@ class Interpret::ToolsController < Interpret::BaseController
     send_data text[5..text.length], :filename => "#{I18n.locale}.yml"
   end
 
+  def run_update
+    Interpret::Translation.update
+    Interpret.backend.reload! if Interpret.backend
+    redirect_to interpret_tools_url, :notice => "Update done"
+  end
+
   def import
     unless params.has_key? :file
       redirect_to interpret_tools_url, :alert => "You have to select a file to import."

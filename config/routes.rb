@@ -8,6 +8,7 @@ Rails.application.routes.draw do
           get :export
           post :import
           post :dump
+          post :run_update
         end
       end
 
