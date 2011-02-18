@@ -67,11 +67,7 @@ module Interpret
         # TODO: Replace with activerecord-import bulk inserts
         transaction do
           records.each do |x|
-            a = create! :locale => x.locale, :key => x.key, :value => x.value
-            puts x.value
-            a.update_attribute :value, x.value.to_s
-            a.reload
-            puts a.inspect
+            x.save!
           end
         end
       end

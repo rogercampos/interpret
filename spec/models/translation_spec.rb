@@ -65,17 +65,18 @@ es:
   new_key: Esta nueva clave debe crearse con este texto en español
 
   folder1:
-    pr1: Hi
+    pr1: Nueva traduccion que tambien debe copiarse
   folder2:
-    pr1: Some other text here
+    pr1: Algun otro texto aqui
+    content: Un largo parrafo con contenido
   folder3:
-    pr1: More phrases
+    pr1: Mas frases aleatorias
     sub:
-      name: This is a 2 level subfolder
+      name: Esta es una subcarpeta de segundo nivel
       subsub:
-        name: With another nested folder inside
+        name: Con otra carpeta anidada en su interior
     other:
-      name: folder
+      name: carpeta
   """
   }
 
@@ -210,21 +211,28 @@ es:
 
   describe ".import" do
     before do
-      @file = mock("a file")
-      @file.stub!(:content_type).and_return("text/plain")
+      @file = new_en_yml
     end
 
     it "should dump the contents for the given file into database" do
-      #file2db(en_yml)
-
-      new_en_yml_hash = YAML.load(new_en_yml)
-      YAML.stub!(:load).and_return(new_en_yml_hash)
+      file2db(en_yml)
+      @file.stub!(:content_type).and_return("text/plain")
       Interpret::Translation.import(@file)
 
       en_trans = Interpret::Translation.locale('en').all
-      #Interpret::Translation.export(en_trans).should == new_en_yml_hash
+      Interpret::Translation.export(en_trans).should == YAML.load(new_en_yml)
     end
 
-    it "should not modify the database contents for other languages"
+    it "should not modify the database contents for other languages" do
+      Interpret::Translation.delete_all
+      file2db(en_yml)
+      file2db(es_yml)
+
+      @file.stub!(:content_type).and_return("text/plain")
+      Interpret::Translation.import(@file)
+
+      es_trans = Interpret::Translation.locale('es').all
+      Interpret::Translation.export(es_trans).should == YAML.load(es_yml)
+    end
   end
 end
