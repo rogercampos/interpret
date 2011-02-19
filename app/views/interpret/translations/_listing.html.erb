@@ -1,22 +1,46 @@
 <table>
   <thead>
     <tr class="header">
-      <th>Key</th>
-      <th>Content</th>
+      <% if @references %>
+        <th>Master translation [<%= I18n.default_locale %>]</th>
+      <% else %>
+        <th>Key</th>
+      <% end %>
+      <th>Content [<%= I18n.locale %>]</th>
     </tr>
   </thead>
   <tbody>
-    <% @translations.each do |x| %>
-      <tr id="translation_<%= x.id %>">
-        <td><%= x.key %></td>
-        <td>
-          <%= best_in_place x, :value,
-              :type => :textarea,
-              :path => interpret_translation_path(x),
-              :activator => "#translation_#{x.id}",
-              :sanitize => false %>
-        </td>
-      </tr>
+    <% unless @references %>
+      <% @translations.each do |x| %>
+        <tr id="translation_<%= x.id %>">
+          <td><%= x.key %></td>
+          <td>
+            <%= best_in_place x, :value,
+                :type => :textarea,
+                :path => interpret_translation_path(x),
+                :activator => "#translation_#{x.id}",
+                :sanitize => false %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <% @references.each do |x| %>
+        <% trans = @translations.detect{|y| y.key == x.key} %>
+        <tr<%= " id='translation_#{trans.id}'" if trans %>>
+          <td><%= x.value %></td>
+          <td>
+            <% if trans %>
+              <%= best_in_place trans, :value,
+                  :type => :textarea,
+                  :path => interpret_translation_path(trans),
+                  :activator => "#translation_#{trans.id}",
+                  :sanitize => false %>
+            <% else %>
+              <%= link_to "[Create missing translation]", new_interpret_translation_translation_path(x) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

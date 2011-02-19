@@ -5,6 +5,10 @@ class Interpret::BaseSweeper < ActionController::Caching::Sweeper
     expire_cache(translation)
   end
 
+  def after_create(translation)
+    expire_cache(translation)
+  end
+
 protected
 
   # Implement user's custom expire logic
