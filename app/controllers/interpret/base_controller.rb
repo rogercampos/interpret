@@ -1,4 +1,4 @@
-class Interpret::BaseController < eval(Interpret.controller.classify)
+class Interpret::BaseController < eval(Interpret.parent_controller.classify)
   before_filter :set_locale
   before_filter :interpret_set_current_user
   layout 'interpret'

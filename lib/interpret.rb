@@ -5,24 +5,20 @@ require 'lazyhash'
 module Interpret
   mattr_accessor :backend
   mattr_accessor :logger
-
-  mattr_accessor :controller
-  @@controller = "action_controller/base"
-
   mattr_accessor :sweeper
-  @@sweeper = nil
-
+  mattr_accessor :parent_controller
   mattr_accessor :registered_envs
-  @@registered_envs = [:production, :staging]
-
   mattr_accessor :scope
+  mattr_accessor :current_user
+  mattr_accessor :admin
+
+  @@controller = "action_controller/base"
+  @@registered_envs = [:production, :staging]
   @@scope = ""
 
-  mattr_accessor :current_user
-  @@current_user = nil
-
-  mattr_accessor :admin
-  @@admin = nil
+  def self.configure
+    yield self
+  end
 end
 
 require 'interpret/engine' if defined? Rails
