@@ -24,6 +24,7 @@ class Interpret::TranslationsController < Interpret::BaseController
 
     # not show translations inside nested folders, \w avoids dots
     @translations = @translations.select{|x| x.key =~ /#{key}\.\w+$/} if key
+    @references = @references.select{|x| x.key =~ /#{key}\.\w+$/} if key && @references
   end
 
   def edit

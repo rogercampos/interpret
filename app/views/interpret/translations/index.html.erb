@@ -1,36 +1,36 @@
-<%= content_for :title do %>
-  Translation list
-<% end %>
-<div id="header">
-  <h1>Translations for [<%= I18n.locale %>]</h1>
-</div>
-<p>
-Below are the translations without any particulary key in your application.
-That use to be some global names or terms for common use along all the site,
-which doesn't belong to any page or section in particulary. To dive into the
-rest of your app's contents, navigate using the tree in the left, that shows your
-locales structure.
-</p>
-
-<p>
-<% if @references %>
-  There are <%=  @references.size - @translations.size %> / <%= @references.size %> missing translations.
-<% else %>
-  There are <%= @translations.size %> translations.
-<% end %>
-</p>
-
-<%= render 'interpret/translations/listing' %>
-
-<%= content_for :sidebar do %>
-  <div id="tree_sidebar">
-    <h3>
-      <% if params[:key] %>
-        /<%= params[:key].split(".").join("/") %>
-      <% else %>
-        /
-      <% end %>
-    </h3>
-    <%= show_interpret_tree(@tree, params[:key]) %>
+<% interpret_title "Interpret - Translations" %>
+<% content_for :interpret_content do %>
+  <div id="header">
+    <h1>Translations for [<%= I18n.locale %>]</h1>
   </div>
+  <p>
+  Below are the translations without any particulary key in your application.
+  That use to be some global names or terms for common use along all the site,
+  which doesn't belong to any page or section in particulary. To dive into the
+  rest of your app's contents, navigate using the tree in the left, that shows your
+  locales structure.
+  </p>
+
+  <p>
+  <% if @references %>
+    There are <%=  @references.size - @translations.size %> / <%= @references.size %> missing translations.
+  <% else %>
+    There are <%= @translations.size %> translations.
+  <% end %>
+  </p>
+
+  <%= render 'interpret/translations/listing' %>
+
+  <% content_for :sidebar do %>
+    <div id="tree_sidebar">
+      <h3>
+        <% if params[:key] %>
+          /<%= params[:key].split(".").join("/") %>
+        <% else %>
+          /
+        <% end %>
+      </h3>
+      <%= interpret_show_tree(@tree, params[:key]) %>
+    </div>
+  <% end %>
 <% end %>

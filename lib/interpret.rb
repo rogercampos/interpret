@@ -11,10 +11,12 @@ module Interpret
   mattr_accessor :scope
   mattr_accessor :current_user
   mattr_accessor :admin
+  mattr_accessor :layout
 
   @@controller = "action_controller/base"
   @@registered_envs = [:production, :staging]
   @@scope = ""
+  @@layout = "layouts/base"
 
   def self.configure
     yield self

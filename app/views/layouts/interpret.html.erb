@@ -1,22 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>INTERPRET - <%= yield :title %></title>
-  <%= stylesheet_link_tag "interpret_style" %>
-  <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" %>
-  <%= javascript_include_tag "jquery.purr" %>
-  <%= javascript_include_tag "best_in_place" %>
-  <%= csrf_meta_tag %>
-</head>
-<body>
-<div id="container">
-  <div class="menu grid_16">
+<%= render :file => Interpret.layout %>
+
+<div id="interpret_container">
+  <div class="menu grid_12">
     <%= interpret_section_link_to "Overview", interpret_root_path %> |
     <%= interpret_section_link_to "Tools", interpret_tools_path %> |
     <%= interpret_section_link_to "Search", interpret_search_path %>
     <hr />
   </div>
-  <div class="menu grid_16">
+  <div class="menu grid_4">
     Languages:
     <% Interpret::Translation.available_locales.each do |locale| %>
       <% opts = {:locale => locale} %>
@@ -25,19 +16,12 @@
     <% end %>
     <hr />
   </div>
+  <div class="clearfix"></div>
   <div id="sidebar" class="grid_3">
     <%= yield :sidebar %>
   </div>
   <div id="main" class="grid_13">
-    <%= yield %>
+    <%= yield :interpret_content %>
   </div>
 </div>
 
-<%= javascript_tag do %>
-  $(document).ready(function() {
-  /* Activating Best In Place */
-    jQuery(".best_in_place").best_in_place()
-  });
-<% end %>
-</body>
-</html>

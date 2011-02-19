@@ -2,7 +2,7 @@ module Interpret
   module InterpretHelpers
 
     # Generates the html tree from the given keys
-    def show_interpret_tree(tree, origin_keys)
+    def interpret_show_tree(tree, origin_keys)
       tree = tree.first[1]
       unless origin_keys.nil?
         origin_keys.split(".").each do |key|
@@ -12,6 +12,18 @@ module Interpret
       build_tree(tree, origin_keys)
     end
 
+    def interpret_section_link_to(name, options = {}, html_options = {})
+      html_options.merge!({ :class => 'current' }) if current_controller?(options)
+      link_to name, options, html_options
+    end
+
+    def interpret_title(title)
+      content_for :title do
+        title
+      end
+    end
+
+  private
     def build_tree(hash, origin_keys = "", prev_key = "")
       out = "<ul id='navigation'>"
       if origin_keys.present? && prev_key.blank?
@@ -35,11 +47,5 @@ module Interpret
       hash = Rails.application.routes.recognize_path(url_for(opts))
       params[:controller] == hash[:controller]
     end
-
-    def interpret_section_link_to(name, options = {}, html_options = {})
-      html_options.merge!({ :class => 'current' }) if current_controller?(options)
-      link_to name, options, html_options
-    end
-
   end
 end
