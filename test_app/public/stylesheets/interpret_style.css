@@ -380,17 +380,13 @@ td, th {
   padding: .4em;
 }
 
-td:first-child, td:first-child {
+td.key {
   width: 20%;
-}
-
-td:last-child, td:last-child {
-  width: 80%;
-  text-align:center;
 }
 
 td.content {
   text-align:center;
+  width: 80%;
 }
 
 tr {

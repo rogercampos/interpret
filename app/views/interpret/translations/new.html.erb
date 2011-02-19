@@ -6,7 +6,7 @@ Previous value:
 </p>
 <%= form_for [@reference, @translation], :url => interpret_translation_translations_path(@reference) do |f| %>
   <%= f.label :value, "Translation to [#{I18n.locale}]" %>
-  <%= f.text_field :value, :value => @translation.value %>
+  <%= f.text_area :value, :value => @translation.value %>
   <%= f.submit %>
 <% end %>
 
