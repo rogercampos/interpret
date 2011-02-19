@@ -17,12 +17,12 @@ class Interpret::TranslationsController < Interpret::BaseController
         @references = Interpret::Translation.locale(I18n.default_locale).where(t[:key].does_not_match("%.%"))
       end
     end
-    if Interpret.current_user
-      user = eval(Interpret.current_user)
-      @translations = @translations.where(:protected => false) if !user.send(Interpret.is_admin)
-      @references = @references.where(:protected => false) if @references && !user.send(Interpret.is_admin)
+    if @interpret_user
+      @translations = @translations.where(:protected => false) if !@interpret_admin
+      @references = @references.where(:protected => false) if @references && !@interpret_admin
     end
 
+    # not show translations inside nested folders, \w avoids dots
     @translations = @translations.select{|x| x.key =~ /#{key}\.\w+$/} if key
   end
 
@@ -31,12 +31,16 @@ class Interpret::TranslationsController < Interpret::BaseController
   end
 
   def update
+    if @interpret_user && !@interpret_admin && params[:interpret_translation].has_key?(:protected)
+      head :error
+      return
+    end
     @translation = Interpret::Translation.find(params[:id])
     old_value = @translation.value
 
     respond_to do |format|
       if @translation.update_attributes(params[:interpret_translation])
-        msg = (Interpret.current_user && respond_to?(Interpret.current_user.to_sym)) ? "By [#{eval(Interpret.current_user)}]. " : ""
+        msg = "By [#{@interpret_user}]. " if @interpret_user
         msg << "Locale: [#{@translation.locale}], key: [#{@translation.key}]. The translation has been changed from [#{old_value}] to [#{@translation.value}]"
         Interpret.logger.info msg
 

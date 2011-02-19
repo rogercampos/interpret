@@ -19,16 +19,10 @@ module Interpret
   @@scope = ""
 
   mattr_accessor :current_user
-  @@current_user = "current_user"
+  @@current_user = nil
 
-  mattr_accessor :is_admin
-  @@is_admin = nil
-
-  # More options:
-  # - memoize?
-  # - flatten?
-  # - logging?
-  # - current_user method. If set, current_user will appear in logs, otherwise not.
+  mattr_accessor :admin
+  @@admin = nil
 end
 
 require 'interpret/engine' if defined? Rails

@@ -4,11 +4,10 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-    User.find session[:user_id]
+    session[:user_id] ? User.find(session[:user_id]) : User.first
   end
 
   def set_current_user
-    # hardcoded users in database from seeds
     if params[:admin]
       session[:user_id] = params[:admin] == "true" ? User.where(:admin => true).first : User.where(:admin => false).first
     end

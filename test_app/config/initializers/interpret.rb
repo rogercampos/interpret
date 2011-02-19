@@ -5,4 +5,5 @@ Interpret.registered_envs = [:production, :development]
 Interpret.controller = "application_controller"
 
 # Enable an authentication method for interpret
-Interpret.is_admin = "admin?"
+Interpret.current_user = "current_user"
+Interpret.admin = "admin?"

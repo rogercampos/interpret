@@ -7,7 +7,7 @@
         <th>Key</th>
       <% end %>
       <th>Content [<%= I18n.locale %>]</th>
-      <% if Interpret.is_admin && @references.nil? %>
+      <% if @interpret_admin && @references.nil? %>
         <th style="width:5%">Protected?</th>
       <% end %>
     </tr>
@@ -24,13 +24,15 @@
                 :activator => "#translation_#{x.id}",
                 :sanitize => false %>
           </td>
-          <td style="width:5%" class='protection_input' id="protection_<%= x.id %>">
-            <%= best_in_place x, :protected,
-                 :type => :checkbox,
-                 :path => interpret_translation_path(x),
-                 :activator => "#protection_#{x.id}"
-                 %>
-          </td>
+          <% if @interpret_admin%>
+            <td style="width:5%" class='protection_input' id="protection_<%= x.id %>">
+              <%= best_in_place x, :protected,
+                  :type => :checkbox,
+                  :path => interpret_translation_path(x),
+                  :activator => "#protection_#{x.id}"
+                  %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     <% else %>
