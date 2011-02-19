@@ -19,7 +19,9 @@
   <div class="menu grid_16">
     Languages:
     <% Interpret::Translation.available_locales.each do |locale| %>
-      <%= link_to locale, :locale => locale %>
+      <% opts = {:locale => locale} %>
+      <% opts[:key] = params[:key] if params[:key] %>
+      <%= link_to locale, opts %>
     <% end %>
     <hr />
   </div>
