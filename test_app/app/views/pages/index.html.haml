@@ -6,4 +6,5 @@
 %p= t ".line3"
 %p= t ".line4_html"
 
-= link_to "Traduccions", interpret_root_path
+= link_to "Login to interpret as admin", interpret_root_path(:admin => true)
+= link_to "Login to interpret as user", interpret_root_path(:admin => false)

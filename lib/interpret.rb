@@ -22,7 +22,7 @@ module Interpret
   @@current_user = "current_user"
 
   mattr_accessor :is_admin
-  @@is_admin = "admin?"
+  @@is_admin = nil
 
   # More options:
   # - memoize?

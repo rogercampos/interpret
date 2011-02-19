@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110219143622) do
+ActiveRecord::Schema.define(:version => 20110219173536) do
 
   create_table "translations", :force => true do |t|
     t.string  "locale"
@@ -19,6 +19,12 @@ ActiveRecord::Schema.define(:version => 20110219143622) do
     t.text    "interpolations"
     t.boolean "is_proc",        :default => false
     t.boolean "protected",      :default => false
+  end
+
+  create_table "users", :force => true do |t|
+    t.boolean  "admin",      :default => false, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
