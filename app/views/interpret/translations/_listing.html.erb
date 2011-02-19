@@ -7,7 +7,7 @@
         <th>Key</th>
       <% end %>
       <th>Content [<%= I18n.locale %>]</th>
-      <% if Interpret.is_admin %>
+      <% if Interpret.is_admin && @references.nil? %>
         <th style="width:5%">Protected?</th>
       <% end %>
     </tr>
