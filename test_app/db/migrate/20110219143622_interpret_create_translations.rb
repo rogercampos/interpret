@@ -6,6 +6,7 @@ class InterpretCreateTranslations < ActiveRecord::Migration
       t.text   :value
       t.text   :interpolations
       t.boolean :is_proc, :default => false
+      t.boolean :protected, :default => false
     end
   end
 

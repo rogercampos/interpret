@@ -381,17 +381,27 @@ td, th {
 }
 
 td:first-child, td:first-child {
-  width: 50%;
+  width: 20%;
 }
 
 td:last-child, td:last-child {
-  width: 50%;
+  width: 80%;
+  text-align:center;
+}
+
+td.content {
+  text-align:center;
 }
 
 tr {
   border-bottom:1px solid #CCC;
   cursor: hand;
   cursor: pointer;
+}
+
+tr.protected {
+  border: 2px dashed red;
+  background-color: #FFEDED;
 }
 
 

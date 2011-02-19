@@ -30,7 +30,7 @@ class Interpret::TranslationsController < Interpret::BaseController
 
     respond_to do |format|
       if @translation.update_attributes(params[:interpret_translation])
-        msg = respond_to?(:current_user) ? "By [#{current_user}]. " : ""
+        msg = (Interpret.current_user && respond_to?(Interpret.current_user.to_sym)) ? "By [#{eval(Interpret.current_user)}]. " : ""
         msg << "Locale: [#{@translation.locale}], key: [#{@translation.key}]. The translation has been changed from [#{old_value}] to [#{@translation.value}]"
         Interpret.logger.info msg
 

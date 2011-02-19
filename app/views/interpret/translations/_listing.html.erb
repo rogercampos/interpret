@@ -7,19 +7,29 @@
         <th>Key</th>
       <% end %>
       <th>Content [<%= I18n.locale %>]</th>
+      <% if Interpret.is_admin %>
+        <th style="width:5%">Protected?</th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
     <% unless @references %>
       <% @translations.each do |x| %>
-        <tr id="translation_<%= x.id %>">
+        <tr<%= " class='protected'" if x.protected %>>
           <td><%= x.key %></td>
-          <td>
+          <td class="content" id="translation_<%= x.id %>">
             <%= best_in_place x, :value,
                 :type => :textarea,
                 :path => interpret_translation_path(x),
                 :activator => "#translation_#{x.id}",
                 :sanitize => false %>
+          </td>
+          <td style="width:5%" class='protection_input' id="protection_<%= x.id %>">
+            <%= best_in_place x, :protected,
+                 :type => :checkbox,
+                 :path => interpret_translation_path(x),
+                 :activator => "#protection_#{x.id}"
+                 %>
           </td>
         </tr>
       <% end %>
@@ -44,3 +54,11 @@
     <% end %>
   </tbody>
 </table>
+
+<%= javascript_tag do %>
+  $(document).ready(function() {
+    $(".protection_input").click(function() {
+      $(this).parent().toggleClass("protected");
+    });
+  });
+<% end %>

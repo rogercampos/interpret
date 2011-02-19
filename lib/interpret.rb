@@ -18,6 +18,12 @@ module Interpret
   mattr_accessor :scope
   @@scope = ""
 
+  mattr_accessor :current_user
+  @@current_user = "current_user"
+
+  mattr_accessor :is_admin
+  @@is_admin = "admin?"
+
   # More options:
   # - memoize?
   # - flatten?
