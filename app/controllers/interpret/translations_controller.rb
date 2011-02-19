@@ -8,16 +8,22 @@ class Interpret::TranslationsController < Interpret::BaseController
     t = Interpret::Translation.arel_table
     if key
       @translations = Interpret::Translation.locale(I18n.locale).where(t[:key].matches("#{key}.%"))
-      @translations = @translations.select{|x| x.key =~ /#{key}\.\w+$/}
       if I18n.locale != I18n.default_locale
         @references = Interpret::Translation.locale(I18n.default_locale).where(t[:key].matches("#{key}.%"))
       end
     else
-      @translations = Interpret::Translation.locale(I18n.locale).where(t[:key].does_not_match("%.%")).paginate :page => params[:page]
+      @translations = Interpret::Translation.locale(I18n.locale).where(t[:key].does_not_match("%.%"))
       if I18n.locale != I18n.default_locale
-        @references = Interpret::Translation.locale(I18n.default_locale).where(t[:key].does_not_match("%.%")).paginate :page => params[:page]
+        @references = Interpret::Translation.locale(I18n.default_locale).where(t[:key].does_not_match("%.%"))
       end
     end
+    if Interpret.current_user
+      user = eval(Interpret.current_user)
+      @translations = @translations.where(:protected => false) if !user.send(Interpret.is_admin)
+      @references = @references.where(:protected => false) if @references && !user.send(Interpret.is_admin)
+    end
+
+    @translations = @translations.select{|x| x.key =~ /#{key}\.\w+$/} if key
   end
 
   def edit
