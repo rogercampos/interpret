@@ -2,7 +2,7 @@
   Translation list
 <% end %>
 <div id="header">
-  <h1>Translations for <%= I18n.locale %></h1>
+  <h1>Translations for [<%= I18n.locale %>]</h1>
 </div>
 <p>
 Below are the translations without any particulary key in your application.
@@ -10,6 +10,14 @@ That use to be some global names or terms for common use along all the site,
 which doesn't belong to any page or section in particulary. To dive into the
 rest of your app's contents, navigate using the tree in the left, that shows your
 locales structure.
+</p>
+
+<p>
+<% if @references %>
+  There are <%=  @references.size - @translations.size %> / <%= @references.size %> missing translations.
+<% else %>
+  There are <%= @translations.size %> translations.
+<% end %>
 </p>
 
 <%= render 'interpret/translations/listing' %>

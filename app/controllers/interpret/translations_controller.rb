@@ -56,7 +56,7 @@ class Interpret::TranslationsController < Interpret::BaseController
 
   def create
     @reference = Interpret::Translation.find(params[:translation_id])
-    if @reference.locale == I18n.locale
+    if @reference.locale == I18n.locale.to_s
       redirect_to interpret_root_path
       return
     end
