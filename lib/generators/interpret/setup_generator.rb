@@ -9,6 +9,7 @@ module Interpret
     end
 
     def copy_js
+      copy_file "javascripts/interpret.js", "public/javascripts/interpret.js"
       copy_file "javascripts/jquery.purr.js", "public/javascripts/jquery.purr.js"
     end
 
