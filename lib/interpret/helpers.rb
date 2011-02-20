@@ -25,7 +25,7 @@ module Interpret
 
   private
     def build_tree(hash, origin_keys = "", prev_key = "")
-      out = "<ul id='navigation'>"
+      out = "<ul>"
       if origin_keys.present? && prev_key.blank?
         parent_key = origin_keys.split(".")[0..-2].join(".")
         if parent_key.blank?
