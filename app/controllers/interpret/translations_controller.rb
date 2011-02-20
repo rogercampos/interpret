@@ -41,7 +41,8 @@ class Interpret::TranslationsController < Interpret::BaseController
 
     respond_to do |format|
       if @translation.update_attributes(params[:interpret_translation])
-        msg = "By [#{@interpret_user}]. " if @interpret_user
+        msg = ""
+        msg << "By [#{@interpret_user}]. " if @interpret_user
         msg << "Locale: [#{@translation.locale}], key: [#{@translation.key}]. The translation has been changed from [#{old_value}] to [#{@translation.value}]"
         Interpret.logger.info msg
 
