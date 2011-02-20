@@ -4,5 +4,5 @@ Interpret.configure do |config|
   config.parent_controller = "application_controller"
   config.current_user = "current_user"
   config.admin = "admin?"
-  config.layout = "layouts/application"
+  config.layout = "application"
 end

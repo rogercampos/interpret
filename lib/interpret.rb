@@ -16,7 +16,7 @@ module Interpret
   @@controller = "action_controller/base"
   @@registered_envs = [:production, :staging]
   @@scope = ""
-  @@layout = "layouts/base"
+  @@layout = "interpret_base"
 
   def self.configure
     yield self

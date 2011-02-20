@@ -1,16 +1,15 @@
 <% interpret_title "Interpret - New translation" %>
-<% content_for :interpret_content do %>
-  <h1>Creating '<%= @translation.key %>'</h1>
 
-  <p>
-  Previous value:
-  <b>[<%= @reference.locale %>] <%= @reference.value %></b>
-  </p>
-  <%= form_for [@reference, @translation], :url => interpret_translation_translations_path(@reference) do |f| %>
-    <%= f.label :value, "Translation to [#{I18n.locale}]" %>
-    <%= f.text_area :value, :value => @translation.value %>
-    <%= f.submit %>
-  <% end %>
+<h1>Creating '<%= @translation.key %>'</h1>
 
-  <%= link_to "Back", interpret_root_path %>
+<p>
+Previous value:
+<b>[<%= @reference.locale %>] <%= @reference.value %></b>
+</p>
+<%= form_for [@reference, @translation], :url => interpret_translation_translations_path(@reference) do |f| %>
+  <%= f.label :value, "Translation to [#{I18n.locale}]" %>
+  <%= f.text_area :value, :value => @translation.value %>
+  <%= f.submit %>
 <% end %>
+
+<%= link_to "Back", interpret_root_path %>

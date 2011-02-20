@@ -1,32 +1,31 @@
 <% interpret_title "Interpret - Search" %>
-<% content_for :interpret_content do %>
-  <div id="header">
-    <h1>Search translations</h1>
-  </div>
 
-  <div id="search">
-    <p>Enter a search term for the key and/or the value of the translation</p>
+<div id="header">
+  <h1>Search translations</h1>
+</div>
 
-    <%= form_tag interpret_search_for_path do %>
-      <%= label_tag "key", "Key value" %>
-      <br />
-      <%= text_field_tag "key" %>
-      <br />
+<div id="search">
+  <p>Enter a search term for the key and/or the value of the translation</p>
 
-      <%= label_tag "value", "Translation text" %>
-      <br />
-      <%= text_field_tag "value" %>
-      <br />
+  <%= form_tag interpret_search_for_path do %>
+    <%= label_tag "key", "Key value" %>
+    <br />
+    <%= text_field_tag "key" %>
+    <br />
 
-      <%= submit_tag "SEARCH" %>
+    <%= label_tag "value", "Translation text" %>
+    <br />
+    <%= text_field_tag "value" %>
+    <br />
 
-    <% end %>
+    <%= submit_tag "SEARCH" %>
 
-    <% content_for :sidebar do %>
-      <h2>Search</h2>
-      <p>
-    You can use this search feature to look into all the translations. Can be filtered by language, key and phrase.
-      </p>
-    <% end %>
-  </div>
-<% end %>
+  <% end %>
+
+  <% content_for :sidebar do %>
+    <h2>Search</h2>
+    <p>
+  You can use this search feature to look into all the translations. Can be filtered by language, key and phrase.
+    </p>
+  <% end %>
+</div>

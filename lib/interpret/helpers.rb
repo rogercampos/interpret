@@ -23,6 +23,11 @@ module Interpret
       end
     end
 
+    def interpret_parent_layout(layout)
+      @_content_for[:layout] = self.output_buffer
+      self.output_buffer = render(:file => "layouts/#{layout}")
+    end
+
   private
     def build_tree(hash, origin_keys = "", prev_key = "")
       out = "<ul>"
