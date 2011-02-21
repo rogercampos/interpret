@@ -47,9 +47,11 @@ module Interpret
       end
 
       # Import the contents of the given .yml locale file into the database
-      # backend. All the existing translations for the given language will be
-      # erased, the backend will contain only the translations from the file
-      # (in that language).
+      # backend. If a given key already exists in database, it will be
+      # overwritten, otherwise it won't be touched. This means that in any
+      # case it will delete an existing translation, it only overwrites the
+      # ones you give in the file.
+      # If the given file has new translations, these will be ignored.
       #
       # The language will be obtained from the first unique key of the yml
       # file.
@@ -61,13 +63,14 @@ module Interpret
         raise ArgumentError, "the YAML file must contain an unique first key representing the locale" unless hash.keys.count == 1
 
         lang = hash.keys.first
-        delete_all(:locale => lang)
 
         records = parse_hash(hash.first[1], lang)
-        # TODO: Replace with activerecord-import bulk inserts
         transaction do
           records.each do |x|
-            x.save!
+            if tr = locale(lang).find_by_key(x.key)
+              tr.value = x.value
+              tr.save!
+            end
           end
         end
       end

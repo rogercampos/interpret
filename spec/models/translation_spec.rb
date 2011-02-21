@@ -214,13 +214,36 @@ es:
       @file = new_en_yml
     end
 
-    it "should dump the contents for the given file into database" do
+    it "should update the contents of the database from the given file" do
+      Interpret::Translation.delete_all
       file2db(en_yml)
       @file.stub!(:content_type).and_return("text/plain")
       Interpret::Translation.import(@file)
 
-      en_trans = Interpret::Translation.locale('en').all
-      Interpret::Translation.export(en_trans).should == YAML.load(new_en_yml)
+      trans = Interpret::Translation.locale('en').find_by_key("p1")
+      trans.value.should == "Hello modified world! This new translation should not be copied into database"
+    end
+
+    it "should not create new keys" do
+      Interpret::Translation.delete_all
+      file2db(en_yml)
+      howm_before = Interpret::Translation.locale('en').count
+
+      @file.stub!(:content_type).and_return("text/plain")
+      Interpret::Translation.import(@file)
+
+      howm_after = Interpret::Translation.locale('en').count
+      howm_before.should == howm_after
+    end
+
+    it "should not touch translations not present in the file" do
+      Interpret::Translation.delete_all
+      file2db(en_yml)
+      @file.stub!(:content_type).and_return("text/plain")
+      Interpret::Translation.import(@file)
+
+      trans = Interpret::Translation.locale('en').find_by_key("folder1.content")
+      trans.value.should == "Some large text content"
     end
 
     it "should not modify the database contents for other languages" do
