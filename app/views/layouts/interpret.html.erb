@@ -1,5 +1,10 @@
 
 <div id="interpret_container">
+  <% if flash.any? %>
+    <div class="interpret_flash grid_16 <%= flash.keys.first %>">
+      <%= flash[:notice] || flash[:alert] %>
+    </div>
+  <% end %>
   <div class="menu grid_12">
     <%= interpret_section_link_to "Overview", interpret_root_path %> |
     <% unless @interpret_user && !@interpret_admin %>

@@ -34,7 +34,8 @@ class Interpret::ToolsController < Interpret::BaseController
     begin
       Interpret::Translation.import(params[:file])
     rescue Exception => e
-      redirect_to interpret_tools_url, :alert => e
+      redirect_to interpret_tools_url, :alert => "Error when importing: #{e.message}"
+      return
     end
 
     session.delete(:tree)

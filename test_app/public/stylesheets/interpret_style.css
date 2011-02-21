@@ -521,3 +521,20 @@ html body * dd.clear
 #interpret_container #tree_sidebar a:hover {
   text-decoration: underline;
 }
+
+#interpret_container .interpret_flash {
+    width: 95%;
+    min-height: 0.8em;
+    padding: 1em;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+
+#interpret_container .interpret_flash.notice {
+    background-color: #BBFFBB;
+    border: 1px solid #55FF55;
+}
+#interpret_container .interpret_flash.alert {
+    background-color: #FFBBBB;
+    border: 1px solid #FF5555;
+}
