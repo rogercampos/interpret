@@ -2,7 +2,7 @@
 <div id="interpret_container">
   <div class="menu grid_12">
     <%= interpret_section_link_to "Overview", interpret_root_path %> |
-    <% if @interpret_admin %>
+    <% unless @interpret_user && !@interpret_admin %>
       <%= interpret_section_link_to "Tools", interpret_tools_path %> |
     <% end %>
     <%= interpret_section_link_to "Search", interpret_search_path %>
