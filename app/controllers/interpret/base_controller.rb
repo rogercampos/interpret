@@ -3,6 +3,14 @@ class Interpret::BaseController < eval(Interpret.parent_controller.classify)
   before_filter :interpret_set_current_user
   layout 'interpret'
 
+protected
+  def require_admin
+    if @interpret_user && !@interpret_admin
+      redirect_to interpret_root_url, :alert => "Not authorized"
+      return
+    end
+  end
+
 private
   def set_locale
     I18n.locale = params[:locale] if params[:locale]

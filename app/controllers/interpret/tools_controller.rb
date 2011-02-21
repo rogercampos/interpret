@@ -1,4 +1,5 @@
 class Interpret::ToolsController < Interpret::BaseController
+  before_filter :require_admin
 
   def dump
     Interpret::Translation.dump
