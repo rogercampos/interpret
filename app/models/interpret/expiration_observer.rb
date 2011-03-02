@@ -15,14 +15,16 @@ module Interpret
     end
 
   protected
+    # expiration logic for your app
     def expire_cache
-      #puts "EXPIRATED!"
     end
 
   private
     def run_expiration
+      return if @done
       Interpret.backend.reload! if Interpret.backend
       expire_cache
+      @done = true
     end
   end
 end
