@@ -19,5 +19,12 @@ module Interpret
       logfile.sync = true
       Interpret.logger = InterpretLogger.new(logfile)
     end
+
+
+    initializer "interpret.register_observer" do |app|
+      app.config.after_initialize do
+        ActiveRecord::Base.observers << Interpret.sweeper.to_sym if Interpret.sweeper
+      end
+    end
   end
 end

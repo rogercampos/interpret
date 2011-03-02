@@ -1,6 +1,4 @@
 class Interpret::TranslationsController < Interpret::BaseController
-  cache_sweeper eval(Interpret.sweeper.to_s.classify) if Interpret.sweeper
-  cache_sweeper Interpret::TranslationSweeper
   before_filter :get_tree, :only => :index
 
   def index
