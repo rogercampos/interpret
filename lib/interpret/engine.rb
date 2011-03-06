@@ -4,13 +4,15 @@ require 'interpret/helpers'
 
 module Interpret
   class Engine < Rails::Engine
-    if Interpret.registered_envs.include?(Rails.env.to_sym)
-      initializer "interpret.register_i18n_active_record_backend" do |app|
-        I18n::Backend::ActiveRecord.send(:include, I18n::Backend::Memoize)
-        I18n::Backend::ActiveRecord.send(:include, I18n::Backend::Flatten)
+    initializer "interpret.register_i18n_active_record_backend" do |app|
+      app.config.after_initialize do
+        if Interpret.registered_envs.include?(Rails.env.to_sym)
+          I18n::Backend::ActiveRecord.send(:include, I18n::Backend::Memoize)
+          I18n::Backend::ActiveRecord.send(:include, I18n::Backend::Flatten)
 
-        Interpret.backend = I18n::Backend::ActiveRecord.new
-        app.config.i18n.backend = Interpret.backend
+          Interpret.backend = I18n::Backend::ActiveRecord.new
+          app.config.i18n.backend = Interpret.backend
+        end
       end
     end
 
