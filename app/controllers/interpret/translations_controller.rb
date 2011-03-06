@@ -81,7 +81,7 @@ class Interpret::TranslationsController < Interpret::BaseController
 
 private
   def get_tree
-    @tree = session[:tree] ||= Interpret::Translation.get_tree
+    @tree ||= Interpret::Translation.get_tree
   end
 
 end
