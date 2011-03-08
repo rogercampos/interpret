@@ -24,8 +24,9 @@ module Interpret
 
 
     initializer "interpret.register_observer" do |app|
-      app.config.after_initialize do
+      app.config.before_initialize do |app|
         ActiveRecord::Base.observers << Interpret.sweeper.to_sym if Interpret.sweeper
+        ActiveRecord::Base.observers << :"interpret/expiration_observer" unless Interpret.sweeper
       end
     end
   end

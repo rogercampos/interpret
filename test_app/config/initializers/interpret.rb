@@ -4,5 +4,5 @@ Interpret.configure do |config|
   config.current_user = "current_user"
   config.admin = "admin?"
   config.layout = "application"
-  config.sweeper = "my_sweeper"
+  #config.sweeper = "my_sweeper"
 end
