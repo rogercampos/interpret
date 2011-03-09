@@ -4,7 +4,7 @@ module Interpret
     observe Interpret::Translation
 
     def after_update(record)
-      run_expiration
+      run_expiration if record.value_changed?
     end
 
     def after_create(record)
