@@ -1,13 +1,4 @@
-require 'i18n/backend/active_record/translation'
-
-
 module Interpret
-
-  class TableDoesNotExists < ActiveRecord::ActiveRecordError; end
-
-  unless I18n::Backend::ActiveRecord::Translation.table_exists?
-    raise TableDoesNotExists, "You must setup a translations table first"
-  end
 
   class Translation < I18n::Backend::ActiveRecord::Translation
     default_scope order('locale ASC')
@@ -41,16 +32,16 @@ module Interpret
           LazyHash.add(res, "#{e.locale}.#{e.key}", e.value)
         end
         if res.keys.size != 1
-          raise IndexError, "Generated hash must have only one root key. Your translation data in datrabase may be corrupted."
+          raise IndexError, "Generated hash must have only one root key. Your translation data in database may be corrupted."
         end
         res
       end
 
       # Import the contents of the given .yml locale file into the database
       # backend. If a given key already exists in database, it will be
-      # overwritten, otherwise it won't be touched. This means that in any
-      # case it will delete an existing translation, it only overwrites the
-      # ones you give in the file.
+      # overwritten, otherwise it won't be touched. This means that  it won't
+      # delete any existing translation, it only overwrites the ones you give
+      # in the file.
       # If the given file has new translations, these will be ignored.
       #
       # The language will be obtained from the first unique key of the yml
@@ -73,11 +64,11 @@ module Interpret
       end
 
       # Dump all contents from *.yml locale files into the database.
-      # CAUTION: All existing data will be erased!
-      #
+      # If Interpret.soft is set to false, all existing translations will be
+      # removed
       def dump
         files = Dir[Rails.root.join("config", "locales", "*.yml").to_s]
-        delete_all
+        delete_all unless Interpret.soft
 
         records = []
         files.each do |f|
@@ -192,7 +183,7 @@ module Interpret
           end
         end
 
-        if prefix.blank?
+        if prefix.blank? && !Interpret.soft
           remove_unused_keys(existing)
         end
       end

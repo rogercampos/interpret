@@ -1,4 +1,5 @@
 module Interpret
+
   class ExpirationObserver < ActiveRecord::Observer
     observe Interpret::Translation
 

@@ -12,11 +12,13 @@ module Interpret
   mattr_accessor :current_user
   mattr_accessor :admin
   mattr_accessor :layout
+  mattr_accessor :soft
 
   @@controller = "action_controller/base"
   @@registered_envs = [:production, :staging]
   @@scope = ""
   @@layout = "interpret_base"
+  @@soft = true
 
   def self.configure
     yield self
@@ -24,5 +26,3 @@ module Interpret
 end
 
 require 'interpret/engine' if defined? Rails
-
-ActionView::Base.send(:include, Interpret::InterpretHelpers)

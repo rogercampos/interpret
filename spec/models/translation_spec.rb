@@ -88,7 +88,7 @@ es:
         if dict[x].kind_of?(Hash)
           res += parse_hash(dict[x], locale, "#{prefix}#{x}.")
         else
-          res << Interpret::Translation.new(:locale => locale, :key => "#{prefix}#{x}", :value => dict[x])
+          res << Interpret::Translation.create!(:locale => locale, :key => "#{prefix}#{x}", :value => dict[x])
         end
       end
       res
@@ -102,6 +102,7 @@ es:
   end
 
   before do
+    Interpret::Translation.delete_all
     I18n.stub!(:default_locale).and_return('en')
   end
 
@@ -132,7 +133,7 @@ es:
   end
 
   describe ".update" do
-    before(:all) do
+    before do
       # Supose the database has the default contents, look at the top of this
       # file for en_yml simulated locale file
       file2db(en_yml)
@@ -144,15 +145,21 @@ es:
       YAML.should_receive(:load_file).twice.and_return(YAML.load(new_en_yml), YAML.load(new_es_yml))
     end
 
-    context "when a key exists in database but not in yml files [for I18n.default_locale]" do
-      it "should remove that key from database for I18n.default_locale" do
-        Interpret::Translation.update
-        Interpret::Translation.locale('en').find_by_key("folder1.content").should be_nil
+    context "when Interpret.soft is false" do
+      before do
+        Interpret.soft = false
       end
 
-      it "should remove that key if it exists for any other language in database" do
-        Interpret::Translation.update
-        Interpret::Translation.locale('es').find_by_key("folder1.content").should be_nil
+      context "when a key exists in database but not in yml files [for I18n.default_locale]" do
+        it "should remove that key from database for I18n.default_locale" do
+          Interpret::Translation.update
+          Interpret::Translation.locale('en').find_by_key("folder1.content").should be_nil
+        end
+
+        it "should remove that key if it exists for any other language in database" do
+          Interpret::Translation.update
+          Interpret::Translation.locale('es').find_by_key("folder1.content").should be_nil
+        end
       end
     end
 
@@ -190,22 +197,26 @@ es:
   end
 
   describe ".dump" do
-    it "should dump all contents from yml files into database" do
-      # Initial database state
-      file2db(en_yml)
-      file2db(es_yml)
+    context "when Interpret.soft is false" do
+      it "should dump all contents from yml files into database" do
+        Interpret.soft = false
 
-      Dir.stub!(:"[]").and_return(['/path/to/en.yml', '/path/to/es.yml'])
-      YAML.should_receive(:load_file).twice.and_return(YAML.load(new_en_yml), YAML.load(new_es_yml))
-      Interpret::Translation.dump
+        # Initial database state
+        file2db(en_yml)
+        file2db(es_yml)
 
-      # We use export to check for the existing database contents, which is
-      # also tested in this spec file
-      en_trans = Interpret::Translation.locale('en').all
-      Interpret::Translation.export(en_trans).should == YAML.load(new_en_yml)
+        Dir.stub!(:"[]").and_return(['/path/to/en.yml', '/path/to/es.yml'])
+        YAML.should_receive(:load_file).twice.and_return(YAML.load(new_en_yml), YAML.load(new_es_yml))
+        Interpret::Translation.dump
 
-      es_trans = Interpret::Translation.locale('es').all
-      Interpret::Translation.export(es_trans).should == YAML.load(new_es_yml)
+        # We use export to check for the existing database contents, which is
+        # also tested in this spec file
+        en_trans = Interpret::Translation.locale('en').all
+        Interpret::Translation.export(en_trans).should == YAML.load(new_en_yml)
+
+        es_trans = Interpret::Translation.locale('es').all
+        Interpret::Translation.export(es_trans).should == YAML.load(new_es_yml)
+      end
     end
   end
 
