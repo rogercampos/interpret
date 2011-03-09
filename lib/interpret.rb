@@ -26,3 +26,5 @@ module Interpret
 end
 
 require 'interpret/engine' if defined? Rails
+
+ActionView::Base.send(:include, Interpret::InterpretHelpers)
