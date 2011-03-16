@@ -22,10 +22,8 @@ module Interpret
 
   private
     def run_expiration
-      return if @done
       Interpret.backend.reload! if Interpret.backend
       expire_cache
-      @done = true
     end
   end
 end
