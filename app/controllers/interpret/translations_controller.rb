@@ -5,9 +5,9 @@ class Interpret::TranslationsController < Interpret::BaseController
     key = params[:key]
     t = Interpret::Translation.arel_table
     if key
-      @translations = Interpret::Translation.locale(I18n.locale).where(t[:key].matches("#{key}.%"))
+      @translations = Interpret::Translation.locale(I18n.locale).where(t[:key].matches("#{CGI.escape(key)}.%"))
       if I18n.locale != I18n.default_locale
-        @references = Interpret::Translation.locale(I18n.default_locale).where(t[:key].matches("#{key}.%"))
+        @references = Interpret::Translation.locale(I18n.default_locale).where(t[:key].matches("#{CGI.escape(key)}.%"))
       end
     else
       @translations = Interpret::Translation.locale(I18n.locale).where(t[:key].does_not_match("%.%"))
