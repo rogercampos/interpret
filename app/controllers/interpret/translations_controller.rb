@@ -86,7 +86,11 @@ class Interpret::TranslationsController < Interpret::BaseController
     @translation = Interpret::Translation.locale(locale).find_by_key(key)
 
     respond_to do |format|
-      format.js
+      if @translation
+        format.js
+      else
+        head :ok
+      end
     end
   end
 
