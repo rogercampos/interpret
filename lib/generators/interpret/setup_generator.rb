@@ -10,6 +10,7 @@ module Interpret
 
     def copy_js
       copy_file "javascripts/interpret.js", "public/javascripts/interpret.js"
+      directory "javascripts/facebox-1.3", "public/javascripts/facebox-1.3"
     end
 
     def copy_images

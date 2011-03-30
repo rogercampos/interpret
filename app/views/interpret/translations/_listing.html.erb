@@ -24,7 +24,7 @@
                 :activator => "#translation_#{x.id}",
                 :sanitize => false %>
           </td>
-          <% if @interpret_admin%>
+          <% if @interpret_admin %>
             <td style="width:5%" class='protection_input' id="protection_<%= x.id %>">
               <%= best_in_place x, :protected,
                   :type => :checkbox,

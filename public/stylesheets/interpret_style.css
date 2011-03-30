@@ -538,3 +538,14 @@ html body * dd.clear
     background-color: #FFBBBB;
     border: 1px solid #FF5555;
 }
+
+#interpret_live_edit {
+  padding-top: 15px;
+  padding-right: 16px;
+  width: 700px;
+  height: 400px;
+}
+
+#interpret_live_edit textarea {
+  width: 100%;
+}

@@ -5,4 +5,5 @@ Interpret.configure do |config|
   config.admin = "admin?"
   config.layout = "application"
   #config.sweeper = "my_sweeper"
+  config.live_edit = true
 end

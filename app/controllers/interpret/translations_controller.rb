@@ -44,11 +44,11 @@ class Interpret::TranslationsController < Interpret::BaseController
         msg << "Locale: [#{@translation.locale}], key: [#{@translation.key}]. The translation has been changed from [#{old_value}] to [#{@translation.value}]"
         Interpret.logger.info msg
 
-        format.html { redirect_to(translations_url)}
+        format.html { redirect_to(request.env["HTTP_REFERER"]) }
         format.xml  { head :ok }
         format.json { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { redirect_to(request.env["HTTP_REFERER"]) }
         format.xml  { render :xml => @translation.errors, :status => :unprocessable_entity }
         format.json { render :status => :unprocessable_entity }
       end
@@ -76,6 +76,17 @@ class Interpret::TranslationsController < Interpret::BaseController
       redirect_to interpret_root_path(:locale => I18n.locale), :notice => "New translation created"
     else
       render :action => :new
+    end
+  end
+
+  def live_edit
+    blobs = params[:key].split(".")
+    locale = blobs.first
+    key = blobs[1..-1].join(".")
+    @translation = Interpret::Translation.locale(locale).find_by_key(key)
+
+    respond_to do |format|
+      format.js
     end
   end
 

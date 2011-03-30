@@ -13,12 +13,14 @@ module Interpret
   mattr_accessor :admin
   mattr_accessor :layout
   mattr_accessor :soft
+  mattr_accessor :live_edit
 
   @@controller = "action_controller/base"
   @@registered_envs = [:production, :staging]
   @@scope = ""
   @@layout = "interpret_base"
   @@soft = true
+  @@live_edit = false
 
   def self.configure
     yield self

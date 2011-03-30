@@ -3,6 +3,10 @@ Rails.application.routes.draw do
     namespace :interpret do
       resources :translations, :only => [:edit, :update] do
         resources :translations, :only => [:new, :create]
+
+        collection do
+          get :live_edit
+        end
       end
 
       resources :tools, :only => :index do

@@ -28,7 +28,56 @@ module Interpret
       self.output_buffer = render(:file => "layouts/#{layout}")
     end
 
+    def t(key, options = {})
+      if Interpret.live_edit && interpret_admin?
+        keys = build_keys(key, options)
+        "<span class='interpret_editable' data-key='#{keys}'>#{translate(key, options)}</span>".html_safe
+      else
+        translate(key, options)
+      end
+    end
+
+    def include_interpret_javascript
+      return unless Interpret.live_edit
+      content_tag(:div) do
+        concat(javascript_include_tag "facebox-1.3/facebox")
+        concat javascript_tag <<-JS
+          $(document).ready(function(){
+            $(".interpret_editable").click(function() {
+              $.get("#{live_edit_interpret_translations_path}", {"key": $(this).attr("data-key")});
+            });
+          });
+        JS
+        concat '<link href="/javascripts/facebox-1.3/facebox.css" media="screen" rel="stylesheet" type="text/css"/>'.html_safe
+      end
+    end
+
   private
+    def interpret_admin?
+      if Interpret.current_user && defined?(Interpret.current_user.to_sym)
+        interpret_user = eval(Interpret.current_user)
+        interpret_admin = true
+        if Interpret.admin && interpret_user.respond_to?(Interpret.admin)
+          interpret_admin = interpret_user.send(Interpret.admin)
+        end
+        interpret_admin
+      else
+        true
+      end
+    end
+
+    def build_keys(key, options)
+      I18n.normalize_keys(I18n.locale, scope_key_by_partial(key), options[:scope]).join(".")
+    end
+
+    def scope_key_by_partial(key)
+      if key.to_s.first == "."
+        "#{@_virtual_path.gsub(%r{/_?}, ".")}#{key.to_s}"
+      else
+        key
+      end
+    end
+
     def build_tree(hash, origin_keys = "", prev_key = "")
       out = "<ul>"
       if origin_keys.present? && prev_key.blank?

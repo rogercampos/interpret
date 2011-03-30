@@ -1,0 +1,7 @@
+<div id="interpret_live_edit">
+  <%= form_for @translation, :url => interpret_translation_path(@translation) do |f| %>
+    <%= f.text_area :value, :value => @translation.value  %>
+    <br/>
+    <%= f.submit %>
+  <% end %>
+</div>
