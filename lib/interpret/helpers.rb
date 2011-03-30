@@ -29,16 +29,16 @@ module Interpret
     end
 
     def t(key, options = {})
-      if Interpret.live_edit && interpret_admin?
+      if Interpret.live_edit && @interpret_admin
         keys = build_keys(key, options)
         "<span class='interpret_editable' data-key='#{keys}'>#{translate(key, options)}</span>".html_safe
       else
-        translate(key, options)
+        translate(key, options).html_safe
       end
     end
 
     def include_interpret_javascript
-      return unless Interpret.live_edit
+      return unless Interpret.live_edit && @interpret_admin
       content_tag(:div) do
         concat(javascript_include_tag "facebox-1.3/facebox")
         concat javascript_tag <<-JS
@@ -53,19 +53,6 @@ module Interpret
     end
 
   private
-    def interpret_admin?
-      if Interpret.current_user && defined?(Interpret.current_user.to_sym)
-        interpret_user = eval(Interpret.current_user)
-        interpret_admin = true
-        if Interpret.admin && interpret_user.respond_to?(Interpret.admin)
-          interpret_admin = interpret_user.send(Interpret.admin)
-        end
-        interpret_admin
-      else
-        true
-      end
-    end
-
     def build_keys(key, options)
       I18n.normalize_keys(I18n.locale, scope_key_by_partial(key), options[:scope]).join(".")
     end
