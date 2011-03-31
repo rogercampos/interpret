@@ -544,8 +544,35 @@ html body * dd.clear
   padding-right: 16px;
   width: 700px;
   height: 400px;
+  text-align: center;
 }
 
 #interpret_live_edit textarea {
   width: 100%;
+  height: 31em;
+}
+
+#interpret_live_edit input[type=submit] {
+  background-color: #555;
+  color: #FFF;
+  border: none;
+  font-size: 1em;
+  margin-top: .5em;
+  padding: .6em 1.5em;
+  cursor: hand;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#interpret_live_edit input[type=submit]:hover {
+  background-color: #777;
+}
+
+.interpret_editable {
+  background-color: #F8FD7D;
+  cursor: hand;
+  cursor: pointer;
+}
+.interpret_editable:hover {
+  background-color: #FCF305;
 }
