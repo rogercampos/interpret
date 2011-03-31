@@ -1,14 +1,18 @@
 <% interpret_title "Interpret - Tools" %>
 
 <div class="header">
-  <h1>Your master language</h1>
+  <h1>Tools for import/export locale data</h1>
 </div>
+
+<p><%= link_to "Download", export_interpret_tools_path %> the current translations for '<%= I18n.locale %>' language as .yml file</p>
+<p>Upload your .yml file for '<%= I18n.locale %>' language</p>
 <p>
-Currently your primary language is <b><%= I18n.default_locale %></b>. This
-language will be used as a reference for all your translation work, you
-can change it below:
-</p>
-<p><em>TODO</em></p>
+<%= form_tag import_interpret_tools_path, :multipart => true do %>
+  <%= label_tag "File:" %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Upload" %>
+<% end %>
+
 
 <div class="header">
   <h1>Update contents from yml locale files</h1>
@@ -32,16 +36,3 @@ can change it below:
 <p>
 <%= button_to "Run the migration", dump_interpret_tools_path %>
 </p>
-
-<div class="header">
-  <h1>Tools for import/export locale data</h1>
-</div>
-
-<p><%= link_to "Download", export_interpret_tools_path %> the current translations for '<%= I18n.locale %>' language as .yml file</p>
-<p>Upload your .yml file for '<%= I18n.locale %>' language</p>
-<p>
-<%= form_tag import_interpret_tools_path, :multipart => true do %>
-  <%= label_tag "File:" %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Upload" %>
-<% end %>
