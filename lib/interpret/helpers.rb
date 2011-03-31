@@ -44,7 +44,9 @@ module Interpret
         concat javascript_tag <<-JS
           $(document).ready(function(){
             $(".interpret_editable").click(function() {
-              $.get("#{live_edit_interpret_translations_path}", {"key": $(this).attr("data-key")});
+              var key = $(this).attr("data-key");
+              jQuery.facebox({ ajax: '#{live_edit_interpret_translations_path}?key=' + key});
+              return false;
             });
           });
         JS

@@ -87,7 +87,7 @@ class Interpret::TranslationsController < Interpret::BaseController
 
     respond_to do |format|
       if @translation
-        format.js
+        format.html { render :layout => false }
       else
         head :ok
       end
