@@ -1,5 +1,4 @@
 require 'best_in_place'
-require 'will_paginate'
 require 'lazyhash'
 
 module Interpret
