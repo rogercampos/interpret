@@ -37,7 +37,7 @@ module Interpret
       end
     end
 
-    def include_interpret_javascript
+    def interpret_live_edition
       return unless Interpret.live_edit && @interpret_admin
       content_tag(:div) do
         concat(javascript_include_tag "facebox-1.3/facebox")
