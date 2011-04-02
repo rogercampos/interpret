@@ -19,7 +19,7 @@ module Interpret
   @@registered_envs = [:production, :staging]
   @@scope = ""
   @@layout = "interpret_base"
-  @@soft = true
+  @@soft = false
   @@live_edit = false
 
   def self.configure
