@@ -18,15 +18,17 @@
   <h1>Update contents from yml locale files</h1>
 </div>
 
-<p>update all your application translatinos from the yml files.<br/>
+<p>Update all your application translations from the yml files.<br/>
 </p>
-<%= button_to "Update contents", run_update_interpret_tools_path %>
+<%= button_to "Update", run_update_interpret_tools_path %>
+
+
 <div class="header">
   <h1>Dump .yml contents into database</h1>
 </div>
 
 <p>With this option you can export all of your *.yml contents into the database backend<br/>
-<b>Be aware!!</b> All of your current database translations will be erased
+<b>Be aware!!</b> All of your current database translations will be updated to match with your current *.yml files.
 </p>
 
 <% if Rails.env == "production" %>
@@ -34,5 +36,5 @@
 <% end %>
 
 <p>
-<%= button_to "Run the migration", dump_interpret_tools_path %>
+<%= button_to "Dump", dump_interpret_tools_path %>
 </p>
