@@ -86,11 +86,7 @@ class Interpret::TranslationsController < Interpret::BaseController
     @translation = Interpret::Translation.locale(locale).find_by_key(key)
 
     respond_to do |format|
-      if @translation
-        format.html { render :layout => false }
-      else
-        head :ok
-      end
+      format.html { render :layout => false }
     end
   end
 
