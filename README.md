@@ -26,6 +26,8 @@ I18n activerecord backend. This way you can still edit your translations as
 before, but in this case the modifications you make won't be directly
 available in your application.
 
+[SEE DEMO](http://interpretapp.heroku.com)
+
 
 Installation
 ===========
