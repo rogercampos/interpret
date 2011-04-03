@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Interpret Demo - Backoffice</title>
+  <%= stylesheet_link_tag "private", "interpret_style" %>
+  <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" %>
+  <%= javascript_include_tag :all %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+  <div id="private_content">
+    <p>
+      This is a demostration of a custom backoffice layout, in which you may have other sections to administrate your site. You can integrate Interpret as a one more option in the main menu:
+    </p>
+    <div id="backoffice_menu">
+      <ul>
+        <li><%= link_to "Public page", "/" %></li>
+        <li><%= link_to "Other backoffice section", "#" %></li>
+        <li><%= link_to "Translations", interpret_root_path %></li>
+      </ul>
+    </div>
+    <div id="page">
+      <%= yield %>
+    </div>
+  </div>
+</body>
+</html>

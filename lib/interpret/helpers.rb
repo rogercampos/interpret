@@ -33,7 +33,7 @@ module Interpret
         keys = build_keys(key, options)
         "<span class='interpret_editable' data-key='#{keys}'>#{translate(key, options)}</span>".html_safe
       else
-        translate(key, options).html_safe
+        translate(key, options) #.html_safe
       end
     end
 

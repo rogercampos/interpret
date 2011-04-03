@@ -247,6 +247,9 @@ be overwritten the next time you run a `rails g interpret:setup`.
 For now there is no generator to copy all the views into your app, but you can
 do it yourself by-hand if you want to also customize them.
 
+Remember to load the Interpret stylesheet if you use your own layout:
+
+    = stylesheet_link_tag "interpret_style"
 
 
 Routes scope
@@ -341,9 +344,9 @@ things:
 3. Use the following helper in your main layout (or all layouts your
    application use):
 
-      = interpret_live_edition
+      `= interpret_live_edition`
 
-  You should use it at the bottom of your `body` block.
+   You should use it at the bottom of your `body` block.
 
 4. Set the `Interpret.live_edit` variable to **true**, to enable live edition.
 
@@ -474,6 +477,10 @@ this, but by now it's not included in Interpret.
 
 Final notes
 ===========
+
+Thanks to [NodeThirtyThree](http://nodethirtythree.com) for their website
+templates released under CreativeCommons 3.0 license, one of which is used
+here.
 
 This piece of software is on a very early stage of development, so use it at your
 own risk!

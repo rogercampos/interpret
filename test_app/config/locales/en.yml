@@ -1,0 +1,55 @@
+en:
+  main_header_html: <span>terra</span>firma<sup>1.0</sup>
+  main_h2: by nodethirtythree
+
+  printer: Printer Friendly
+  comments: Comments
+  read_more: Read more
+
+  about_me: About Me
+  about_me_text_html: <strong>Nullam turpis</strong> vestibulum et sed dolore. Nulla facilisi. Sed tortor. lobortis commodo. <a href="#">More ...</a>
+  topics: Topics
+
+  topics_list:
+    t1_html: <a href="#">Accumsan congue (32)</a>
+    t2_html: <a href="#">Dignissim nec augue (14)</a>
+    t3_html: <a href="#">Nunc ante elit nulla (83)</a>
+    t4_html: <a href="#">Aliquam suscipit (74)</a>
+    t5_html: <a href="#">Cursus sed arcu sed (14)</a>
+    t6_html: <a href="#">Eu ante cras at risus (24)</a>
+    t7_html: <a href="#">Donec mollis dolore (39)</a>
+    t8_html: <a href="#">Aliquam suscipit (74)</a>
+
+  pages:
+    index:
+      title1_html: TerraFirma<sup>1.0</sup> by NodeThirtyThree
+      date1: August 1, 2006
+      title2: Vivamus tortor sed aenean
+      date2: June 2, 2006
+      title3: Vivamus tortor sed aenean
+      date3: July 31, 2006
+
+      post_1_1_html: <strong>TerraFirma</strong><sup>1.0</sup> is a free, lightweight, tableless, W3C-compliant website design by <a href="http://www.nodethirtythree.com/">NodeThirtyThree Design</a>. You're free to dissect, manipulate and use it to your heart's content. We only ask that you link back to our site in some way. If you find this design useful, feel free to let us know :)
+      post_1_2_html: You can find more of our free work at this site or <a href="http://www.nodethirtythree.com/">our site</a>, or some of our commercial work on <a href="http://www.4templates.com/?aff=n33">4Templates.com</a>, a commercial website template site.
+
+      post_2_1_html: Volutpat at varius sed sollicitudin et, arcu. Vivamus viverra. Nullam turpis. Vestibulum sed etiam. Lorem ipsum sit amet dolore. Nulla facilisi. Sed tortor. Aenean felis. Quisque eros. Cras lobortis commodo metus. Vestibulum vel purus. In eget odio in sapien adipiscing blandit. Quisque augue tortor, facilisis sit amet, aliquam, suscipit vitae, cursus sed, arcu lorem ipsum dolor sit amet.
+      post_2_2_html: Fermentum at, varius pretium, elit. Mauris egestas scelerisque nunc. Mauris non ligula quis wisi laoreet malesuada. In commodo. Maecenas lobortis cursus dolor.
+      post_3_1_html: Volutpat at varius sed sollicitudin et, arcu. Vivamus viverra. Nullam turpis. Vestibulum sed etiam. Lorem ipsum sit amet dolore. Nulla facilisi. Sed tortor. Aenean felis. Quisque eros. Cras lobortis commodo metus. Vestibulum vel purus. In eget odio in sapien adipiscing blandit. Quisque augue tortor, facilisis sit amet, aliquam, suscipit vitae, cursus sed, arcu lorem ipsum dolor sit amet.
+      post_3_2_html: Fermentum at, varius pretium, elit. Mauris egestas scelerisque nunc. Mauris non ligula quis wisi laoreet malesuada. In commodo. Maecenas lobortis cursus dolor.
+
+    archives:
+      h1: This is the archives section of the site
+      p1: Nisi nec libero. Cras magna ipsum, scelerisque et, tempor eget, gravida nec, lacus. Fusce eros nisi, ullamcorper blandit, ultricies eget, elementum eget, pede. Phasellus id risus vitae nisl ullamcorper congue. Proin est.  Sed eleifend odio sed leo. Mauris tortor turpis, dignissim vel, ornare ac, ultricies quis, magna. Phasellus lacinia, augue ac dictum tempor, nisi felis ornare magna, eu vehicula tellus enim eu neque. Fusce est eros, sagittis eget, interdum a, ornare suscipit, massa. Sed vehicula elementum ligula. Aliquam erat volutpat. Donec odio. Quisque nunc. Integer cursus feugiat magna. Fusce ac elit ut elit aliquam suscipit. Duis leo est, interdum nec, varius in.
+    contact:
+      h1: Contact section
+      p1: Nisi nec libero. Cras magna ipsum, scelerisque et, tempor eget, gravida nec, lacus. Fusce eros nisi, ullamcorper blandit, ultricies eget, elementum eget, pede. Phasellus id risus vitae nisl ullamcorper congue. Proin est.  Sed eleifend odio sed leo. Mauris tortor turpis, dignissim vel, ornare ac, ultricies quis, magna. Phasellus lacinia, augue ac dictum tempor, nisi felis ornare magna, eu vehicula tellus enim eu neque. Fusce est eros, sagittis eget, interdum a, ornare suscipit, massa. Sed vehicula elementum ligula. Aliquam erat volutpat. Donec odio. Quisque nunc. Integer cursus feugiat magna. Fusce ac elit ut elit aliquam suscipit. Duis leo est, interdum nec, varius in.
+    resources:
+      h1: Resources section
+      p1: Sed eleifend odio sed leo. Mauris tortor turpis, dignissim vel, ornare ac, ultricies quis, magna. Phasellus lacinia, augue ac dictum tempor, nisi felis ornare magna, eu vehicula tellus enim eu neque. Fusce est eros, sagittis eget, interdum a, ornare suscipit, massa. Sed vehicula elementum ligula. Aliquam erat volutpat. Donec odio. Quisque nunc. Integer cursus feugiat magna. Fusce ac elit ut elit aliquam suscipit. Duis leo est, interdum nec, varius in.
+      p2: Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.  Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.  Mirum est notare quam littera gothica, quam nunc putamus parum.
+    links:
+      h1: Links section
+      p1: Sed eleifend odio sed leo. Mauris tortor turpis, dignissim vel, ornare ac, ultricies quis, magna. Phasellus lacinia, augue ac dictum tempor, nisi felis ornare magna, eu vehicula tellus enim eu neque. Fusce est eros, sagittis eget, interdum a, ornare suscipit, massa. Sed vehicula elementum ligula. Aliquam erat volutpat. Donec odio. Quisque nunc. Integer cursus feugiat magna. Fusce ac elit ut elit aliquam suscipit. Duis leo est, interdum nec, varius in.
+      elem1: List element one
+      elem2: List element two
+      elem3: List element three

@@ -1,15 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cuca</title>
-  <%= stylesheet_link_tag :all %>
+  <title>Interpret Demo</title>
+  <%= stylesheet_link_tag "default" %>
   <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" %>
   <%= javascript_include_tag :all %>
   <%= csrf_meta_tag %>
 </head>
 <body>
-  This is the APPLICATION main Layout
-  <%= yield %>
+  <div id="demo_sidebar">
+    <p>
+    This is a DEMO site to provide an example usage of <a href="https://github.com/rogercampos/interpret">Interpret</a>.
+    </p>
+
+    <p>
+      <ul>
+        <li>
+          <%= link_to "Login to interpret as ADMIN", interpret_root_path(:admin => "true") %>
+        </li>
+        <li>
+          <%= link_to "Login to interpret as USER", interpret_root_path(:admin => "false") %>
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <%= button_to Interpret.live_edit ? "Disable edition mode" : "Enable edition mode", toggle_edition_mode_path %>
+    </p>
+
+    <p>You can reestore the original contents with the option "Dump", inside the backoffice > Tools section.</p>
+    <p>
+      Thanks to <a href="http://nodethirtythree.com">NodeThirtyThree</a> to provide this template in order to demostrate a real website.
+    </p>
+  </div>
+
+  <div id="outer">
+
+    <div id="upbg"></div>
+
+    <div id="inner">
+
+      <div id="header">
+        <h1><%= t "main_header_html" %></h1>
+        <h2><%= t "main_h2" %></h2>
+      </div>
+
+      <div id="splash"></div>
+
+      <div id="menu">
+        <ul>
+          <li class="first"><a href="/">Home</a></li>
+          <li><%= link_to "Archives", archives_path %></li>
+          <li><%= link_to "Links", links_path %></li>
+          <li><%= link_to "Resources", resources_path %></li>
+          <li><%= link_to "Contact", contact_path %></li>
+        </ul>
+
+        <div id="lang_menu">
+          Language:
+          <%= link_to "English", :locale => :en %>
+          |
+          <%= link_to "Spanish", :locale => :es %>
+        </div>
+      </div>
+
+
+      <div id="primarycontent">
+        <%= yield %>
+      </div>
+
+      <div id="secondarycontent">
+
+        <!-- secondary content start -->
+
+        <h3><%= t "about_me" %></h3>
+        <div class="content">
+          <img src="images/pic2.jpg" class="picB" alt="" />
+          <p><%= t "about_me_text_html" %></p>
+        </div>
+
+        <h3><%= t "topics" %></h3>
+        <div class="content">
+          <ul class="linklist">
+            <li class="first"><%= t "t1_html", :scope => "topics_list" %></li>
+            <li><%= t "t2_html", :scope => "topics_list" %></li>
+            <li><%= t "t3_html", :scope => "topics_list" %></li>
+            <li><%= t "t4_html", :scope => "topics_list" %></li>
+            <li><%= t "t5_html", :scope => "topics_list" %></li>
+            <li><%= t "t6_html", :scope => "topics_list" %></li>
+            <li><%= t "t7_html", :scope => "topics_list" %></li>
+            <li><%= t "t8_html", :scope => "topics_list" %></li>
+          </ul>
+        </div>
+
+        <!-- secondary content end -->
+
+      </div>
+
+      <div id="footer">
+
+        &copy; My Website. All rights reserved. Design by <a href="http://www.nodethirtythree.com/">NodeThirtyThree</a>.
+
+      </div>
+
+    </div>
+
+  </div>
+
   <%= interpret_live_edition %>
 </body>
 </html>
