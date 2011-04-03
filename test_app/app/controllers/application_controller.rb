@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
 
   def current_user
-    session[:user_id] ? User.find(session[:user_id]) : User.first
+    session[:user_id] ? User.find(session[:user_id]) : User.where(:admin => true).first
   end
 
   def set_current_user

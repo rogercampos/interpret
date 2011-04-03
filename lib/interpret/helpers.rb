@@ -50,7 +50,8 @@ module Interpret
             });
           });
         JS
-        concat '<link href="/javascripts/facebox-1.3/facebox.css" media="screen" rel="stylesheet" type="text/css"/>'.html_safe
+        concat(stylesheet_link_tag "interpret_live_edit_style")
+        concat(stylesheet_link_tag "/javascripts/facebox-1.3/facebox.css")
       end
     end
 

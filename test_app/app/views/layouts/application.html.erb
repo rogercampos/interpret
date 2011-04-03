@@ -4,7 +4,6 @@
   <title>Interpret Demo</title>
   <%= stylesheet_link_tag "default" %>
   <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" %>
-  <%= javascript_include_tag :all %>
   <%= csrf_meta_tag %>
 </head>
 <body>
@@ -23,11 +22,24 @@
         </li>
       </ul>
     </p>
+    <br/>
 
     <p>
+    <% if current_user %>
+      You are currently logged in as <%= current_user.admin? ? "an ADMIN" : "an USER" %>
+    <% else %>
+      You are not logged in
+    <% end %>
+    </p>
+    <p>
+    <% if current_user && current_user.admin? %>
       <%= button_to Interpret.live_edit ? "Disable edition mode" : "Enable edition mode", toggle_edition_mode_path %>
+    <% else %>
+      Log in as an ADMIN to use the live edition features!
+    <% end %>
     </p>
 
+    <br/>
     <p>You can reestore the original contents with the option "Dump", inside the backoffice > Tools section.</p>
     <p>
       Thanks to <a href="http://nodethirtythree.com">NodeThirtyThree</a> to provide this template in order to demostrate a real website.
@@ -75,7 +87,7 @@
 
         <h3><%= t "about_me" %></h3>
         <div class="content">
-          <img src="images/pic2.jpg" class="picB" alt="" />
+          <img src="/images/pic2.jpg" class="picB" alt="" />
           <p><%= t "about_me_text_html" %></p>
         </div>
 

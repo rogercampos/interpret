@@ -6,6 +6,7 @@ module Interpret
 
     def copy_css
       copy_file "stylesheets/interpret_style.css", "public/stylesheets/interpret_style.css"
+      copy_file "stylesheets/interpret_live_edit_style.css", "public/stylesheets/interpret_live_edit_style.css"
     end
 
     def copy_js
