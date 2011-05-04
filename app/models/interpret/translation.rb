@@ -3,6 +3,7 @@ module Interpret
   class Translation < I18n::Backend::ActiveRecord::Translation
     default_scope order('locale ASC')
     validates_presence_of :value
+    validates_uniqueness_of :key, :scope => :locale
 
     class << self
       # Generates a hash representing the tree structure of the translations
@@ -32,7 +33,7 @@ module Interpret
         translations.each do |e|
           LazyHash.add(res, "#{e.locale}.#{e.key}", e.value)
         end
-        if res.keys.size != 1
+        if res.any? && res.keys.size != 1
           raise IndexError, "Generated hash must have only one root key. Your translation data in database may be corrupted."
         end
         res
