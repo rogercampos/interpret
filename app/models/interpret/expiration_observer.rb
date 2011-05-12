@@ -20,6 +20,9 @@ module Interpret
     def expire_cache(key)
     end
 
+    def expire_cache_all
+    end
+
   private
     def run_expiration(record)
       Interpret.backend.reload! if Interpret.backend
