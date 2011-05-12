@@ -59,7 +59,7 @@ module Interpret
           records.each do |x|
             if tr = locale(lang).find_by_key(x.key)
               tr.value = x.value
-              tr.save!
+              tr.save(:validate => false)
             end
           end
         end
@@ -81,7 +81,7 @@ module Interpret
 
         # TODO: Replace with activerecord-import bulk inserts
         transaction do
-          records.each {|x| x.save!}
+          records.each {|x| x.save(:validate => false)}
         end
       end
 
@@ -197,7 +197,8 @@ module Interpret
           trans = locale(lang).find_by_key(key)
           if trans.nil?
             if value = get_value_from_hash(@languages[lang], key)
-              create! :locale => lang, :key => key, :value => value
+              foo = new( :locale => lang, :key => key, :value => value )
+              foo.save(:validate => false)
               Interpret.logger.info "New key created [#{key}] for language [#{lang}]"
             end
           end
@@ -213,7 +214,8 @@ module Interpret
       end
 
       def create_new_translation(missing_key, main_value)
-        create! :locale => I18n.default_locale, :key => missing_key, :value => main_value
+        foo = new(:locale => I18n.default_locale, :key => missing_key, :value => main_value)
+        foo.save(:validate => false)
         Interpret.logger.info "New key created [#{missing_key}] for language [#{I18n.default_locale}]"
 
         check_in_other_langs(missing_key)
