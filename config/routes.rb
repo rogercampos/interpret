@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       end
 
       match "search", :to => "search#index"
+      resources :missing_translations
 
       root :to => "translations#index"
     end

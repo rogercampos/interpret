@@ -1,0 +1,24 @@
+<% if I18n.locale == I18n.default_locale %>
+  <p>There can't be missing translations for the main language</p>
+<% elsif @missing_translations.empty? %>
+  <p>There are no missing translations</p>
+<% else %>
+  <p>There are <%= @missing_translations.size %> missing translations in [<%= I18n.locale %>]. You can
+  create them below and you can see the translation key and also the original
+  content in the reference language [ <%= I18n.default_locale %> ]
+  </p>
+  <table>
+    <thead>
+      <tr class="header">
+        <th>Key</th>
+        <th>Value in [ <%= I18n.default_locale %> ]</th>
+      </tr>
+    </thead>
+    <% @missing_translations.each do |trans| %>
+      <tr>
+        <td><%= trans[:key] %></td>
+        <td><%= trans[:ref_value] %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
