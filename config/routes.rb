@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
   scope Interpret.scope do
     namespace :interpret do
-      resources :translations, :only => [:edit, :update] do
-        resources :translations, :only => [:new, :create]
-
+      resources :translations, :only => [:edit, :update, :create] do
         collection do
           get :live_edit
         end
@@ -19,6 +17,7 @@ Rails.application.routes.draw do
       end
 
       match "search", :to => "search#index"
+      resources :missing_translations
 
       root :to => "translations#index"
     end

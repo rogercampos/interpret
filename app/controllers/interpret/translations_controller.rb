@@ -55,27 +55,15 @@ class Interpret::TranslationsController < Interpret::BaseController
     end
   end
 
-  def new
-    @reference = Interpret::Translation.find(params[:translation_id])
-    if @reference.locale === I18n.locale.to_s
-      redirect_to interpret_root_path
-      return
-    end
-    @translation = Interpret::Translation.new :locale => I18n.locale, :key => @reference.key
-  end
-
   def create
-    @reference = Interpret::Translation.find(params[:translation_id])
-    if @reference.locale == I18n.locale.to_s
-      redirect_to interpret_root_path
-      return
-    end
-    @translation = Interpret::Translation.new params[:interpret_translation].merge(:locale => I18n.locale, :key => @reference.key)
+    @translation = Interpret::Translation.new params[:interpret_translation]
 
     if @translation.save
-      redirect_to interpret_root_path(:locale => I18n.locale), :notice => "New translation created"
+      flash[:notice] = "New translation created for #{@translation.key}"
+      redirect_to request.env["HTTP_REFERER"]
     else
-      render :action => :new
+      flash[:alert] = "Error when creating a new translation"
+      redirect_to request.env["HTTP_REFERER"]
     end
   end
 
