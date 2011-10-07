@@ -18,7 +18,7 @@
     <%= @translations.size %> results found.
   </p>
   <div id="side_search">
-    <%= form_tag interpret_search_for_path do %>
+    <%= form_tag interpret_search_path do %>
       <%= label_tag "key", "Key value" %>
       <br />
       <%= text_field_tag "key", params[:key] %>

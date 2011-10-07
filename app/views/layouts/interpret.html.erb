@@ -18,6 +18,7 @@
     <% Interpret::Translation.available_locales.each do |locale| %>
       <% opts = {:locale => locale} %>
       <% opts[:key] = params[:key] if params[:key] %>
+      <% opts[:value] = params[:value] if params[:value] %>
       <%= link_to locale, opts %>
     <% end %>
     <hr />

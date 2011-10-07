@@ -19,7 +19,6 @@ Rails.application.routes.draw do
       end
 
       match "search", :to => "search#index"
-      match "search_for", :to => "search#perform"
 
       root :to => "translations#index"
     end
