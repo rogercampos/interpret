@@ -2,6 +2,7 @@
   <thead>
     <tr class="header">
       <% if @references %>
+        <th>Key</th>
         <th>Master translation [<%= I18n.default_locale %>]</th>
       <% else %>
         <th>Key</th>
@@ -39,6 +40,7 @@
       <% @references.each do |x| %>
         <% trans = @translations.detect{|y| y.key == x.key} %>
         <tr<%= " id='translation_#{trans.id}'" if trans %><%= " class='protected'" if x.protected %>>
+          <td style='width:5%'><%= x.key %></td>
           <td style='width:50%'><%= x.value %></td>
           <td style='width:50%'>
             <% if trans %>
