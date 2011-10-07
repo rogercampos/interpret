@@ -5,14 +5,14 @@ class Interpret::TranslationsController < Interpret::BaseController
     key = params[:key]
     t = Interpret::Translation.arel_table
     if key
-      @translations = Interpret::Translation.locale(I18n.locale).where(t[:key].matches("#{CGI.escape(key)}.%"))
+      @translations = Interpret::Translation.locale(I18n.locale).where(t[:key].matches("#{CGI.escape(key)}.%")).order("translations.key ASC")
       if I18n.locale != I18n.default_locale
-        @references = Interpret::Translation.locale(I18n.default_locale).where(t[:key].matches("#{CGI.escape(key)}.%"))
+        @references = Interpret::Translation.locale(I18n.default_locale).where(t[:key].matches("#{CGI.escape(key)}.%")).order("translations.key ASC")
       end
     else
-      @translations = Interpret::Translation.locale(I18n.locale).where(t[:key].does_not_match("%.%"))
+      @translations = Interpret::Translation.locale(I18n.locale).where(t[:key].does_not_match("%.%")).order("translations.key ASC")
       if I18n.locale != I18n.default_locale
-        @references = Interpret::Translation.locale(I18n.default_locale).where(t[:key].does_not_match("%.%"))
+        @references = Interpret::Translation.locale(I18n.default_locale).where(t[:key].does_not_match("%.%")).order("translations.key ASC")
       end
     end
     if @interpret_user
