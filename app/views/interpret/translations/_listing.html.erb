@@ -50,7 +50,7 @@
                   :activator => "#translation_#{trans.id}",
                   :sanitize => false %>
             <% else %>
-              <%= link_to "[Create missing translation]", new_interpret_translation_translation_path(x) %>
+              <%= link_to "Create this missing translation", interpret_missing_translations_path %>
             <% end %>
           </td>
         </tr>
