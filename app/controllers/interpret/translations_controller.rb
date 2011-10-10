@@ -23,6 +23,8 @@ class Interpret::TranslationsController < Interpret::BaseController
     # not show translations inside nested folders, \w avoids dots
     @translations = @translations.select{|x| x.key =~ /#{key}\.\w+$/} if key
     @references = @references.select{|x| x.key =~ /#{key}\.\w+$/} if key && @references
+
+    @total_keys_number = Interpret::Translation.locale(I18n.locale).count
   end
 
   def edit
