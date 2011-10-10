@@ -27,4 +27,9 @@ class Interpret::MissingTranslationsController < Interpret::BaseController
       [x, foo ? foo.value : nil]
     end
   end
+
+  def unused
+    used_keys = Interpret::Translation.locale(I18n.default_locale).all.map{|x| x.key}
+    @unused_translations = Interpret::Translation.locale(I18n.locale).where("translations.key NOT IN (?)", used_keys)
+  end
 end
