@@ -58,7 +58,6 @@ module Interpret
       # overwritten, otherwise it won't be touched. This means that  it won't
       # delete any existing translation, it only overwrites the ones you give
       # in the file.
-      # If the given file has new translations, these will be ignored.
       #
       # The language will be obtained from the first unique key of the yml
       # file.
@@ -74,6 +73,8 @@ module Interpret
             if tr = locale(lang).find_by_key(x.key)
               tr.value = x.value
               tr.save(:validate => false)
+            else
+              x.save(:validate => false)
             end
           end
         end
