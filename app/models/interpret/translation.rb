@@ -72,9 +72,9 @@ module Interpret
           records.each do |x|
             if tr = locale(lang).find_by_key(x.key)
               tr.value = x.value
-              tr.save(:validate => false)
+              tr.save!
             else
-              x.save(:validate => false)
+              x.save!
             end
           end
         end
