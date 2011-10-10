@@ -14,13 +14,13 @@ class Interpret::MissingTranslationsController < Interpret::BaseController
     end
 
     ids = res.map{|x| x.first}
-    translations = Interpret::Translation.where(:id => ids)
+    translations = Interpret::Translation.allowed.where(:id => ids)
     @missing_translations = translations.map{|x| {:ref_value => x.value, :key => x.key, :source => x}}
   end
 
   def blank
-    @blank_translations = Interpret::Translation.locale(I18n.locale).where(:value => "--- \"\"\n")
-    @ref_translations = Interpret::Translation.locale(I18n.default_locale).where(:key => @blank_translations.map{|x| x.key})
+    @blank_translations = Interpret::Translation.allowed.locale(I18n.locale).where(:value => "--- \"\"\n")
+    @ref_translations = Interpret::Translation.allowed.locale(I18n.default_locale).where(:key => @blank_translations.map{|x| x.key})
 
     @blank_translations.map do |x|
       foo = @ref_translations.detect{|y| x.key == y.key}
@@ -29,7 +29,7 @@ class Interpret::MissingTranslationsController < Interpret::BaseController
   end
 
   def unused
-    used_keys = Interpret::Translation.locale(I18n.default_locale).all.map{|x| x.key}
-    @unused_translations = Interpret::Translation.locale(I18n.locale).where("translations.key NOT IN (?)", used_keys)
+    used_keys = Interpret::Translation.allowed.locale(I18n.default_locale).all.map{|x| x.key}
+    @unused_translations = Interpret::Translation.allowed.locale(I18n.locale).where("translations.key NOT IN (?)", used_keys)
   end
 end

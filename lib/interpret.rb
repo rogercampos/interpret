@@ -13,6 +13,7 @@ module Interpret
   mattr_accessor :layout
   mattr_accessor :soft
   mattr_accessor :live_edit
+  mattr_accessor :black_list
 
   @@controller = "action_controller/base"
   @@registered_envs = [:production, :staging]
@@ -20,9 +21,18 @@ module Interpret
   @@layout = "interpret_base"
   @@soft = false
   @@live_edit = false
+  @@black_list = []
 
   def self.configure
     yield self
+  end
+
+  def self.fixed_blacklist
+    @@black_list.select{|x| !x.include?("*")}
+  end
+
+  def self.wild_blacklist
+    @@black_list.select{|x| x.include?("*")}.map{|x| x.gsub("*", "")}
   end
 end
 

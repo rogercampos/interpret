@@ -5,6 +5,21 @@ module Interpret
     validates_uniqueness_of :key, :scope => :locale
 
     class << self
+
+      def allowed
+        s = order("")
+        if Interpret.wild_blacklist.any?
+          black_keys = Interpret.wild_blacklist.map{|x| "#{CGI.escape(x)}%"}
+          s = s.where(arel_table[:key].does_not_match_all(black_keys))
+        end
+        if Interpret.fixed_blacklist.any?
+          black_keys = Interpret.fixed_blacklist.map{|x| "#{CGI.escape(x)}"}
+          s = s.where(arel_table[:key].does_not_match_all(black_keys))
+        end
+        s
+      end
+
+
       # Generates a hash representing the tree structure of the translations
       # for the given locale. It includes only "folders" in the sense of
       # locale keys that includes some real translations, or other keys.
