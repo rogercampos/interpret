@@ -67,6 +67,13 @@ class Interpret::TranslationsController < Interpret::BaseController
     end
   end
 
+  def destroy
+    @translation = Interpret::Translation.find(params[:id])
+
+    @translation.destroy
+    redirect_to request.env["HTTP_REFERER"]
+  end
+
   def live_edit
     blobs = params[:key].split(".")
     locale = blobs.first

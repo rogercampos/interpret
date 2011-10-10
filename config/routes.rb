@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   scope Interpret.scope do
     namespace :interpret do
-      resources :translations, :only => [:edit, :update, :create] do
+      resources :translations, :only => [:destroy, :edit, :update, :create] do
         collection do
           get :live_edit
         end
