@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
       match "search", :to => "search#index"
       resources :missing_translations
+      match "blank", :to => "missing_translations#blank", :as => "blank_translations"
 
       root :to => "translations#index"
     end
