@@ -10,12 +10,15 @@
         <th>Key</th>
         <th>Value in [ <%= I18n.default_locale %> ]</th>
         <th>Your translation to [ <%= I18n.locale %> ]</th>
+        <% if @interpret_admin %>
+          <th>Delete</th>
+        <% end %>
       </tr>
     </thead>
     <% @blank_translations.each do |trans, ref| %>
       <tr>
         <td><%= trans.key %></td>
-        <td><%= ref || "It's also empty" %></td>
+        <td><%= ref || "It's empty" %></td>
         <td>
           <%= form_for Interpret::Translation.new, :url => interpret_translations_path do |f| %>
             <%= f.hidden_field "locale", :value => I18n.locale %>
@@ -24,6 +27,11 @@
             <%= submit_tag "Create" %>
           <% end %>
         </td>
+        <% if @interpret_admin %>
+          <td>
+            <%= link_to "Destroy it", trans, :method => :delete, :confirm => "Are you sure?" %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </table>
