@@ -1,28 +1,44 @@
-<% #if I18n.locale == I18n.default_locale %>
+<% if I18n.locale == I18n.default_locale %>
   <p>There can't be stale translations for the main language</p>
-<% if @stale_translations.empty? %>
+
+<% elsif @stale_translations.empty? %>
   <p>There are no stale translations</p>
+
 <% else %>
   <p>There are <%= @stale_translations.size %> stale translations in [<%= I18n.locale %>].</p>
+  <p>
+    They have been modified in the master language (<%= I18n.default_locale %>)
+    so probably you want to change them in the current languge too.
+    Once you think your new adaptation is correct click on "Mark as OK" button and that translation will no longer appear as stale.
+    You can also click the "Mark all OK" button to mark ALL these translations as no stale, use with caution!
+  </p>
   <table>
     <thead>
       <tr class="header">
         <th>Key</th>
         <th>Value in [ <%= I18n.default_locale %> ]</th>
         <th>Your translation to [ <%= I18n.locale %> ]</th>
+        <th>Actions</th>
       </tr>
     </thead>
-    <% @stale_translations.each do |trans| %>
+    <% @stale_translations.each do |trans, ref| %>
       <tr>
-        <td><%= trans.key %></td>
+        <td class='key'><%= trans.key %></td>
+        <td><%= ref.value %></td>
+        <td class='content' id='translation_<%= trans.id %>'>
+            <%= best_in_place trans, :value,
+                :type => :textarea,
+                :path => interpret_translation_path(trans),
+                :activator => "#translation_#{trans.id}",
+                :sanitize => false %>
+        </td>
         <td>
-          <%= form_for trans, :url => interpret_translations_path do |f| %>
-            <%= f.text_area :value, :rows => 4, :cols => 60 %>
-            <%= submit_tag "Update" %>
+          <%= form_for trans, :url => interpret_translation_path(trans) do |f| %>
+            <%= f.hidden_field :stale, :value => false %>
+            <%= submit_tag "Mark as OK" %>
           <% end %>
         </td>
       </tr>
     <% end %>
   </table>
 <% end %>
-
