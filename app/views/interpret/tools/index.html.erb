@@ -1,40 +1,30 @@
 <% interpret_title "Interpret - Tools" %>
 
 <div class="header">
-  <h1>Tools for import/export locale data</h1>
+  <h1>Download the current .yml file for language [ <%= I18n.locale %> ]</h1>
 </div>
 
-<p><%= link_to "Download", export_interpret_tools_path %> the current translations for '<%= I18n.locale %>' language as .yml file</p>
-<p>Upload your .yml file for '<%= I18n.locale %>' language</p>
+<p>With the following button you can download a "<%= I18n.locale %>.yml" file with the current translations for this language.</p>
+
 <p>
+<%= button_to "Download", export_interpret_tools_path, :method => :get %>
+</p>
+
+<div class="header">
+  <h1>Import translations from a .yml file</h1>
+</div>
+
+<p>This action will let you update the translations from a standard .yml file.
+All existing translations in that file will be copied into the application,
+and if they already exists they will be overwritten.
+</p>
+
+<p>
+Remember that the first key of the YAML file you're uploading must match the current locale.
+</p>
+
 <%= form_tag import_interpret_tools_path, :multipart => true do %>
   <%= label_tag "File:" %>
   <%= file_field_tag :file %>
   <%= submit_tag "Upload" %>
 <% end %>
-
-
-<div class="header">
-  <h1>Update contents from yml locale files</h1>
-</div>
-
-<p>Update all your application translations from the yml files.<br/>
-</p>
-<%= button_to "Update", run_update_interpret_tools_path %>
-
-
-<div class="header">
-  <h1>Dump .yml contents into database</h1>
-</div>
-
-<p>With this option you can export all of your *.yml contents into the database backend<br/>
-<b>Be aware!!</b> All of your current database translations will be updated to match with your current *.yml files.
-</p>
-
-<% if Rails.env == "production" %>
-  <p><b>MY GOD!!! You're in PRODUCTION!! You're sure you wanna do this??</b></p>
-<% end %>
-
-<p>
-<%= button_to "Dump", dump_interpret_tools_path %>
-</p>
