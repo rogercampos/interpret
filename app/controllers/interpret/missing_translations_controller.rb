@@ -14,7 +14,7 @@ class Interpret::MissingTranslationsController < Interpret::BaseController
     end
 
     ids = res.map{|x| x.first}
-    translations = Interpret::Translation.allowed.where(:id => ids)
+    translations = Interpret::Translation.allowed.where(:id => ids).order("translations.key ASC")
     @missing_translations = translations.map{|x| {:ref_value => x.value, :key => x.key, :source => x}}
   end
 
@@ -31,5 +31,9 @@ class Interpret::MissingTranslationsController < Interpret::BaseController
   def unused
     used_keys = Interpret::Translation.allowed.locale(I18n.default_locale).all.map{|x| x.key}
     @unused_translations = Interpret::Translation.allowed.locale(I18n.locale).where("translations.key NOT IN (?)", used_keys)
+  end
+
+  def stale
+    @stale_translations = Interpret::Translation.allowed.stale.locale(I18n.locale).order("translations.key ASC")
   end
 end

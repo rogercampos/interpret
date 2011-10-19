@@ -4,6 +4,21 @@ module Interpret
     default_scope order('locale ASC')
     validates_uniqueness_of :key, :scope => :locale
 
+    after_update :set_stale
+
+    scope :stale, where(:stale => true)
+
+    private
+
+    # If this translations is in the main language, mark this translation in
+    # other languages as stale, so the translators know that they must change
+    # it.
+    def set_stale
+      return unless locale == I18n.default_locale.to_s
+
+      Translation.where(:key => key).where(Translation.arel_table[:locale].not_eq(locale)).update_all({:stale => true})
+    end
+
     class << self
 
       def allowed
@@ -55,7 +70,7 @@ module Interpret
 
       # Import the contents of the given .yml locale file into the database
       # backend. If a given key already exists in database, it will be
-      # overwritten, otherwise it won't be touched. This means that  it won't
+      # overwritten, otherwise it won't be touched. This means that it won't
       # delete any existing translation, it only overwrites the ones you give
       # in the file.
       #

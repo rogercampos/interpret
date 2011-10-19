@@ -1,0 +1,28 @@
+<% #if I18n.locale == I18n.default_locale %>
+  <p>There can't be stale translations for the main language</p>
+<% if @stale_translations.empty? %>
+  <p>There are no stale translations</p>
+<% else %>
+  <p>There are <%= @stale_translations.size %> stale translations in [<%= I18n.locale %>].</p>
+  <table>
+    <thead>
+      <tr class="header">
+        <th>Key</th>
+        <th>Value in [ <%= I18n.default_locale %> ]</th>
+        <th>Your translation to [ <%= I18n.locale %> ]</th>
+      </tr>
+    </thead>
+    <% @stale_translations.each do |trans| %>
+      <tr>
+        <td><%= trans.key %></td>
+        <td>
+          <%= form_for trans, :url => interpret_translations_path do |f| %>
+            <%= f.text_area :value, :rows => 4, :cols => 60 %>
+            <%= submit_tag "Update" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+

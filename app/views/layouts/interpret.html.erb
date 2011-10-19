@@ -12,6 +12,7 @@
     <% end %>
     <%= interpret_section_link_to "Search", interpret_search_path %> |
     <%= link_to "Missing translations", interpret_missing_translations_path, :class => controller_name == "missing_translations" && action_name == "index" ? "current" : "" %> |
+    <%= link_to "Stale translations", interpret_stale_translations_path, :class => controller_name == "missing_translations" && action_name == "stale" ? "current" : "" %> |
     <%= link_to "Blank translations", interpret_blank_translations_path, :class => controller_name == "missing_translations" && action_name == "blank" ? "current" : "" %> |
     <%= link_to "Unused translations", interpret_unused_translations_path, :class => controller_name == "missing_translations" && action_name == "unused" ? "current" : "" %>
     <hr />
