@@ -38,6 +38,16 @@ es:
     """
   }
 
+  let(:es_2_yml) {"""
+es:
+  p1: Hola mundo!
+    """}
+
+  let(:pt_2_yml) {"""
+pt:
+  p1: Olá mundo
+    """}
+
   let(:new_en_yml) {"""
 en:
   p1: Hello modified world! This new translation should not be copied into database
@@ -268,6 +278,49 @@ es:
 
       es_trans = Interpret::Translation.locale('es').all
       Interpret::Translation.export(es_trans).should == YAML.load(es_yml)
+    end
+  end
+
+  describe "set stale" do
+    it "should mark sibling translations as stale after editing the one of the app's default_language" do
+      Interpret::Translation.delete_all
+      file2db(en_yml)
+      file2db(es_2_yml)
+      file2db(pt_2_yml)
+
+      tr = Interpret::Translation.locale("en").find_by_key("p1")
+      tr.value = "New value"
+      tr.save!
+
+      Interpret::Translation.locale("es").find_by_key("p1").stale?.should be_true
+      Interpret::Translation.locale("pt").find_by_key("p1").stale?.should be_true
+    end
+
+    it "should not mark as stale the translation that you're editing when it's in the app's default_language" do
+      Interpret::Translation.delete_all
+      file2db(en_yml)
+      file2db(es_2_yml)
+
+      tr = Interpret::Translation.locale("en").find_by_key("p1")
+      tr.value = "New value"
+      tr.save!
+
+      tr.stale?.should be_false
+    end
+
+    it "should not mark sibling translations as stale after editing some that is not in the app's default_language" do
+      Interpret::Translation.delete_all
+      file2db(en_yml)
+      file2db(es_2_yml)
+      file2db(pt_2_yml)
+
+      tr = Interpret::Translation.locale("es").find_by_key("p1")
+      tr.value = "New value"
+      tr.save!
+
+      Interpret::Translation.locale("en").find_by_key("p1").stale?.should be_false
+      Interpret::Translation.locale("es").find_by_key("p1").stale?.should be_false
+      Interpret::Translation.locale("pt").find_by_key("p1").stale?.should be_false
     end
   end
 end
