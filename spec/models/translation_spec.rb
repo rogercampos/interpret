@@ -235,16 +235,17 @@ es:
       trans.value.should == "Hello modified world! This new translation should not be copied into database"
     end
 
-    it "should not create new keys" do
+    it "should create new keys" do
       Interpret::Translation.delete_all
       file2db(en_yml)
-      howm_before = Interpret::Translation.locale('en').count
+      Interpret::Translation.locale('en').count
 
       @file.stub!(:content_type).and_return("text/plain")
       Interpret::Translation.import(@file)
 
-      howm_after = Interpret::Translation.locale('en').count
-      howm_before.should == howm_after
+      howm = Interpret::Translation.locale('en').count
+      # It should create 2 new translations, from 8 to 10
+      howm.should == 10
     end
 
     it "should not touch translations not present in the file" do
