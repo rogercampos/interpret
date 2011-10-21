@@ -3,3 +3,6 @@ rvm:
   - ree
   - 1.9.2
   - 1.9.3
+
+before_script:
+  - "sh -e 'cd test_app && bundle && bundle exec rake db:drop db:migrate db:test:prepare'"
