@@ -1,5 +1,7 @@
 Interpret
 =========
+[![Build Status](https://secure.travis-ci.org/rogercampos/interpret.png)](http://travis-ci.org/rogercampos/interpret)
+
 
 Interpret is a rails 3 engine to help you manage your application
 translations, also allowing you to have editable contents in live. In order to
