@@ -14,7 +14,8 @@ class Interpret::MissingTranslationsController < Interpret::BaseController
     end
 
     ids = res.map{|x| x.first}
-    translations = Interpret::Translation.allowed.where(:id => ids).order("translations.key ASC")
+    translations = Interpret::Translation.allowed.where(:id => ids).order("translations.key ASC").all
+    translations = translations.select{|x| x.value.present?}
     @missing_translations = translations.map{|x| {:ref_value => x.value, :key => x.key, :source => x}}
   end
 
