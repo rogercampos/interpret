@@ -14,6 +14,7 @@ module Interpret
   mattr_accessor :soft
   mattr_accessor :live_edit
   mattr_accessor :black_list
+  mattr_accessor :ability
 
   @@controller = "action_controller/base"
   @@registered_envs = [:production, :staging]
@@ -23,7 +24,7 @@ module Interpret
   @@live_edit = false
   @@black_list = []
   @@current_user = "current_user"
-  @@ability = "Interpret::Ability"
+  @@ability = "interpret/ability"
 
   def self.configure
     yield self
