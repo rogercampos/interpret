@@ -9,9 +9,15 @@ class Interpret::SearchController < Interpret::BaseController
       redirect_to interpret_search_url(opts)
     else
       if params[:key].present? || params[:value].present?
+        sanitizer = case ActiveRecord::Base.connection.adapter_name
+                    when "SQLite"
+                      lambda {|x| "%#{x}%"}
+                    else
+                      lambda {|x| "%#{CGI.escape(x)}%"}
+                    end
         t = Interpret::Translation.arel_table
-        search_key = params[:key].present? ? params[:key].split(" ").map{|x| "%#{CGI.escape(x)}%"} : []
-        search_value = params[:value].present? ? params[:value].split(" ").map{|x| "%#{CGI.escape(x)}%"} : []
+        search_key = params[:key].present? ? params[:key].split(" ").map{|x| sanitizer.call(x)} : []
+        search_value = params[:value].present? ? params[:value].split(" ").map{|x| sanitizer.call(x)} : []
         @translations = Interpret::Translation.allowed.locale(I18n.locale).where(t[:key].matches_all(search_key).or(t[:value].matches_all(search_value))).order("translations.key ASC")
       end
     end

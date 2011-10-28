@@ -17,7 +17,17 @@ describe "Search" do
       end
     end
 
-    it "should work with accents and other non ascii chars"
+    it "should work with accents and other non ascii chars" do
+      visit interpret_search_path(:es)
+      fill_in "Translation text", :with => "extraña"
+      click_button "SEARCH"
+
+      page.all("table#results tbody tr").size.should == 1
+      within("table#results") do
+        page.should have_content("extraña")
+      end
+    end
+
     it "should not return any result"
   end
 end

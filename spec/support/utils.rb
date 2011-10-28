@@ -1,3 +1,4 @@
+# encoding: utf-8
 # Convert a locale file into database translations
 def file2db(string_file)
   def parse_hash(dict, locale, prefix = "")
@@ -23,6 +24,7 @@ en:
   printer: Printer Friendly
   comments: Comments
   read_more: Read more
+  phrase: This is a rare phrase with non ascii chars
   """
 
   es_yml = """
@@ -30,6 +32,7 @@ es:
   printer: Para imprimir
   comments: Comentarios
   read_more: Leer mas
+  phrase: Esta és una extraña frase con carácteres no ascii
   """
 
   file2db en_yml
