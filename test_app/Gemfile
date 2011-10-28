@@ -9,3 +9,4 @@ group :development, :test do
 end
 
 gem 'interpret', :path => ".."
+gem 'mysql2', "~> 0.2.7"
