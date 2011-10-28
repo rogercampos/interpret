@@ -18,12 +18,10 @@ ActiveRecord::Schema.define(:version => 20111021100344) do
     t.text    "value"
     t.text    "interpolations"
     t.boolean "is_proc",        :default => false
-    t.boolean "protected",      :default => false
     t.boolean "stale",          :default => false
   end
 
   create_table "users", :force => true do |t|
-    t.boolean  "admin",      :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

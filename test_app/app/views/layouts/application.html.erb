@@ -15,10 +15,7 @@
     <p>
       <ul>
         <li>
-          <%= link_to "Login to interpret as ADMIN", interpret_root_path(:admin => "true") %>
-        </li>
-        <li>
-          <%= link_to "Login to interpret as USER", interpret_root_path(:admin => "false") %>
+          <%= link_to "Login to interpret", interpret_root_path %>
         </li>
       </ul>
     </p>
@@ -26,16 +23,16 @@
 
     <p>
     <% if current_user %>
-      You are currently logged in as <%= current_user.admin? ? "an ADMIN" : "an USER" %>
+      You are currently logged in
     <% else %>
       You are not logged in
     <% end %>
     </p>
     <p>
-    <% if current_user && current_user.admin? %>
+    <% if current_user %>
       <%= button_to Interpret.live_edit ? "Disable edition mode" : "Enable edition mode", toggle_edition_mode_path %>
     <% else %>
-      Log in as an ADMIN to use the live edition features!
+      Log in to use the live edition features!
     <% end %>
     </p>
 

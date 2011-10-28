@@ -10,9 +10,7 @@
         <th>Key</th>
         <th>Value in [ <%= I18n.default_locale %> ]</th>
         <th>Your translation to [ <%= I18n.locale %> ]</th>
-        <% if @interpret_admin %>
-          <th>Delete</th>
-        <% end %>
+        <th>Delete</th>
       </tr>
     </thead>
     <% @blank_translations.each do |trans, ref| %>
@@ -27,11 +25,9 @@
             <%= submit_tag "Create" %>
           <% end %>
         </td>
-        <% if @interpret_admin %>
-          <td>
-            <%= link_to "Destroy it", trans, :method => :delete, :confirm => "Are you sure?" %>
-          </td>
-        <% end %>
+        <td>
+          <%= link_to "Destroy it", trans, :method => :delete, :confirm => "Are you sure?" %>
+        </td>
       </tr>
     <% end %>
   </table>
