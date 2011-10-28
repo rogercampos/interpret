@@ -13,9 +13,7 @@
         <th>Key</th>
         <th>Value in [ <%= I18n.default_locale %> ]</th>
         <th>Your translation to [ <%= I18n.locale %> ]</th>
-        <% if @interpret_admin %>
-          <th>Delete</th>
-        <% end %>
+        <th>Delete</th>
       </tr>
     </thead>
     <% @missing_translations.each do |trans| %>
@@ -30,12 +28,10 @@
             <%= submit_tag "Create" %>
           <% end %>
         </td>
-        <% if @interpret_admin %>
-          <td>
-            <%= link_to "Destroy", trans[:source], :method => :delete, :confirm => "Are you sure?" %>
-            the original [ <%= I18n.default_locale %> ] translation.
-          </td>
-        <% end %>
+        <td>
+          <%= link_to "Destroy", trans[:source], :method => :delete, :confirm => "Are you sure?" %>
+          the original [ <%= I18n.default_locale %> ] translation.
+        </td>
       </tr>
     <% end %>
   </table>

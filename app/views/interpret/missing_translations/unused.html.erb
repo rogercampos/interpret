@@ -11,20 +11,16 @@
       <tr class="header">
         <th>Key</th>
         <th>Value in [ <%= I18n.locale %> ]</th>
-        <% if @interpret_admin %>
-          <th>Delete</th>
-        <% end %>
+        <th>Delete</th>
       </tr>
     </thead>
     <% @unused_translations.each do |trans| %>
       <tr>
         <td><%= trans.key %></td>
         <td><%= trans.value %></td>
-        <% if @interpret_admin %>
-          <td>
-            <%= link_to "Destroy it", trans, :method => :delete, :confirm => "Are you sure?" %>
-          </td>
-        <% end %>
+        <td>
+          <%= link_to "Destroy it", trans, :method => :delete, :confirm => "Are you sure?" %>
+        </td>
       </tr>
     <% end%>
   </table>

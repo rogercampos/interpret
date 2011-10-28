@@ -9,7 +9,6 @@ module Interpret
   mattr_accessor :registered_envs
   mattr_accessor :scope
   mattr_accessor :current_user
-  mattr_accessor :admin
   mattr_accessor :layout
   mattr_accessor :soft
   mattr_accessor :live_edit
