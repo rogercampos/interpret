@@ -8,13 +8,12 @@
         <th>Key</th>
       <% end %>
       <th>Content [<%= I18n.locale %>]</th>
-      <th style="width:5%">Protected?</th>
     </tr>
   </thead>
   <tbody>
     <% unless @references %>
       <% @translations.each do |x| %>
-        <tr<%= " class='protected'" if x.protected %>>
+        <tr>
           <td class='key'><%= x.key %></td>
           <td class="content" id="translation_<%= x.id %>">
             <%= best_in_place x, :value,
@@ -23,19 +22,12 @@
                 :activator => "#translation_#{x.id}",
                 :sanitize => false %>
           </td>
-          <td style="width:5%" class='protection_input' id="protection_<%= x.id %>">
-            <%= best_in_place x, :protected,
-                :type => :checkbox,
-                :path => interpret_translation_path(x),
-                :activator => "#protection_#{x.id}"
-                %>
-          </td>
         </tr>
       <% end %>
     <% else %>
       <% @references.each do |x| %>
         <% trans = @translations.detect{|y| y.key == x.key} %>
-        <tr<%= " id='translation_#{trans.id}'" if trans %><%= " class='protected'" if x.protected %>>
+        <tr<%= " id='translation_#{trans.id}'" if trans %>>
           <td style='width:5%'><%= x.key %></td>
           <td style='width:50%'><%= x.value %></td>
           <td style='width:50%'>
