@@ -25,6 +25,7 @@
   <div class="menu grid_4">
     Languages:
     <% Interpret::Translation.available_locales.each do |locale| %>
+      <% next unless can? :use, :"interpret_in_#{locale}" %>
       <% opts = {:locale => locale} %>
       <% opts[:key] = params[:key] if params[:key] %>
       <% opts[:value] = params[:value] if params[:value] %>

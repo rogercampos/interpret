@@ -1,6 +1,7 @@
 class Interpret::BaseController < eval(Interpret.parent_controller.classify)
   before_filter :set_locale
-  before_filter { authorize! :read, :interpret }
+  before_filter { authorize! :use, :interpret }
+  before_filter :check_authorized_language
   layout 'interpret'
 
 protected
@@ -15,6 +16,10 @@ protected
 private
   def set_locale
     I18n.locale = params[:locale] if params[:locale]
+  end
+
+  def check_authorized_language
+    authorize! :use, :"interpret_in_#{I18n.locale}"
   end
 end
 
