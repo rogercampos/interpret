@@ -1,5 +1,6 @@
 require 'best_in_place'
 require 'lazyhash'
+require 'cancan'
 
 module Interpret
   mattr_accessor :backend
@@ -21,6 +22,8 @@ module Interpret
   @@soft = false
   @@live_edit = false
   @@black_list = []
+  @@current_user = "current_user"
+  @@ability = "Interpret::Ability"
 
   def self.configure
     yield self
@@ -32,6 +35,14 @@ module Interpret
 
   def self.wild_blacklist
     @@black_list.select{|x| x.include?("*")}.map{|x| x.gsub("*", "")}
+  end
+
+  def self.ability
+    unless @@ability.is_a?(Class)
+      @@ability.classify.constantize
+    else
+      @@ability
+    end
   end
 end
 
