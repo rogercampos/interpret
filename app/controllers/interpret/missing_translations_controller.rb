@@ -1,5 +1,6 @@
 class Interpret::MissingTranslationsController < Interpret::BaseController
   def index
+    authorize! :read, :missing_translations
     return if I18n.locale == I18n.default_locale
 
     case ActiveRecord::Base.connection.adapter_name
@@ -20,6 +21,7 @@ class Interpret::MissingTranslationsController < Interpret::BaseController
   end
 
   def blank
+    authorize! :read, :blank_translations
     @blank_translations = Interpret::Translation.allowed.locale(I18n.locale).where(:value => "--- \"\"\n")
     @ref_translations = Interpret::Translation.allowed.locale(I18n.default_locale).where(:key => @blank_translations.map{|x| x.key})
 
@@ -30,6 +32,7 @@ class Interpret::MissingTranslationsController < Interpret::BaseController
   end
 
   def unused
+    authorize! :read, :unused_translations
     used_keys = Interpret::Translation.allowed.locale(I18n.default_locale).all.map{|x| x.key}
     @unused_translations = Interpret::Translation.allowed.locale(I18n.locale).where("translations.key NOT IN (?)", used_keys)
   end

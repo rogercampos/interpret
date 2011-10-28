@@ -1,8 +1,6 @@
 class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
-      t.boolean :admin, :default => false, :null => false
-
       t.timestamps
     end
   end

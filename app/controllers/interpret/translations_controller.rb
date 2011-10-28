@@ -1,5 +1,6 @@
 class Interpret::TranslationsController < Interpret::BaseController
   before_filter :get_tree, :only => :index
+  authorize_resource
 
   def index
     key = params[:key]
@@ -15,10 +16,6 @@ class Interpret::TranslationsController < Interpret::BaseController
         @references = Interpret::Translation.allowed.locale(I18n.default_locale).where(t[:key].does_not_match("%.%")).order("translations.key ASC")
       end
     end
-    if @interpret_user
-      @translations = @translations.where(:protected => false) if !@interpret_admin
-      @references = @references.where(:protected => false) if @references && !@interpret_admin
-    end
 
     # not show translations inside nested folders, \w avoids dots
     @translations = @translations.select{|x| x.key =~ /#{key}\.\w+$/} if key
@@ -32,10 +29,6 @@ class Interpret::TranslationsController < Interpret::BaseController
   end
 
   def update
-    if @interpret_user && !@interpret_admin && params[:interpret_translation].has_key?(:protected)
-      head :error
-      return
-    end
     @translation = Interpret::Translation.find(params[:id])
     old_value = @translation.value
 

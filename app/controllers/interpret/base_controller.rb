@@ -1,14 +1,16 @@
 class Interpret::BaseController < eval(Interpret.parent_controller.classify)
   before_filter :set_locale
-  before_filter :interpret_set_current_user
+  before_filter { authorize! :use, :interpret }
+  before_filter :check_authorized_language
   layout 'interpret'
 
 protected
-  def require_admin
-    if @interpret_user && !@interpret_admin
-      redirect_to interpret_root_url, :alert => "Not authorized"
-      return
-    end
+  def current_interpret_user
+    @current_interpret_user ||= eval(Interpret.current_user)
+  end
+
+  def current_ability
+    @current_ability ||= Interpret.ability.new(current_interpret_user)
   end
 
 private
@@ -16,14 +18,8 @@ private
     I18n.locale = params[:locale] if params[:locale]
   end
 
-  def interpret_set_current_user
-    if Interpret.current_user && defined?(Interpret.current_user.to_sym)
-      @interpret_user = eval(Interpret.current_user)
-      @interpret_admin = true
-      if Interpret.admin && @interpret_user.respond_to?(Interpret.admin)
-        @interpret_admin = @interpret_user.send(Interpret.admin)
-      end
-    end
+  def check_authorized_language
+    authorize! :use, :"interpret_in_#{I18n.locale}"
   end
 end
 

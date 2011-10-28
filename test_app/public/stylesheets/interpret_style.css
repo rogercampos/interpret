@@ -382,12 +382,6 @@ html body * dd.clear
   cursor: pointer;
 }
 
-#interpret_container tr.protected {
-  border: 2px dashed red;
-  background-color: #FFEDED;
-}
-
-
 #interpret_container tr:hover {
   background-color: #DDD;
   -moz-transition: background .4s linear;

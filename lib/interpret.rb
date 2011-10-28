@@ -1,5 +1,6 @@
 require 'best_in_place'
 require 'lazyhash'
+require 'cancan'
 
 module Interpret
   mattr_accessor :backend
@@ -9,11 +10,11 @@ module Interpret
   mattr_accessor :registered_envs
   mattr_accessor :scope
   mattr_accessor :current_user
-  mattr_accessor :admin
   mattr_accessor :layout
   mattr_accessor :soft
   mattr_accessor :live_edit
   mattr_accessor :black_list
+  mattr_accessor :ability
 
   @@controller = "action_controller/base"
   @@registered_envs = [:production, :staging]
@@ -22,6 +23,8 @@ module Interpret
   @@soft = false
   @@live_edit = false
   @@black_list = []
+  @@current_user = "current_user"
+  @@ability = "interpret/ability"
 
   def self.configure
     yield self
@@ -33,6 +36,14 @@ module Interpret
 
   def self.wild_blacklist
     @@black_list.select{|x| x.include?("*")}.map{|x| x.gsub("*", "")}
+  end
+
+  def self.ability
+    unless @@ability.is_a?(Class)
+      @@ability.classify.constantize
+    else
+      @@ability
+    end
   end
 end
 

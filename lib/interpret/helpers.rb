@@ -29,7 +29,7 @@ module Interpret
     end
 
     def t(key, options = {})
-      if Interpret.live_edit && @interpret_admin
+      if Interpret.live_edit
         keys = build_keys(key, options)
         "<span class='interpret_editable' data-key='#{keys}'>#{translate(key, options)}</span>".html_safe
       else
@@ -38,7 +38,7 @@ module Interpret
     end
 
     def interpret_live_edition
-      return unless Interpret.live_edit && @interpret_admin
+      return unless Interpret.live_edit
       content_tag(:div) do
         concat(javascript_include_tag "facebox-1.3/facebox")
         concat javascript_tag <<-JS

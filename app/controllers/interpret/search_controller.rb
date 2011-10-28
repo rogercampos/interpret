@@ -1,4 +1,6 @@
 class Interpret::SearchController < Interpret::BaseController
+  before_filter { authorize! :use, :search }
+
   def index
     if request.post?
       opts = {}
