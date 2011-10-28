@@ -90,27 +90,6 @@ es:
   """
   }
 
-  # Convert a locale file into database translations
-  def file2db(string_file)
-    def parse_hash(dict, locale, prefix = "")
-      res = []
-      dict.keys.each do |x|
-        if dict[x].kind_of?(Hash)
-          res += parse_hash(dict[x], locale, "#{prefix}#{x}.")
-        else
-          res << Interpret::Translation.create!(:locale => locale, :key => "#{prefix}#{x}", :value => dict[x])
-        end
-      end
-      res
-    end
-
-    hash = YAML.load string_file
-    lang = hash.keys.first
-    Interpret::Translation.transaction do
-      parse_hash(hash.first[1], lang).map{|x| x.save!}
-    end
-  end
-
   before do
     Interpret::Translation.delete_all
     I18n.stub!(:default_locale).and_return('en')
