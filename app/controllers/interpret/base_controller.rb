@@ -1,5 +1,6 @@
 class Interpret::BaseController < eval(Interpret.parent_controller.classify)
   before_filter :set_locale
+  before_filter { authorize! :read, :interpret }
   layout 'interpret'
 
 protected

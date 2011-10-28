@@ -1,4 +1,6 @@
 class Interpret::ToolsController < Interpret::BaseController
+  before_filter { authorize! :use, :tools }
+
   def dump
     Interpret::Translation.dump
 
