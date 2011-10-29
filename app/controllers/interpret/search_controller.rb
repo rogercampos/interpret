@@ -11,7 +11,11 @@ class Interpret::SearchController < Interpret::BaseController
       if params[:key].present? || params[:value].present?
         sanitizer = case ActiveRecord::Base.connection.adapter_name
                     when "SQLite"
-                      lambda {|x| "%#{x}%"}
+                      if Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new("1.9")
+                        lambda {|x| "%#{x}%"}
+                      else
+                        lambda {|x| "%#{CGI.escape(x)}%"}
+                      end
                     else
                       lambda {|x| "%#{CGI.escape(x)}%"}
                     end
