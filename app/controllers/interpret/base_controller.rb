@@ -10,7 +10,7 @@ protected
   end
 
   def current_ability
-    @current_ability ||= Interpret.ability.new(current_interpret_user)
+    @current_ability ||= super.merge(Interpret.ability.new(current_interpret_user))
   end
 
 private
