@@ -16,7 +16,7 @@ module Interpret
   mattr_accessor :black_list
   mattr_accessor :ability
 
-  @@controller = "action_controller/base"
+  @@parent_controller = "application_controller"
   @@registered_envs = [:production, :staging]
   @@scope = ""
   @@layout = "interpret_base"
