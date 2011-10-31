@@ -22,7 +22,7 @@
     <%= link_to "Unused translations", interpret_unused_translations_path, :class => controller_name == "missing_translations" && action_name == "unused" ? "current" : "" %>
     <hr />
   </div>
-  <div class="menu grid_4">
+  <div class="menu grid_4" id='languages_nav'>
     Languages:
     <% Interpret::Translation.available_locales.each do |locale| %>
       <% next unless can? :use, :"interpret_in_#{locale}" %>
