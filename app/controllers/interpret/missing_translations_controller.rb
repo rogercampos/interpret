@@ -38,6 +38,7 @@ class Interpret::MissingTranslationsController < Interpret::BaseController
   end
 
   def stale
+    authorize! :read, :stale_translations
     @stale_translations = Interpret::Translation.allowed.stale.locale(I18n.locale).order("translations.key ASC")
     refs = Interpret::Translation.locale(I18n.default_locale).where(:key => @stale_translations.map{|x| x.key})
     @stale_translations.map!{|x| [x, refs.detect{|y| y.key == x.key}]}

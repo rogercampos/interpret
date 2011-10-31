@@ -6,20 +6,31 @@
     </div>
   <% end %>
   <div class="menu grid_12">
-    <%= interpret_section_link_to "Overview", interpret_root_path %> |
+    <%= interpret_section_link_to "Overview", interpret_root_path %>
 
     <% if can? :use, :tools %>
-      <%= interpret_section_link_to "Tools", interpret_tools_path %> |
+      | <%= interpret_section_link_to "Tools", interpret_tools_path %>
     <% end %>
 
     <% if can? :use, :search %>
-      <%= interpret_section_link_to "Search", interpret_search_path %> |
+      | <%= interpret_section_link_to "Search", interpret_search_path %>
     <% end %>
 
-    <%= link_to "Missing translations", interpret_missing_translations_path, :class => controller_name == "missing_translations" && action_name == "index" ? "current" : "" %> |
-    <%= link_to "Stale translations", interpret_stale_translations_path, :class => controller_name == "missing_translations" && action_name == "stale" ? "current" : "" %> |
-    <%= link_to "Blank translations", interpret_blank_translations_path, :class => controller_name == "missing_translations" && action_name == "blank" ? "current" : "" %> |
-    <%= link_to "Unused translations", interpret_unused_translations_path, :class => controller_name == "missing_translations" && action_name == "unused" ? "current" : "" %>
+    <% if can? :read, :missing_translations %>
+      | <%= link_to "Missing translations", interpret_missing_translations_path, :class => controller_name == "missing_translations" && action_name == "index" ? "current" : "" %>
+    <% end %>
+
+    <% if can? :read, :stale_translations %>
+      | <%= link_to "Stale translations", interpret_stale_translations_path, :class => controller_name == "missing_translations" && action_name == "stale" ? "current" : "" %>
+    <% end %>
+
+    <% if can? :read, :blank_translations %>
+      | <%= link_to "Blank translations", interpret_blank_translations_path, :class => controller_name == "missing_translations" && action_name == "blank" ? "current" : "" %>
+    <% end %>
+
+    <% if can? :read, :unused_translations %>
+      | <%= link_to "Unused translations", interpret_unused_translations_path, :class => controller_name == "missing_translations" && action_name == "unused" ? "current" : "" %>
+    <% end %>
     <hr />
   </div>
   <div class="menu grid_4" id='languages_nav'>

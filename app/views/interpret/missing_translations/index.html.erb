@@ -30,7 +30,7 @@
             <%= submit_tag "Create" %>
           <% end %>
         </td>
-        <% if can? :destroy, trans %>
+        <% if can? :destroy, trans[:source] %>
           <td>
             <%= link_to "Destroy", trans[:source], :method => :delete, :confirm => "Are you sure?" %>
             the original [ <%= I18n.default_locale %> ] translation.
