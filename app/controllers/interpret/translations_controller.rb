@@ -1,6 +1,6 @@
 class Interpret::TranslationsController < Interpret::BaseController
   before_filter :get_tree, :only => :index
-  authorize_resource
+  authorize_resource :class => "Interpret::Translation"
 
   def index
     key = params[:key]
