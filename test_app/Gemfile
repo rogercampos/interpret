@@ -1,12 +1,17 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~> 3.0.5'
+gem 'rails', '~> 3.1.1'
 gem 'haml-rails'
-gem 'capistrano'
 
-group :development, :test do
-  gem 'sqlite3-ruby', :require => 'sqlite3'
-end
+gem 'sqlite3'
 
 gem 'interpret', :path => ".."
-gem 'mysql2', "~> 0.2.7"
+gem 'mysql2', "~> 0.3.0"
+
+gem 'jquery-rails'
+
+group :assets do
+  gem 'sass-rails',   '~> 3.1.4'
+  gem 'coffee-rails', '~> 3.1.1'
+  gem 'uglifier', '>= 1.0.3'
+end

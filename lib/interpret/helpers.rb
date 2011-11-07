@@ -30,8 +30,9 @@ module Interpret
 
     def t(key, options = {})
       if Interpret.live_edit
-        keys = build_keys(key, options)
-        "<span class='interpret_editable' data-key='#{keys}'>#{translate(key, options)}</span>".html_safe
+        #keys = build_keys(key, options)
+        #"<span class='interpret_editable' data-key='#{keys}'>#{translate(key, options)}</span>".html_safe
+        translate(key, options)
       else
         translate(key, options) #.html_safe
       end
@@ -62,7 +63,8 @@ module Interpret
 
     def scope_key_by_partial(key)
       if key.to_s.first == "."
-        "#{@_virtual_path.gsub(%r{/_?}, ".")}#{key.to_s}"
+        #"#{@_virtual_path.gsub(%r{/_?}, ".")}#{key.to_s}"
+        key
       else
         key
       end

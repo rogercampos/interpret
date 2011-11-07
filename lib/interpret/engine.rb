@@ -1,4 +1,3 @@
-require 'i18n/backend/active_record'
 require 'interpret/logger'
 require 'interpret/helpers'
 require 'interpret/controller_filter'
@@ -25,10 +24,12 @@ module Interpret
 
 
     initializer "interpret.register_observer" do |app|
-      app.config.before_initialize do |app|
+      #app.config.before_initialize do |app|
+        require 'active_record'
+        require 'i18n/backend/active_record'
         ActiveRecord::Base.observers << Interpret.sweeper.to_sym if Interpret.sweeper && I18n::Backend::ActiveRecord::Translation.table_exists?
         ActiveRecord::Base.observers << :"interpret/expiration_observer" if !Interpret.sweeper && I18n::Backend::ActiveRecord::Translation.table_exists?
-      end
+      #end
     end
   end
 end

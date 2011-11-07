@@ -6,6 +6,9 @@ InterpretApp::Application.routes.draw do
     get "contact", :to => "pages#contact"
 
     post "toggle_edition_mode", :to => "application#toggle_edition_mode"
+
+    mount Interpret::Engine => "/interpret"
+
     root :to => "pages#index"
   end
 end

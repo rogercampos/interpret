@@ -13,7 +13,7 @@ margin: 0px;
 
 body
 {
-background: #F9F9F7 url('/images/a1.gif') repeat-x;
+background: #F9F9F7 url(<%= asset_path 'a1.gif' %>) repeat-x;
 font-size: 11px;
 font-family: "trebuchet ms", helvetica, sans-serif;
 color: #8C8C73;
@@ -47,7 +47,7 @@ img.picA
 {
 position: relative;
 top: -2px;
-background: url('/images/a47.gif') no-repeat;
+background: url(<%= asset_path 'a47.gif' %>) no-repeat;
 width: 76px;
 height: 74px;
 padding: 8px;
@@ -57,7 +57,7 @@ img.picB
 {
 position: relative;
 top: -2px;
-background: url('/images/a26.gif') no-repeat;
+background: url(<%= asset_path 'a26.gif' %>) no-repeat;
 width: 146px;
 height: 75px;
 padding: 7px;
@@ -94,7 +94,7 @@ padding-top: 0px;
 position: absolute;
 top: 0px;
 left: 0px;
-background: #fff url('/images/upbg.gif') no-repeat;
+background: #fff url(<%= asset_path 'upbg.gif' %>) no-repeat;
 width: 747px;
 height: 264px;
 z-index: 1;
@@ -105,7 +105,7 @@ z-index: 1;
 position: relative;
 width: 747px;
 margin: 0 auto;
-background: #fff url('/images/abg.gif') repeat-y;
+background: #fff url(<%= asset_path 'abg.gif' %>) repeat-y;
 }
 
 #inner
@@ -118,7 +118,7 @@ z-index: 2;
 #header
 {
 position: absolute;
-background: #FF7800 url('/images/a8.gif') repeat-x;
+background: #FF7800 url(<%= asset_path 'a8.gif' %>) repeat-x;
 width: 202px;
 height: 92px;
 color: #fff;
@@ -157,7 +157,7 @@ color: #FCE2CA;
 {
 position: absolute;
 right: 30px;
-background: #EAEAE2 url('/images/a10.jpg') no-repeat;
+background: #EAEAE2 url(<%= asset_path 'a10.jpg' %>) no-repeat;
 width: 458px;
 height: 92px;
 }
@@ -165,7 +165,7 @@ height: 92px;
 #menu
 {
 position: relative;
-background: #46461F url('/images/a16.gif') repeat-x;
+background: #46461F url(<%= asset_path 'a16.gif' %>) repeat-x;
 height: 67px;
 padding: 0px 20px 0px 5px;
 margin: 98px 0px 20px 0px;
@@ -199,7 +199,7 @@ font-weight: bold;
 
 #menu ul li a:hover
 {
-background: #fff url('/images/a18.gif') repeat-x top;
+  background: #fff url(<%= asset_path 'a18.gif' %>) repeat-x top;
 color: #4A4A24;
 text-decoration: none;
 }
@@ -223,7 +223,7 @@ font-size: 16px;
 line-height: 25px;
 color: #656551;
 letter-spacing: -1px;
-background: url('/images/a22.gif') bottom repeat-x;
+background: url(<%= asset_path 'a22.gif' %>) bottom repeat-x;
 padding: 0px 0px 10px 10px;
 margin-bottom: 20px;
 }
@@ -249,7 +249,7 @@ font-size: 18px;
 line-height: 25px;
 color: #111;
 letter-spacing: -1px;
-background: url('/images/a22.gif') bottom repeat-x;
+background: url(<%= asset_path 'a22.gif' %>) bottom repeat-x;
 padding: 0px 0px 10px 15px;
 margin-bottom: 20px;
 }
@@ -289,7 +289,7 @@ margin-bottom: 0px;
 {
 position: relative;
 top: -10px;
-background: url('/images/a33.gif') repeat-x;
+background: url(<%= asset_path 'a33.gif' %>) repeat-x;
 height: 64px;
 }
 
@@ -313,17 +313,17 @@ background-position: 0px 2px;
 
 #primarycontent .post .footer ul li.printerfriendly
 {
-background-image: url('/images/a41.gif');
+  background-image: url(<%= asset_path 'a41.gif' %>);
 }
 
 #primarycontent .post .footer ul li.comments
 {
-background-image: url('/images/a36.gif');
+  background-image: url(<%= asset_path 'a36.gif' %>);
 }
 
 #primarycontent .post .footer ul li.readmore
 {
-background-image: url('/images/a38.gif');
+  background-image: url(<%= asset_path 'a38.gif' %>);
 }
 
 #footer
@@ -333,7 +333,7 @@ clear: both;
 height: 66px;
 text-align: center;
 line-height: 66px;
-background-image: url('/images/a50.gif');
+background-image: url(<%= asset_path 'a50.gif' %>);
 color: #A8A88D;
 }
 

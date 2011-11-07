@@ -3,7 +3,7 @@
 <head>
   <title>Interpret Demo</title>
   <%= stylesheet_link_tag "default" %>
-  <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tag %>
 </head>
 <body>
@@ -15,7 +15,7 @@
     <p>
       <ul>
         <li>
-          <%= link_to "Login to interpret", interpret_root_path %>
+          <%= link_to "Login to interpret", interpret_engine_path %>
         </li>
       </ul>
     </p>
@@ -84,7 +84,7 @@
 
         <h3><%= t "about_me" %></h3>
         <div class="content">
-          <img src="/images/pic2.jpg" class="picB" alt="" />
+          <%= image_tag "pic2.jpg", :class => "picB" %>
           <p><%= t "about_me_text_html" %></p>
         </div>
 
