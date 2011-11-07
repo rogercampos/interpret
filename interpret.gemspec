@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency "i18n", "~> 0.5.0"
   s.add_dependency "i18n-active_record"
   s.add_dependency "ya2yaml", ">= 0.30.0"
-  s.add_dependency "best_in_place", "~> 0.2.0"
+  s.add_dependency "best_in_place", "~> 0.2.2"
   s.add_dependency "lazyhash", ">= 0.1.1"
   s.add_dependency "cancan", "~> 1.6.0"
 

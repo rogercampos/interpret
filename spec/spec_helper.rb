@@ -13,6 +13,7 @@ RSpec.configure do |config|
   require 'rspec/expectations'
 
   config.include RSpec::Matchers
+  config.include BestInPlace::TestHelpers
   config.use_transactional_fixtures = true
 
   # == Mock Framework

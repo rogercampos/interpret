@@ -55,3 +55,13 @@ es:
   file2db en_yml
   file2db es_yml
 end
+
+def change_translation(scope, new_value)
+  bip_id = ""
+  within(scope) do
+    bip_id = page.all("span.best_in_place").first[:id]
+  end
+  bip_id = bip_id.scan(/translation_\d+/).first
+
+  bip_area bip_id, :value, new_value
+end
