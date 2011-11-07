@@ -7,7 +7,7 @@
   create them below and you can see the translation key and also the original
   content in the reference language [ <%= I18n.default_locale %> ]
   </p>
-  <table>
+  <table id='missing_translations'>
     <thead>
       <tr class="header">
         <th>Key</th>
@@ -18,25 +18,27 @@
         <% end %>
       </tr>
     </thead>
-    <% @missing_translations.each do |trans| %>
-      <tr>
-        <td><%= trans[:key] %></td>
-        <td><%= trans[:ref_value] %></td>
-        <td>
-          <%= form_for Interpret::Translation.new, :url => interpret_translations_path do |f| %>
-            <%= f.hidden_field "locale", :value => I18n.locale %>
-            <%= f.hidden_field "key", :value => trans[:key] %>
-            <%= f.text_area :value, :rows => 4, :cols => 60 %>
-            <%= submit_tag "Create" %>
-          <% end %>
-        </td>
-        <% if can? :destroy, trans[:source] %>
+    <tbody>
+      <% @missing_translations.each do |trans| %>
+        <tr>
+          <td><%= trans[:key] %></td>
+          <td><%= trans[:ref_value] %></td>
           <td>
-            <%= link_to "Destroy", trans[:source], :method => :delete, :confirm => "Are you sure?" %>
-            the original [ <%= I18n.default_locale %> ] translation.
+            <%= form_for Interpret::Translation.new, :url => interpret_translations_path do |f| %>
+              <%= f.hidden_field "locale", :value => I18n.locale %>
+              <%= f.hidden_field "key", :value => trans[:key] %>
+              <%= f.text_area :value, :rows => 4, :cols => 60 %>
+              <%= submit_tag "Create" %>
+            <% end %>
           </td>
-        <% end %>
-      </tr>
-    <% end %>
+          <% if can? :destroy, trans[:source] %>
+            <td>
+              <%= link_to "Destroy", trans[:source], :method => :delete, :confirm => "Are you sure?" %>
+              the original [ <%= I18n.default_locale %> ] translation.
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
 <% end %>

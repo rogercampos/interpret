@@ -4,5 +4,5 @@ Interpret.configure do |config|
   config.layout = "backoffice"
   config.scope = "(:locale)"
   config.ability = "interpret_ability"
-  config.black_list = ["blacklist.*"]
+  config.black_list = ["blacklist.*", "missings.black"]
 end

@@ -66,6 +66,7 @@ class Interpret::TranslationsController < Interpret::BaseController
     @translation = Interpret::Translation.find(params[:id])
 
     @translation.destroy
+    flash[:notice] = "Translation #{@translation.key} destroyed."
     redirect_to request.env["HTTP_REFERER"]
   end
 

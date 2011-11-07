@@ -31,6 +31,11 @@ en:
 
   blacklist:
     black_p1: A forbidden phrase
+
+  missings:
+    p1: Missing one
+    p2: Missing two
+    black: A one blacklisted
   """
 
   es_yml = """
