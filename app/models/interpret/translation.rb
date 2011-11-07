@@ -82,6 +82,10 @@ module Interpret
 
         lang = hash.keys.first
 
+        unless lang.to_s == I18n.locale.to_s
+          raise ArgumentError, "the language doesn't match"
+        end
+
         records = parse_hash(hash.first[1], lang)
         transaction do
           records.each do |x|

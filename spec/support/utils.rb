@@ -39,6 +39,17 @@ en:
   """
 end
 
+def import_en_yml
+"""
+en:
+  printer: A new printer phrase
+  new_stuff: Something brand new
+
+  section1:
+    printer: Other change
+  """
+end
+
 def load_integration_data
   #en_yml =
   es_yml = """
@@ -67,4 +78,12 @@ def change_translation(scope, new_value)
   bip_id = bip_id.scan(/translation_\d+/).first
 
   bip_area bip_id, :value, new_value
+end
+
+def create_tmp_file(content)
+  file = Tempfile.new("interpret_test")
+  file.write(content)
+  path = file.path
+  file.close
+  path
 end
