@@ -18,8 +18,8 @@ def file2db(string_file)
   parse_hash(hash.first[1], lang).map{|x| x.save!}
 end
 
-def load_integration_data
-  en_yml = """
+def en_yml
+"""
 en:
   printer: Printer Friendly
   comments: Comments
@@ -37,7 +37,10 @@ en:
     p2: Missing two
     black: A one blacklisted
   """
+end
 
+def load_integration_data
+  #en_yml =
   es_yml = """
 es:
   printer: Para imprimir

@@ -16,7 +16,7 @@ class Interpret::ToolsController < Interpret::BaseController
     hash = Interpret::Translation.export(translations)
     text = hash.ya2yaml
 
-    send_data text[5..text.length], :filename => "#{I18n.locale}.yml"
+    send_data text[5..text.length], :filename => "#{I18n.locale}.yml", :type => "text/plain", :disposition => "attachment"
   end
 
   def run_update
