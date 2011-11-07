@@ -18,7 +18,7 @@
           <td class="content" id="translation_<%= x.id %>">
             <%= best_in_place x, :value,
                 :type => :textarea,
-                :path => interpret_translation_path(x),
+                :path => translation_path(x),
                 :activator => "#translation_#{x.id}",
                 :sanitize => false %>
           </td>
@@ -34,11 +34,11 @@
             <% if trans %>
               <%= best_in_place trans, :value,
                   :type => :textarea,
-                  :path => interpret_translation_path(trans),
+                  :path => translation_path(trans),
                   :activator => "#translation_#{trans.id}",
                   :sanitize => false %>
             <% else %>
-              <%= link_to "Create this missing translation", interpret_missing_translations_path %>
+              <%= link_to "Create this missing translation", missing_translations_path %>
             <% end %>
           </td>
         </tr>

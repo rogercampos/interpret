@@ -4,6 +4,8 @@ require 'interpret/controller_filter'
 
 module Interpret
   class Engine < Rails::Engine
+    isolate_namespace Interpret
+
     initializer "interpret.register_i18n_active_record_backend" do |app|
       app.config.after_initialize do
         if Interpret.registered_envs.include?(Rails.env.to_sym)

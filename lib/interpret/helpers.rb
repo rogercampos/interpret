@@ -75,14 +75,14 @@ module Interpret
       if origin_keys.present? && prev_key.blank?
         parent_key = origin_keys.split(".")[0..-2].join(".")
         if parent_key.blank?
-          out << "<li>#{link_to "..", interpret_root_path}</li>"
+          out << "<li>#{link_to "..", root_path}</li>"
         else
-          out << "<li>#{link_to "..", interpret_root_path(:key => parent_key)}</li>"
+          out << "<li>#{link_to "..", root_path(:key => parent_key)}</li>"
         end
       end
       hash.keys.each do |key|
         out << "<li>"
-        out << "#{link_to key, interpret_root_path(:key => "#{origin_keys.blank? ? "" : "#{origin_keys}."}#{prev_key}#{key}")}"
+        out << "#{link_to key, root_path(:key => "#{origin_keys.blank? ? "" : "#{origin_keys}."}#{prev_key}#{key}")}"
         out << "</li>"
       end
       out << "</ul>"

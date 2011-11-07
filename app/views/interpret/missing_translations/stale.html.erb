@@ -27,12 +27,12 @@
         <td class='content' id='translation_<%= trans.id %>'>
             <%= best_in_place trans, :value,
                 :type => :textarea,
-                :path => interpret_translation_path(trans),
+                :path => translation_path(trans),
                 :activator => "#translation_#{trans.id}",
                 :sanitize => false %>
         </td>
         <td>
-          <%= form_for trans, :url => interpret_translation_path(trans) do |f| %>
+          <%= form_for trans, :url => translation_path(trans) do |f| %>
             <%= f.hidden_field :stale, :value => false %>
             <%= submit_tag "Mark as OK" %>
           <% end %>

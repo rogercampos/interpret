@@ -7,7 +7,7 @@
 <p>With the following button you can download a "<%= I18n.locale %>.yml" file with the current translations for this language.</p>
 
 <p>
-<%= button_to "Download", export_interpret_tools_path, :method => :get %>
+<%= button_to "Download", export_tools_path, :method => :get %>
 </p>
 
 <div class="header">
@@ -23,7 +23,7 @@ and if they already exists they will be overwritten.
 Remember that the first key of the YAML file you're uploading must match the current locale.
 </p>
 
-<%= form_tag import_interpret_tools_path, :multipart => true do %>
+<%= form_tag import_tools_path, :multipart => true do %>
   <%= label_tag "File:" %>
   <%= file_field_tag :file %>
   <%= submit_tag "Upload" %>

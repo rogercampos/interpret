@@ -6,7 +6,7 @@ class Interpret::SearchController < Interpret::BaseController
       opts = {}
       opts[:key] = params[:key] if params[:key].present?
       opts[:value] = params[:value] if params[:value].present?
-      redirect_to interpret_search_url(opts)
+      redirect_to search_url(opts)
     else
       if params[:key].present? || params[:value].present?
         sanitizer = case ActiveRecord::Base.connection.adapter_name

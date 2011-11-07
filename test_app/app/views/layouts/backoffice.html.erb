@@ -3,8 +3,7 @@
 <head>
   <title>Interpret Demo - Backoffice</title>
   <%= stylesheet_link_tag "private", "interpret_style" %>
-  <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" %>
-  <%= javascript_include_tag :all %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tag %>
 </head>
 <body>
@@ -16,7 +15,7 @@
       <ul>
         <li><%= link_to "Public page", "/" %></li>
         <li><%= link_to "Other backoffice section", "#" %></li>
-        <li><%= link_to "Translations", interpret_root_path %></li>
+        <li><%= link_to "Translations", interpret_path %></li>
       </ul>
     </div>
     <div id="page">

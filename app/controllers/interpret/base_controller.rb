@@ -2,7 +2,7 @@ class Interpret::BaseController < eval(Interpret.parent_controller.classify)
   before_filter :set_locale
   before_filter { authorize! :use, :interpret }
   before_filter :check_authorized_language
-  layout 'interpret'
+  layout 'interpret/application'
 
 protected
   def current_interpret_user

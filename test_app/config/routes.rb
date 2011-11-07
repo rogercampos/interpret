@@ -1,5 +1,9 @@
 InterpretApp::Application.routes.draw do
-  scope "(:locale)" do
+  root :to => redirect("/es")
+
+  mount Interpret::Engine => "/interpret"
+
+  scope ":locale" do
     get "archives", :to => "pages#archives"
     get "links", :to => "pages#links"
     get "resources", :to => "pages#resources"
@@ -7,7 +11,6 @@ InterpretApp::Application.routes.draw do
 
     post "toggle_edition_mode", :to => "application#toggle_edition_mode"
 
-    mount Interpret::Engine => "/interpret"
 
     root :to => "pages#index"
   end
