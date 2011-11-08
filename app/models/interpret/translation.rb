@@ -3,6 +3,7 @@ module Interpret
   class Translation < I18n::Backend::ActiveRecord::Translation
     default_scope order('locale ASC')
     validates_uniqueness_of :key, :scope => :locale
+    validates_presence_of :locale
 
     after_update :set_stale
 
