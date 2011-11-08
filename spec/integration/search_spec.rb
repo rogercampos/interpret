@@ -17,7 +17,7 @@ describe "Search" do
   end
 
   it "should work with accents and other non ascii chars" do
-    visit interpret_search_path(:es)
+    visit search_path(:es)
     fill_in "Translation text", :with => "extraña"
     click_button "SEARCH"
 
@@ -28,7 +28,7 @@ describe "Search" do
   end
 
   it "should return the correct results searching by key" do
-    visit interpret_search_path(:es)
+    visit search_path(:es)
     fill_in "Key value", :with => "printer"
     click_button "SEARCH"
 
@@ -40,7 +40,7 @@ describe "Search" do
   end
 
   it "should not return blacklisted translations by key" do
-    visit interpret_search_path(:es)
+    visit search_path(:es)
     fill_in "Key value", :with => "black_p1"
     click_button "SEARCH"
 
@@ -48,7 +48,7 @@ describe "Search" do
   end
 
   it "should not return blacklisted translations by text" do
-    visit interpret_search_path(:es)
+    visit search_path(:es)
     fill_in "Translation text", :with => "Una frase prohibida"
     click_button "SEARCH"
 
@@ -56,7 +56,7 @@ describe "Search" do
   end
 
   it "should say the number of results found" do
-    visit interpret_search_path(:es)
+    visit search_path(:es)
     fill_in "Key value", :with => "printer"
     click_button "SEARCH"
 
@@ -66,7 +66,7 @@ describe "Search" do
   end
 
   it "should be able to switch the language after a search" do
-    visit interpret_search_path(:es)
+    visit search_path(:es)
     fill_in "Key value", :with => "printer"
     click_button "SEARCH"
 
@@ -75,7 +75,7 @@ describe "Search" do
   end
 
   it "should see the search results in the same order after switching languages" do
-    visit interpret_search_path(:es)
+    visit search_path(:es)
     fill_in "Key value", :with => "printer"
     click_button "SEARCH"
     res = page.all("table#results tbody tr").map{|x| x.find("td.key").text}

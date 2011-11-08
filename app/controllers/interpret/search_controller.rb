@@ -22,7 +22,13 @@ class Interpret::SearchController < Interpret::BaseController
         t = Interpret::Translation.arel_table
         search_key = params[:key].present? ? params[:key].split(" ").map{|x| sanitizer.call(x)} : []
         search_value = params[:value].present? ? params[:value].split(" ").map{|x| sanitizer.call(x)} : []
-        @translations = Interpret::Translation.allowed.locale(I18n.locale).where(t[:key].matches_all(search_key).or(t[:value].matches_all(search_value))).order("translations.key ASC")
+        if search_value.any? && search_key.any?
+          @translations = Interpret::Translation.allowed.locale(I18n.locale).where(t[:key].matches_all(search_key).or(t[:value].matches_all(search_value))).order("translations.key ASC")
+        elsif search_key.any?
+          @translations = Interpret::Translation.allowed.locale(I18n.locale).where(t[:key].matches_all(search_key)).order("translations.key ASC")
+        else
+          @translations = Interpret::Translation.allowed.locale(I18n.locale).where(t[:value].matches_all(search_value)).order("translations.key ASC")
+        end
       end
     end
   end
