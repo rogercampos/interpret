@@ -28,16 +28,8 @@
       You are not logged in
     <% end %>
     </p>
-    <p>
-    <% if current_user %>
-      <%= button_to Interpret.live_edit ? "Disable edition mode" : "Enable edition mode", toggle_edition_mode_path %>
-    <% else %>
-      Log in to use the live edition features!
-    <% end %>
-    </p>
 
     <br/>
-    <p>You can reestore the original contents with the option "Dump", inside the backoffice > Tools section.</p>
     <p>
       Thanks to <a href="http://nodethirtythree.com">NodeThirtyThree</a> to provide this template in order to demostrate a real website.
     </p>
@@ -115,8 +107,6 @@
     </div>
 
   </div>
-
-  <%= interpret_live_edition %>
 </body>
 </html>
 

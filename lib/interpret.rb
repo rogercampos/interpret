@@ -8,20 +8,16 @@ module Interpret
   mattr_accessor :sweeper
   mattr_accessor :parent_controller
   mattr_accessor :registered_envs
-  mattr_accessor :scope
   mattr_accessor :current_user
   mattr_accessor :layout
   mattr_accessor :soft
-  mattr_accessor :live_edit
   mattr_accessor :black_list
   mattr_accessor :ability
 
   @@parent_controller = "application_controller"
   @@registered_envs = [:production, :staging]
-  @@scope = ""
   @@layout = "interpret_base"
   @@soft = false
-  @@live_edit = false
   @@black_list = []
   @@current_user = "current_user"
   @@ability = "interpret/ability"

@@ -71,17 +71,6 @@ module Interpret
       redirect_to request.env["HTTP_REFERER"]
     end
 
-    def live_edit
-      blobs = params[:key].split(".")
-      locale = blobs.first
-      key = blobs[1..-1].join(".")
-      @translation = Interpret::Translation.locale(locale).find_by_key(key)
-
-      respond_to do |format|
-        format.html { render :layout => false }
-      end
-    end
-
   private
     def get_tree
       @tree ||= Interpret::Translation.get_tree
