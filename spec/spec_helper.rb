@@ -1,7 +1,7 @@
 # Configure Rails Envinronment
 ENV["RAILS_ENV"] = "test"
 
-require File.expand_path('../../test_app/config/environment', __FILE__)
+require File.expand_path('../../test_app/config/environment.rb', __FILE__)
 require "rspec/rails"
 require 'yaml'
 
@@ -9,14 +9,7 @@ require 'yaml'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each{|f| require f}
 
 RSpec.configure do |config|
-  # Remove this line if you don't want RSpec's should and should_not
-  # methods or matchers
-  require 'rspec/expectations'
-
-  config.include RSpec::Matchers
   config.include BestInPlace::TestHelpers
-  config.use_transactional_fixtures = true
 
-  # == Mock Framework
-  config.mock_with :rspec
+  config.use_transactional_fixtures = true
 end

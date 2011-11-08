@@ -6,7 +6,7 @@ describe "Search" do
   before { load_integration_data }
 
   it "should return the correct results searching by text" do
-    visit interpret_search_path(:es)
+    visit search_path(:es)
     fill_in "Translation text", :with => "Comentarios"
     click_button "SEARCH"
 

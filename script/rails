@@ -3,4 +3,3 @@
 
 ENGINE_PATH = File.expand_path('../..',  __FILE__)
 load File.expand_path('../../test_app/script/rails',  __FILE__)
-

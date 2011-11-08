@@ -6,7 +6,7 @@ describe "Translations" do
   before { load_integration_data }
 
   it "should let me edit a translation", :js => true do
-    visit interpret_root_path(:en)
+    visit root_path(:en)
 
     # We need this to identify the translation we want to change
     bip_id = ""
@@ -18,7 +18,7 @@ describe "Translations" do
     bip_area bip_id, :value, "New value"
 
 
-    visit interpret_root_path(:en)
+    visit root_path(:en)
     within("table#results tbody tr:first") do
       page.should have_content("New value")
     end
