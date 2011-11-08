@@ -1,5 +1,5 @@
-class InterpretCreateTranslations < ActiveRecord::Migration
-  def self.up
+class CreateTranslations < ActiveRecord::Migration
+  def up
     create_table :translations do |t|
       t.string :locale
       t.string :key
@@ -10,8 +10,7 @@ class InterpretCreateTranslations < ActiveRecord::Migration
     end
   end
 
-  def self.down
+  def down
     drop_table :translations
   end
 end
-
