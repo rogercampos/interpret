@@ -422,17 +422,8 @@ backoffice.
     rake interpret:update
     rake interpret:dump
 
-The `update` task is what you may want to run after a deployment, for what
-Interpret already has a capistrano recipe...
+The `update` task is what you may want to run after a deployment.
 
-
-Capistrano recipe
------------------
-
-Interpret also have a capistrano recipe to run the `update` rake task after
-updating code. You only need to require this file in your `deploy.rb`:
-
-    require 'interpret/capistrano'
 
 
 Soft behavior
