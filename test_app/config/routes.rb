@@ -11,6 +11,9 @@ InterpretApp::Application.routes.draw do
 
     post "toggle_edition_mode", :to => "application#toggle_edition_mode"
 
+    namespace :admin do
+      get 'dashboard', :to => "dashboard#index"
+    end
 
     root :to => "pages#index"
   end

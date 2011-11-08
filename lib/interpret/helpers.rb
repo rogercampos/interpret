@@ -1,6 +1,5 @@
 module Interpret
   module InterpretHelpers
-
     # Generates the html tree from the given keys
     def interpret_show_tree(tree, origin_keys)
       tree = tree.first[1]
@@ -12,11 +11,6 @@ module Interpret
       build_tree(tree, origin_keys)
     end
 
-    def interpret_section_link_to(name, options = {}, html_options = {})
-      html_options.merge!({ :class => 'current' }) if current_controller?(options)
-      link_to name, options, html_options
-    end
-
     def interpret_title(title)
       content_for :title do
         title
@@ -24,7 +18,7 @@ module Interpret
     end
 
     def interpret_parent_layout(layout)
-      @_content_for[:layout] = self.output_buffer
+      @view_flow.set(:layout, self.output_buffer)
       self.output_buffer = render(:file => "layouts/#{layout}")
     end
 
@@ -87,11 +81,6 @@ module Interpret
       end
       out << "</ul>"
       out.html_safe
-    end
-
-    def current_controller?(opts)
-      hash = Rails.application.routes.recognize_path(url_for(opts))
-      params[:controller] == hash[:controller]
     end
   end
 end
