@@ -17,7 +17,7 @@ module Interpret
   @@parent_controller = "application_controller"
   @@registered_envs = [:production, :staging]
   @@layout = "interpret_base"
-  @@soft = false
+  @@soft = true
   @@black_list = []
   @@current_user = "current_user"
   @@ability = "interpret/ability"
