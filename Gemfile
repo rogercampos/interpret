@@ -5,3 +5,4 @@ gemspec
 
 gem 'sqlite3'
 gem 'jquery-rails'
+gem "rails", "3.1.3"
