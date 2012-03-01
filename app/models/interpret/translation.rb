@@ -4,6 +4,7 @@ module Interpret
     default_scope order('locale ASC')
     validates_uniqueness_of :key, :scope => :locale
     validates_presence_of :locale
+    validate :key_format
 
     after_update :set_stale
     before_validation :downcase_key
@@ -23,6 +24,10 @@ module Interpret
 
     def downcase_key
       self.key = key.downcase
+    end
+
+    def key_format
+      errors.add(:key, "has an invalid format") unless key =~ /^[a-zA-Z0-9\._]+$/
     end
 
     class << self
