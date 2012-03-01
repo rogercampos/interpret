@@ -310,4 +310,21 @@ es:
       subject.key.should == "paypal.resume"
     end
   end
+
+  describe "key format" do
+    it "should not allow spaces" do
+      subject.key = "not allowed spaces"
+      subject.should_not be_valid
+    end
+
+    it "should not allow -" do
+      subject.key = "not-allowed"
+      subject.should_not be_valid
+    end
+
+    it "should allow _" do
+      subject.key = "some_key.other_key"
+      subject.should be_valid
+    end
+  end
 end
