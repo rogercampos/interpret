@@ -6,6 +6,7 @@ module Interpret
     validates_presence_of :locale
 
     after_update :set_stale
+    before_validation :downcase_key
 
     scope :stale, where(:stale => true)
 
@@ -18,6 +19,10 @@ module Interpret
       return unless locale == I18n.default_locale.to_s
 
       Translation.where(:key => key).where(Translation.arel_table[:locale].not_eq(locale)).update_all({:stale => true})
+    end
+
+    def downcase_key
+      self.key = key.downcase
     end
 
     class << self

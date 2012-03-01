@@ -302,4 +302,12 @@ es:
       Interpret::Translation.locale("pt").find_by_key("p1").stale?.should be_false
     end
   end
+
+  describe "downcase key" do
+    it "should be performed before validation" do
+      subject.key = "PayPal.resume"
+      subject.save!
+      subject.key.should == "paypal.resume"
+    end
+  end
 end
