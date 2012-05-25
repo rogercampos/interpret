@@ -8,6 +8,7 @@ module Interpret
 
     after_update :set_stale
     before_validation :downcase_key
+    attr_accessible :stale
 
     scope :stale, where(:stale => true)
 
