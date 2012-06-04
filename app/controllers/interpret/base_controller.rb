@@ -1,4 +1,4 @@
-class Interpret::BaseController < eval(Interpret.parent_controller.classify)
+class Interpret::BaseController < Interpret.parent_controller.classify.constantize
   before_filter :set_locale
   before_filter { authorize! :use, :interpret }
   before_filter :check_authorized_language
@@ -6,7 +6,7 @@ class Interpret::BaseController < eval(Interpret.parent_controller.classify)
 
 protected
   def current_interpret_user
-    @current_interpret_user ||= eval(Interpret.current_user)
+    @current_interpret_user ||= send(Interpret.current_user)
   end
 
   def current_ability
