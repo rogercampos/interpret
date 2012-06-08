@@ -13,6 +13,11 @@ protected
     @current_ability ||= Interpret.ability.new(current_interpret_user)
   end
 
+  def default_url_options(options = {})
+    options.merge({:locale => I18n.locale})
+  end
+
+
 private
   def set_locale
     I18n.locale = params[:locale] if params[:locale]
