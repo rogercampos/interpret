@@ -44,11 +44,11 @@ module Interpret
           msg << "Locale: [#{@translation.locale}], key: [#{@translation.key}]. The translation has been changed from [#{old_value}] to [#{@translation.value}]"
           Interpret.logger.info msg
 
-          format.html { redirect_to(request.env["HTTP_REFERER"]) }
+          format.html { redirect_to :back }
           format.xml  { head :ok }
           format.json { head :ok }
         else
-          format.html { redirect_to(request.env["HTTP_REFERER"]) }
+          format.html { redirect_to :back }
           format.xml  { render :xml => @translation.errors, :status => :unprocessable_entity }
           format.json { render :status => :unprocessable_entity }
         end
@@ -60,10 +60,10 @@ module Interpret
 
       if @translation.save
         flash[:notice] = "New translation created for #{@translation.key}"
-        redirect_to request.env["HTTP_REFERER"]
+        redirect_to :back
       else
         flash[:alert] = "Error when creating a new translation"
-        redirect_to request.env["HTTP_REFERER"]
+        redirect_to :back
       end
     end
 
@@ -72,7 +72,7 @@ module Interpret
 
       @translation.destroy
       flash[:notice] = "Translation #{@translation.key} destroyed."
-      redirect_to request.env["HTTP_REFERER"]
+      redirect_to :back
     end
 
   private
