@@ -1,5 +1,5 @@
 module Interpret
-  module InterpretHelpers
+  module InterpretHelper
     # Generates the html tree from the given keys
     def interpret_show_tree(tree, origin_keys)
       tree = tree.first[1]
@@ -39,3 +39,4 @@ module Interpret
     end
   end
 end
+

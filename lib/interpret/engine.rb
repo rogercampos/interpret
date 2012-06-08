@@ -1,5 +1,4 @@
 require 'interpret/logger'
-require 'interpret/helpers'
 
 module Interpret
   class Engine < Rails::Engine

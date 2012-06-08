@@ -3,6 +3,7 @@ class Interpret::BaseController < Interpret.parent_controller.classify.constanti
   before_filter { authorize! :use, :interpret }
   before_filter :check_authorized_language
   layout 'interpret/interpret'
+  helper Interpret::InterpretHelper
 
 protected
   def current_interpret_user
