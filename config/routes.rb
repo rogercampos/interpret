@@ -23,4 +23,6 @@ Interpret::Engine.routes.draw do
 
     root :to => "translations#index"
   end
+
+  match "/", :to => "translations#welcome"
 end

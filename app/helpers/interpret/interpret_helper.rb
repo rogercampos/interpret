@@ -1,5 +1,5 @@
 module Interpret
-  module InterpretHelpers
+  module InterpretHelper
     # Generates the html tree from the given keys
     def interpret_show_tree(tree, origin_keys)
       tree = tree.first[1]
@@ -15,11 +15,6 @@ module Interpret
       content_for :title do
         title
       end
-    end
-
-    def interpret_parent_layout(layout)
-      @view_flow.set(:layout, self.output_buffer)
-      self.output_buffer = render(:file => "layouts/#{layout}")
     end
 
   private
@@ -44,3 +39,4 @@ module Interpret
     end
   end
 end
+
