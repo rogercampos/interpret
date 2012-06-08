@@ -7,7 +7,7 @@ class Interpret::BaseController < Interpret.parent_controller.classify.constanti
 
 protected
   def current_interpret_user
-    @current_interpret_user ||= send(Interpret.current_user)
+    send(Interpret.current_user)
   end
 
   def current_ability
