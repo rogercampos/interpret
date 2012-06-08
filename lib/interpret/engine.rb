@@ -4,6 +4,7 @@ require 'interpret/helpers'
 module Interpret
   class Engine < Rails::Engine
     isolate_namespace Interpret
+    engine_name "interpret"
 
     initializer "interpret.register_i18n_active_record_backend" do |app|
       app.config.after_initialize do

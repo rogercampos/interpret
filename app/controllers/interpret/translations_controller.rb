@@ -3,6 +3,10 @@ module Interpret
     before_filter :get_tree, :only => :index
     authorize_resource :class => "Interpret::Translation"
 
+    def welcome
+      redirect_to root_url
+    end
+
     def index
       key = params[:key]
       t = Interpret::Translation.arel_table
