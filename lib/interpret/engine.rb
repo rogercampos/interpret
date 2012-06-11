@@ -1,4 +1,5 @@
 require 'interpret/logger'
+require 'interpret/translate_helper'
 
 module Interpret
   class Engine < Rails::Engine
@@ -6,6 +7,8 @@ module Interpret
     engine_name "interpret"
 
     initializer "interpret.register_i18n_active_record_backend" do |app|
+      ActionView::Base.send(:include, Interpret::TranslateHelper)
+
       app.config.after_initialize do
         if Interpret.registered_envs.include?(Rails.env.to_sym)
           I18n::Backend::ActiveRecord.send(:include, I18n::Backend::Memoize)
