@@ -1,7 +1,7 @@
 module Interpret
 
   class Translation < I18n::Backend::ActiveRecord::Translation
-    default_scope order('locale ASC')
+    default_scope lambda {order(arel_table[:locale].asc)}
     validates_uniqueness_of :key, :scope => :locale
     validates_presence_of :locale
     validate :key_format
@@ -10,7 +10,7 @@ module Interpret
     before_validation :downcase_key
     attr_accessible :stale
 
-    scope :stale, where(:stale => true)
+    scope :stale, lambda { where(:stale => true) }
 
     private
 
