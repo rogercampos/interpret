@@ -23,6 +23,9 @@ module Interpret
       Interpret.logger = InterpretLogger.new(logfile)
     end
 
+    initializer "interpret.setup_assets_precompile" do |app|
+      app.config.assets.precompile += %w(interpret_style.css interpret.js)
+    end
 
     initializer "interpret.register_observer" do |app|
       #app.config.before_initialize do |app|
