@@ -19,7 +19,6 @@
             <%= best_in_place x, :value,
                 :type => :textarea,
                 :path => translation_path(x),
-                :activator => "#translation_#{x.id}",
                 :sanitize => false %>
           </td>
         </tr>
@@ -27,7 +26,7 @@
     <% else %>
       <% @references.each do |x| %>
         <% trans = @translations.detect{|y| y.key == x.key} %>
-        <tr<%= " id='translation_#{trans.id}'" if trans %>>
+        <tr<%= " id=translation_#{trans.id}" if trans %>>
           <td style='width:5%'><%= x.key %></td>
           <td style='width:50%'><%= x.value %></td>
           <td style='width:50%'>
@@ -35,7 +34,6 @@
               <%= best_in_place trans, :value,
                   :type => :textarea,
                   :path => translation_path(trans),
-                  :activator => "#translation_#{trans.id}",
                   :sanitize => false %>
             <% else %>
               <%= link_to "Create this missing translation", missing_translations_path %>
