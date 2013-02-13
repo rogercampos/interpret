@@ -2,7 +2,6 @@ module Interpret
 
   class Translation < I18n::Backend::ActiveRecord::Translation
     default_scope order('locale ASC')
-    validates_presence_of :value
 
     class << self
       # Generates a hash representing the tree structure of the translations
