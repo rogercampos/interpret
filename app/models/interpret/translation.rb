@@ -28,7 +28,7 @@ module Interpret
     end
 
     def key_format
-      errors.add(:key, "has an invalid format") unless key =~ /^[a-zA-Z0-9\._-]+$/
+      errors.add(:key, "has an invalid format") unless key =~ /^[a-zA-Z0-9\._\-]+$/
     end
 
     class << self

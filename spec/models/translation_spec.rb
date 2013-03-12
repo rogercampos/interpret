@@ -303,6 +303,8 @@ es:
     end
   end
 
+  subject { Interpret::Translation.new(:locale => "en", :key => "cuca", :value => "monga") }
+
   describe "downcase key" do
     it "should be performed before validation" do
       subject.key = "PayPal.resume"
@@ -317,13 +319,13 @@ es:
       subject.should_not be_valid
     end
 
-    it "should not allow -" do
-      subject.key = "not-allowed"
-      subject.should_not be_valid
-    end
-
     it "should allow _" do
       subject.key = "some_key.other_key"
+      subject.should be_valid
+    end
+
+    it "support hypens" do
+      subject.key = "parent.child-cuca"
       subject.should be_valid
     end
   end
