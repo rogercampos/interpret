@@ -48,6 +48,7 @@ module Interpret
           format.xml  { head :ok }
           format.json { head :ok }
         else
+          Interpret.logger.error "ERROR ON UPDATE: #{@translation.errors.inspect}"
           format.html { redirect_to :back }
           format.xml  { render :xml => @translation.errors, :status => :unprocessable_entity }
           format.json { render :status => :unprocessable_entity }
