@@ -89,7 +89,7 @@ module Interpret
       # The language will be obtained from the first unique key of the yml
       # file.
       def import(file)
-        hash = YAML.load file
+        hash = YAML.load File.open(file.path)
         raise ArgumentError, "the YAML file must contain an unique first key representing the locale" unless hash.keys.count == 1
 
         lang = hash.keys.first
