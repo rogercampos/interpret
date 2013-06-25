@@ -19,16 +19,16 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency "rails", "~> 3.1"
-  s.add_dependency "i18n", "~> 0.6.0"
+  s.add_dependency "rails", "~> 4"
+  s.add_dependency "i18n"
   s.add_dependency "i18n-active_record"
-  s.add_dependency "ya2yaml", ">= 0.30.0"
-  s.add_dependency "best_in_place", "~> 2"
-  s.add_dependency "lazyhash", ">= 0.1.1"
-  s.add_dependency "cancan", "~> 1.6.0"
+  s.add_dependency "ya2yaml"
+  s.add_dependency "best_in_place"
+  s.add_dependency "lazyhash"
+  s.add_dependency "cancan"
   s.add_dependency "jquery-rails"
 
-  s.add_development_dependency "rspec-rails", "~> 2.5"
-  s.add_development_dependency "capybara", "~> 1.0.1"
+  s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "capybara"
   s.add_development_dependency "launchy"
 end
