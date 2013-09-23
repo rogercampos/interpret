@@ -57,7 +57,11 @@ module Interpret
         tree = LazyHash.build_hash
         all_trans = all_trans.map{|x| x.key.split(".")[0..-2].join(".")}.uniq
         all_trans.each do |x|
-          LazyHash.add(tree, x, {}) rescue next
+          begin
+            LazyHash.add(tree, x, {})
+          rescue
+            next
+          end
         end
 
         # Generate a new clean hash without the proc's from LazyHash.
