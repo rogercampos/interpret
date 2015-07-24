@@ -57,7 +57,11 @@ module Interpret
         tree = LazyHash.build_hash
         all_trans = all_trans.map{|x| x.key.split(".")[0..-2].join(".")}.uniq
         all_trans.each do |x|
-          LazyHash.add(tree, x, {})
+          begin
+            LazyHash.add(tree, x, {})
+          rescue
+            next
+          end
         end
 
         # Generate a new clean hash without the proc's from LazyHash.
@@ -89,7 +93,7 @@ module Interpret
       # The language will be obtained from the first unique key of the yml
       # file.
       def import(file)
-        hash = YAML.load file
+        hash = YAML.load File.open(file.path)
         raise ArgumentError, "the YAML file must contain an unique first key representing the locale" unless hash.keys.count == 1
 
         lang = hash.keys.first
